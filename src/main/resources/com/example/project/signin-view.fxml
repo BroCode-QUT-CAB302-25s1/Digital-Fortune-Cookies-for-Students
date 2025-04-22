@@ -1,14 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.project.SigninView"
-            prefHeight="400.0" prefWidth="600.0">
+<VBox prefHeight="500.0" prefWidth="700.0" stylesheets="@style_sheet/signin-stylesheet.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.controller.SigninController">
+   <HBox prefHeight="57.0" prefWidth="620.0">
+      <children>
+         <ImageView fitHeight="30.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" />
+         <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+             <image>
+                 <Image url="@symbol/circleFortuneIcon.png" />
+             </image>
+         </ImageView>
+         <Label fx:id="titleLabel" alignment="CENTER" prefHeight="55.0" prefWidth="449.0" text="Digital Fortune Cookie" textAlignment="CENTER">
+            <font>
+               <Font name="Arial Bold" size="35.0" />
+            </font>
+         </Label>
+      </children>
+   </HBox>
+    <Label fx:id="subtitleLabel" alignment="CENTER" prefHeight="38.0" prefWidth="745.0" text="Welcome to the Fortune Cookie App">
+      <font>
+         <Font name="Arial Bold" size="16.0" />
+      </font></Label>
+   <Label fx:id="descriptionLabel" alignment="CENTER" prefHeight="38.0" prefWidth="671.0" text="Enter your email and password to sign in" />
 
-</AnchorPane>
+    <GridPane alignment="CENTER" hgap="10" prefHeight="142.0" prefWidth="696.0" vgap="10">
+        <columnConstraints>
+            <ColumnConstraints halignment="RIGHT" />
+        </columnConstraints>
+
+        <Label fx:id="emailLabel" prefHeight="17.0" prefWidth="209.0" text="Email">
+         <font>
+            <Font name="Arial Bold" size="14.0" />
+         </font></Label>
+        <TextField fx:id="emailField" prefHeight="25.0" prefWidth="204.0" GridPane.rowIndex="1" />
+
+        <Label fx:id="passwordLabel" prefHeight="17.0" prefWidth="206.0" text="Password" GridPane.rowIndex="2">
+         <font>
+            <Font name="Arial Bold" size="13.0" />
+         </font></Label>
+        <PasswordField fx:id="passwordField" GridPane.rowIndex="3" />
+      <rowConstraints>
+         <RowConstraints />
+         <RowConstraints />
+         <RowConstraints />
+         <RowConstraints />
+      </rowConstraints>
+    </GridPane>
+   <StackPane prefHeight="70.0" prefWidth="620.0">
+      <children>
+         <Button fx:id="loginButton" mnemonicParsing="false" prefHeight="34.0" prefWidth="157.0" style="-fx-background-color: black; -fx-background-radius: 5;" text="Sign in" />
+      </children>
+   </StackPane>
+   <GridPane alignment="CENTER" hgap="10" opacity="0.6" prefHeight="38.0" prefWidth="620.0" vgap="10">
+      <columnConstraints>
+         <ColumnConstraints halignment="RIGHT" />
+         <ColumnConstraints halignment="RIGHT" />
+      </columnConstraints>
+      <rowConstraints>
+         <RowConstraints />
+         <RowConstraints />
+         <RowConstraints />
+         <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+         <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+      </rowConstraints>
+      <children>
+         <Label fx:id="footerLabel" alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="95.0" text="New to Fortune ?" GridPane.rowIndex="1">
+            <font>
+               <Font name="Arial Bold" size="14.0" />
+            </font>
+         </Label>
+         <Label fx:id="signupLink" prefHeight="15.0" prefWidth="137.0" text="Create an account now!" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <font>
+               <Font name="Arial Bold" size="14.0" />
+            </font>
+         </Label>
+      </children>
+   </GridPane>
+   <StackPane prefHeight="9.0" prefWidth="620.0">
+      <children>
+         <Label fx:id="forgotLabel" text="Forgot password" />
+      </children>
+   </StackPane>
+
+</VBox>

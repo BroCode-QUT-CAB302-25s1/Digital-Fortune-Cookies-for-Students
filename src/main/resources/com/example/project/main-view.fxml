@@ -13,9 +13,9 @@
 <!--    <Label fx:id="welcomeText"/>-->
 <!--    <Button text="Hello!" onAction="#onHelloButtonClick"/>-->
 <!--</VBox>-->
-<Label >
+<Label>
     <graphic>
-        <ImageView fitWidth="300" fitHeight="300">
+        <ImageView fitWidth="500" fitHeight="500">
             <Image url="@symbol/digitalCookieMainIcon1.png"/>
         </ImageView>
     </graphic>
