@@ -1,5 +1,6 @@
 package com.example.project;
 
+import com.example.project.controller.MainController;
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -25,26 +26,32 @@ public class MainApplication extends Application {
         stage.setScene(scene);
         stage.show();
 
+        // Pass the stage to MainController
+        MainController controller = fxmlLoader.getController();
+        controller.setSplashStage(stage);
 
-        // Wait 2 seconds, then open sign in window
-        PauseTransition delay = new PauseTransition(Duration.seconds(2));
-        delay.setOnFinished(event -> {
-            stage.close();
-            try {
-                // Load new FXML after splash
-                Parent signInRoot = FXMLLoader.load(getClass().getResource("signin-view.fxml"));
-                Stage signInStage = new Stage();
-                signInStage.setScene(new Scene(signInRoot));
-                signInStage.setTitle("Sign in");
-                signInStage.show();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-        delay.play();
     }
 
     public static void main(String[] args) {
         launch();
     }
 }
+
+//        // Wait 2 seconds, then open sign in window
+//        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+//        delay.setOnFinished(event -> {
+//            stage.close();
+//            try {
+//                // Load new FXML after splash
+////                Parent signInRoot = FXMLLoader.load(getClass().getResource("signin-view.fxml"));
+//                FXMLLoader signInRoot = new FXMLLoader(getClass().getResource("signin-view.fxml"));
+//                Stage signInStage = (Stage) new Stage();
+//                Scene signInScene = new Scene(signInRoot.load());
+//                signInStage.setTitle("Sign in");
+//                signInStage.setScene(signInScene);
+//                signInStage.show();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        });
+//        delay.play();

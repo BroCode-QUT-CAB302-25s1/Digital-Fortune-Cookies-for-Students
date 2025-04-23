@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.project.SignupView"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="500.0" prefWidth="700.0"
+            stylesheets="@style_sheet/signup-stylesheet.css"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.project.controller.SignUpController">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="400.0" layoutX="229.0" layoutY="91.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@symbol/transparentIcon.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="titleLabel" alignment="CENTER" layoutX="75.0" layoutY="75.0" prefHeight="42.0" prefWidth="732.0" text="Welcome to the Fortune Cookie App" />
+      <Label fx:id="subtitleLabel" alignment="CENTER" layoutX="144.0" layoutY="141.0" prefHeight="22.0" prefWidth="593.0" text="Enter your email, password and your desired study time goal" textAlignment="CENTER">
+         <font>
+            <Font name="Arial Italic" size="12.0" />
+         </font></Label>
+      <Label layoutX="185.0" layoutY="185.0" text="Email" />
+      <Label layoutX="185.0" layoutY="272.0" text="Password" />
+      <Label fx:id="studygoalField" layoutX="185.0" layoutY="364.0" text="Study Time Goal" />
+      <TextField fx:id="emailField" layoutX="185.0" layoutY="213.0" prefHeight="40.0" prefWidth="511.0" />
+      <PasswordField fx:id="passwordField" layoutX="185.0" layoutY="299.0" prefWidth="511.0" />
+      <TextField layoutX="185.0" layoutY="388.0" prefHeight="40.0" prefWidth="511.0" />
+      <Button fx:id="backButton" layoutX="289.0" layoutY="463.0" mnemonicParsing="false" text="Back" />
+      <Button fx:id="signupButton" layoutX="453.0" layoutY="463.0" mnemonicParsing="false" text="Sign up" />
+   </children>
 </AnchorPane>

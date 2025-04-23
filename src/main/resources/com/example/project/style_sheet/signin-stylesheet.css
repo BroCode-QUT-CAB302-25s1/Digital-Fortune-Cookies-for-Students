@@ -80,7 +80,8 @@
     -fx-font-size: 12px;
     -fx-text-fill: #888888;
     -fx-alignment: center-right;
-    -fx-font-family: "Arial"
+    -fx-font-family: "Arial";
+    -fx-font-weight: bold
 }
 
 #footerLabel {

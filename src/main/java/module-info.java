@@ -4,6 +4,7 @@ module com.example.project {
 
     requires org.controlsfx.controls;
     requires org.kordamp.bootstrapfx.core;
+    requires java.xml;
 
     opens com.example.project to javafx.fxml;
     exports com.example.project;
