@@ -1,14 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.project.HomeView"
-            prefHeight="400.0" prefWidth="600.0">
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.HBox?>
 
-</AnchorPane>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.geometry.Insets?>
+<?import java.net.URL?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.project.controller.HomeController" styleClass="root" >
+
+    <stylesheets>
+        <URL value="@style_sheet/home-stylesheet.css" />
+    </stylesheets>
+
+    <top>
+        <VBox alignment="CENTER" spacing="5">
+            <padding>
+                <Insets bottom="20" />
+            </padding>
+            <Label fx:id="welcomeTitle" text="Daily Fortune Cookie" />
+            <Label fx:id="usernameLabel" text="Hello, [Student Name Here]!" />
+        </VBox>
+    </top>
+
+    <center>
+        <VBox alignment="CENTER" spacing="20">
+            <!-- Fortune Cookie Image -->
+            <StackPane styleClass="fortune-image-container">
+                <ImageView fx:id="fortuneCookieImage" fitWidth="150" fitHeight="100" preserveRatio="true">
+                    <!-- Set image in the controller -->
+                </ImageView>
+            </StackPane>
+
+            <!-- Action Button -->
+            <Button fx:id="newFortuneButton" text="Get New Fortune" />
+        </VBox>
+    </center>
+
+    <bottom>
+        <VBox spacing="15">
+            <!-- Progress Section -->
+            <VBox styleClass="progress-pane">
+                <padding>
+                    <Insets top="15" right="15" bottom="15" left="15" />
+                </padding>
+                <Label styleClass="progress-title" text="Your Study Progress" />
+                <ProgressBar fx:id="progressBar" progress="0.65" maxWidth="Infinity" />
+                <Label fx:id="progressText" styleClass="progress-text" text="You've viewed 13 fortunes this week. Keep going!" />
+            </VBox>
+
+            <!-- Navigation Bar -->
+            <HBox styleClass="nav-bar" alignment="CENTER" spacing="5">
+                <Button styleClass="nav-button, selected" text="Home" />
+                <Button styleClass="nav-button" text="History" />
+                <Button styleClass="nav-button" text="Profile" />
+                <Button styleClass="nav-button" text="Settings" />
+            </HBox>
+
+            <padding>
+                <Insets top="20" />
+            </padding>
+        </VBox>
+    </bottom>
+
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+</BorderPane>

@@ -108,10 +108,6 @@ public class SignInController {
             signUpController.setSignUpStage(signUpStage);
             signUpController.setSignInScene(signupLink.getScene(), this);
 
-            // Close the sign-in stage
-//            signInStage.close();
-//            System.out.println("SignInController: Sign-in stage closed");
-
             signUpStage.show();
 
         } catch (IOException e) {
@@ -136,10 +132,18 @@ public class SignInController {
             // Add your authentication logic here (e.g., check credentials against a database)
             try {
                 // Example: Load a new scene after successful login
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("home-view.fxml"));
-                Stage stage = (Stage) loginButton.getScene().getWindow();
-                stage.setScene(new Scene(loader.load()));
-                stage.show();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/home-view.fxml"));
+                Stage homeStage = (Stage) ((Node)loginButton).getScene().getWindow();
+                root = loader.load();
+                Scene homeScene = new Scene(root);
+                homeStage.setTitle("Home");
+                homeStage.setScene(homeScene);
+
+                // Pass the new stage and sign-in scene to SignUpController
+                HomeController homeController = loader.getController();
+                homeController.setHomeStage(homeStage, this);
+
+                homeStage.show();
             } catch (IOException e) {
                 descriptionLabel.setText("Error loading dashboard.");
                 descriptionLabel.setStyle("-fx-text-fill: red;");
