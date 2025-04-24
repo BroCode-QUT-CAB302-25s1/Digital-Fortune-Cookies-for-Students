@@ -1,6 +1,7 @@
 package com.example.project.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -48,7 +49,10 @@ public class SignInController {
     @FXML
     private Label forgotLabel;
 
+
+    private Scene scene;
     private Stage signInStage;
+    private Parent root;
     private boolean initialized = false; // Prevent double initialization
 
     // Setter to pass the Stage from MainController or SignUpController
@@ -93,8 +97,9 @@ public class SignInController {
                 System.err.println("Error: signup-view.fxml not found at /com/example/project/signup-view.fxml");
                 return;
             }
-            Scene signUpScene = new Scene(loader.load());
-            Stage signUpStage = new Stage(); // New stage for signup
+            root = loader.load();
+            Stage signUpStage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow(); // New stage for signup
+            Scene signUpScene = new Scene(root);
             signUpStage.setTitle("Sign Up");
             signUpStage.setScene(signUpScene);
 
@@ -104,8 +109,8 @@ public class SignInController {
             signUpController.setSignInScene(signupLink.getScene(), this);
 
             // Close the sign-in stage
-            signInStage.close();
-            System.out.println("SignInController: Sign-in stage closed");
+//            signInStage.close();
+//            System.out.println("SignInController: Sign-in stage closed");
 
             signUpStage.show();
 

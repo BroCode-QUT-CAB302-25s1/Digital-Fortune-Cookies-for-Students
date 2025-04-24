@@ -76,6 +76,27 @@ public class SignUpController {
         backButton.setOnAction(event -> handleBackButton());
     }
 
+    @FXML
+    private void handleBackButton() {
+        if (signInScene == null || signUpStage == null) {
+            System.err.println("SignUpController: Error: signInScene or signUpStage is null");
+            return;
+        }
+        try {
+            // Update the stage in SignInController
+            if (signInController != null) {
+                signUpStage.setScene(signInScene);
+            } else {
+                System.err.println("SignUpController: Warning: signInController is null");
+            }
+
+        } catch (Exception e) {
+            System.err.println("SignUpController: Exception while restoring sign-in scene");
+            e.printStackTrace();
+        }
+    }
+
+
     private void handleSignupButton() {
         String email = emailField.getText().trim();
         String password = passwordField.getText();
@@ -113,36 +134,6 @@ public class SignUpController {
     }
 
 
-
-    @FXML
-    private void handleBackButton() {
-        if (signInScene == null || signUpStage == null) {
-            System.err.println("SignUpController: Error: signInScene or signUpStage is null");
-            return;
-        }
-        try {
-            // Create a new stage for sign-in
-            Stage signInStage = new Stage();
-            signInStage.setTitle("Sign In");
-            signInStage.setScene(signInScene);
-
-            // Update the stage in SignInController
-            if (signInController != null) {
-                signInController.setSignInStage(signInStage);
-            } else {
-                System.err.println("SignUpController: Warning: signInController is null");
-            }
-
-            // Close the signup stage
-            signUpStage.close();
-            System.out.println("SignUpController: Signup stage closed");
-
-            signInStage.show();
-        } catch (Exception e) {
-            System.err.println("SignUpController: Exception while restoring sign-in scene");
-            e.printStackTrace();
-        }
-    }
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
