@@ -1,6 +1,9 @@
 package com.example.project.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -8,6 +11,8 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class HomeController {
 
@@ -28,7 +33,11 @@ public class HomeController {
 
     @FXML
     private Label progressText;
-
+    
+    @FXML
+    private Button userDisplayButton;
+    
+    private Parent root;
     private Stage homeStage;
     private SignInController signInController; // Store the SignInController instance
 
@@ -40,6 +49,7 @@ public class HomeController {
 
     @FXML
     private void initialize() {
+        userDisplayButton.setOnAction(this::handleProfileButton);
     }
 
     @FXML
@@ -56,6 +66,25 @@ public class HomeController {
 
     @FXML
     private void handleProfileButton(ActionEvent event) {
+        try {
+            // Load signup FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/userdisplay-view.fxml"));
+            root = loader.load();
+            Stage userDisplayStage = (Stage) ((Node)event.getSource()).getScene().getWindow(); // New stage for signup
+            Scene userDisplayScene = new Scene(root);
+            userDisplayStage.setTitle("User Display");
+            userDisplayStage.setScene(userDisplayScene);
+
+            // Pass the new stage and sign-in scene to userDisplayController
+            UserDisplayController userDisplayController = loader.getController();
+
+            userDisplayController.setHomeStage(homeStage, this);
+
+            userDisplayStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

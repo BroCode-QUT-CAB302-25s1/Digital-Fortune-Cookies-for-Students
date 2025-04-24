@@ -53,7 +53,7 @@ public class SignInController {
     private Scene scene;
     private Stage signInStage;
     private Parent root;
-    private boolean initialized = false; // Prevent double initialization
+
 
     // Setter to pass the Stage from MainController or SignUpController
     public void setSignInStage(Stage stage) {
@@ -62,23 +62,6 @@ public class SignInController {
 
     @FXML
     public void initialize() {
-        if (initialized) {
-            System.out.println("SignInController: Already initialized, skipping.");
-            return;
-        }
-        initialized = true;
-
-        System.out.println("SignInController: Initializing...");
-        if (signInStage != null) {
-            System.out.println("SignInController: Initialized with stage title: " + signInStage.getTitle());
-        } else {
-            System.out.println("SignInController: Stage is null during initialization.");
-        }
-
-        // Clear any existing handlers to prevent duplicates
-        loginButton.setOnAction(null);
-        signupLink.setOnMouseClicked(null);
-
         // Initialize UI components if needed
         loginButton.setOnAction(this::handleLoginButton);
         signupLink.setOnMouseClicked(this::handleSignupLink);
@@ -86,6 +69,7 @@ public class SignInController {
         // Optional: Add visual feedback for interactivity
         signupLink.setStyle("-fx-cursor: hand;"); // Makes cursor a hand on hover
         forgotLabel.setStyle("-fx-cursor: hand;");
+        loginButton.setStyle("-fx-cursor: hand;");
     }
 
     @FXML

@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ProgressBar?>
-<?import javafx.scene.control.ToggleButton?>
-<?import javafx.scene.control.ToggleGroup?>
-
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.HBox?>
-
-<?import javafx.scene.image.ImageView?>
-<?import javafx.geometry.Insets?>
 <?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.project.controller.HomeController" styleClass="root" >
+<BorderPane styleClass="root" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="com.example.project.controller.HomeController">
 
     <stylesheets>
         <URL value="@style_sheet/home-stylesheet.css" />
@@ -36,7 +31,7 @@
         <VBox alignment="CENTER" spacing="20">
             <!-- Fortune Cookie Image -->
             <StackPane styleClass="fortune-image-container">
-                <ImageView fx:id="fortuneCookieImage" fitWidth="150" fitHeight="100" preserveRatio="true">
+                <ImageView fx:id="fortuneCookieImage" fitHeight="100" fitWidth="150" preserveRatio="true">
                     <!-- Set image in the controller -->
                 </ImageView>
             </StackPane>
@@ -51,18 +46,18 @@
             <!-- Progress Section -->
             <VBox styleClass="progress-pane">
                 <padding>
-                    <Insets top="15" right="15" bottom="15" left="15" />
+                    <Insets bottom="15" left="15" right="15" top="15" />
                 </padding>
                 <Label styleClass="progress-title" text="Your Study Progress" />
-                <ProgressBar fx:id="progressBar" progress="0.65" maxWidth="Infinity" />
+                <ProgressBar fx:id="progressBar" maxWidth="Infinity" progress="0.65" />
                 <Label fx:id="progressText" styleClass="progress-text" text="You've viewed 13 fortunes this week. Keep going!" />
             </VBox>
 
             <!-- Navigation Bar -->
-            <HBox styleClass="nav-bar" alignment="CENTER" spacing="5">
+            <HBox alignment="CENTER" spacing="5" styleClass="nav-bar">
                 <Button styleClass="nav-button, selected" text="Home" />
                 <Button styleClass="nav-button" text="History" />
-                <Button styleClass="nav-button" text="Profile" />
+                <Button fx:id="userDisplayButton" styleClass="nav-button" text="Profile" />
                 <Button styleClass="nav-button" text="Settings" />
             </HBox>
 
@@ -73,6 +68,6 @@
     </bottom>
 
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
 </BorderPane>

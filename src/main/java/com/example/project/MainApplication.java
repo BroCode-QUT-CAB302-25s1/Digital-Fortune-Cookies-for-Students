@@ -37,21 +37,3 @@ public class MainApplication extends Application {
     }
 }
 
-//        // Wait 2 seconds, then open sign in window
-//        PauseTransition delay = new PauseTransition(Duration.seconds(2));
-//        delay.setOnFinished(event -> {
-//            stage.close();
-//            try {
-//                // Load new FXML after splash
-////                Parent signInRoot = FXMLLoader.load(getClass().getResource("signin-view.fxml"));
-//                FXMLLoader signInRoot = new FXMLLoader(getClass().getResource("signin-view.fxml"));
-//                Stage signInStage = (Stage) new Stage();
-//                Scene signInScene = new Scene(signInRoot.load());
-//                signInStage.setTitle("Sign in");
-//                signInStage.setScene(signInScene);
-//                signInStage.show();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        });
-//        delay.play();

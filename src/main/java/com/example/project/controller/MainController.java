@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.animation.PauseTransition;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -45,6 +46,8 @@ public class MainController {
                 Scene signInScene = new Scene(loader.load());
                 Stage signInStage = new Stage();
                 signInStage.setTitle("Sign In");
+                signInStage.initStyle(StageStyle.DECORATED);
+                signInStage.setResizable(false);
                 signInStage.setScene(signInScene);
 
                 // Pass the stage to SignInController

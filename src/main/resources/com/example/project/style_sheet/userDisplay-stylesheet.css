@@ -1,0 +1,82 @@
+.root {
+    -fx-background-color: #f9fdf6;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+#profileCard {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 5);
+    -fx-background-radius: 15;
+    -fx-padding: 20;
+}
+
+#profileHeader {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #3b3b3b;
+}
+
+#leftPanel {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 15;
+    -fx-padding: 20;
+    -fx-spacing: 15;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);
+}
+
+#profileImage {
+    -fx-background-radius: 50%;
+    -fx-border-radius: 50%;
+}
+
+.label-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #444;
+}
+
+.label-value {
+    -fx-font-size: 14px;
+    -fx-text-fill: #555;
+}
+
+.button {
+    -fx-background-color: white;
+    -fx-text-fill: #c63f57;
+    -fx-border-color: #c63f57;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 6 16;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #ffe6eb;
+}
+
+.button:focused {
+    -fx-border-color: #9b2f40;
+    -fx-text-fill: #9b2f40;
+}
+
+#statusOnline {
+    -fx-fill: #00d26a;
+}
+
+#sectionTitle {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2d2d2d;
+    -fx-padding: 5 0 10 0;
+}
+
+#infoBox {
+    -fx-background-color: #f8f8ff;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 10;
+}
