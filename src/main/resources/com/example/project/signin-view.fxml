@@ -48,13 +48,13 @@
          <font>
             <Font name="Arial Bold" size="14.0" />
          </font></Label>
-        <TextField fx:id="emailField" prefHeight="25.0" prefWidth="204.0" GridPane.rowIndex="1" />
+        <TextField fx:id="emailField" promptText="yourEmail@gmail.com" prefHeight="25.0" prefWidth="204.0" GridPane.rowIndex="1" />
 
         <Label fx:id="passwordLabel" prefHeight="17.0" prefWidth="206.0" text="Password" GridPane.rowIndex="2">
          <font>
             <Font name="Arial Bold" size="13.0" />
          </font></Label>
-        <PasswordField fx:id="passwordField" GridPane.rowIndex="3" />
+        <PasswordField fx:id="passwordField" promptText="password" GridPane.rowIndex="3" />
       <rowConstraints>
          <RowConstraints />
          <RowConstraints />

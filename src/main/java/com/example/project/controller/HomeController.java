@@ -78,8 +78,8 @@ public class HomeController {
 
             // Pass the new stage and sign-in scene to userDisplayController
             UserDisplayController userDisplayController = loader.getController();
-            userDisplayController.setHomeStage(userDisplayStage);
-            userDisplayController.setHomeScene(userDisplayButton.getScene(), this);
+            userDisplayController.setStage(userDisplayStage);
+            userDisplayController.setScene(userDisplayButton.getScene(), this);
 
             userDisplayStage.show();
 

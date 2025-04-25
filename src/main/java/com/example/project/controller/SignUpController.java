@@ -1,15 +1,22 @@
 package com.example.project.controller;
 
+import com.example.project.model.IUserDAO;
+import com.example.project.model.SqliteUserDAO;
+import com.example.project.model.User;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class SignUpController {
+    private static final Logger LOGGER = Logger.getLogger(SignUpController.class.getName());
 
     @FXML
     private TextField emailField;
@@ -77,6 +84,13 @@ public class SignUpController {
     }
 
 
+    private IUserDAO userDAO;
+
+    public SignUpController() {
+        userDAO = new SqliteUserDAO();
+    }
+
+    @FXML
     private void handleSignupButton() {
         String email = emailField.getText().trim();
         String password = passwordField.getText();
@@ -84,43 +98,54 @@ public class SignUpController {
 
         // Basic validation
         if (email.isEmpty() || !email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
-            showAlert("Error", "Please enter a valid email address.");
+            LOGGER.warning("Invalid email address: " + email);
             return;
         }
 
         if (password.isEmpty() || password.length() < 6) {
-            showAlert("Error", "Password must be at least 6 characters long.");
+            LOGGER.warning("Password must be at least 6 characters long.");
             return;
         }
 
         if (studyGoal.isEmpty() || !studyGoal.matches("\\d+")) {
-            showAlert("Error", "Please enter a valid study time goal (in minutes).");
+            LOGGER.warning("Invalid study time goal: " + studyGoal);
             return;
         }
 
-        // Process signup (e.g., save to database or pass to another service)
-        System.out.println("Signup successful: Email=" + email + ", Study Goal=" + studyGoal + " minutes");
-
-        // Optionally, navigate to another scene (e.g., dashboard)
+        int studyGoalValue;
         try {
+            studyGoalValue = Integer.parseInt(studyGoal);
+        } catch (NumberFormatException e) {
+            LOGGER.warning("Study goal must be a valid number: " + studyGoal);
+            return;
+        }
+
+        // Check if email (username) already exists
+        if (userDAO.getUser(email) != null) {
+            LOGGER.warning("Email already registered: " + email);
+            return;
+        }
+
+        // Create new user
+        User newUser = new User(email, password);
+
+        // Save to database
+        try {
+            userDAO.addUser(newUser);
+            LOGGER.info("Signup successful: Email=" + email);
+
+            // Navigate to dashboard
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/view/dashboard.fxml"));
             Stage stage = (Stage) signupButton.getScene().getWindow();
             stage.setScene(new Scene(loader.load()));
-
             stage.show();
         } catch (IOException e) {
-            showAlert("Error", "Failed to load dashboard.");
+            LOGGER.severe("Failed to load dashboard: " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            LOGGER.severe("Failed to save user to database: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-
-
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
 }
