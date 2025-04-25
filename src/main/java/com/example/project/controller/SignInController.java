@@ -8,6 +8,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
+import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
@@ -62,14 +65,29 @@ public class SignInController {
 
     @FXML
     public void initialize() {
+        loginButton.setOnAction(null);
+        signupLink.setOnMouseClicked(null);
+
         // Initialize UI components if needed
         loginButton.setOnAction(this::handleLoginButton);
         signupLink.setOnMouseClicked(this::handleSignupLink);
+
+        // Add Enter key handler to emailField and passwordField
+        emailField.setOnKeyPressed(this::handleKeyPressed);
+        passwordField.setOnKeyPressed(this::handleKeyPressed);
 
         // Optional: Add visual feedback for interactivity
         signupLink.setStyle("-fx-cursor: hand;"); // Makes cursor a hand on hover
         forgotLabel.setStyle("-fx-cursor: hand;");
         loginButton.setStyle("-fx-cursor: hand;");
+    }
+
+    @FXML
+    private void handleKeyPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+//            System.out.println("SignInController: Enter key pressed, triggering login");
+            handleLoginButton(new ActionEvent(loginButton, null));
+        }
     }
 
     @FXML
@@ -122,6 +140,7 @@ public class SignInController {
                 Scene homeScene = new Scene(root);
                 homeStage.setTitle("Home");
                 homeStage.setScene(homeScene);
+
 
                 // Pass the new stage and sign-in scene to SignUpController
                 HomeController homeController = loader.getController();

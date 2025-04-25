@@ -1,12 +1,22 @@
 .root {
     -fx-background-color: #f9fdf6;
-    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-family: "Arial"
+}
+
+#titleHeader {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+    -fx-font-family: "Arial"
 }
 
 #profileCard {
     -fx-background-color: white;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 5);
     -fx-background-radius: 15;
+    -fx-border-color: #87CEFA;
+    -fx-border-radius: 15;
+    -fx-border-weight: 1;
     -fx-padding: 20;
 }
 
@@ -16,67 +26,91 @@
     -fx-text-fill: #3b3b3b;
 }
 
-#leftPanel {
+#infoPanel {
     -fx-background-color: #ffffff;
     -fx-background-radius: 15;
+    -fx-border-color: #87CEFA;
+    -fx-border-radius: 15;
+    -fx-border-weight: 1;
     -fx-padding: 20;
     -fx-spacing: 15;
     -fx-alignment: center;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);
 }
 
-#profileImage {
-    -fx-background-radius: 50%;
-    -fx-border-radius: 50%;
+.subInfoFrame {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 15;
+    -fx-border-color: #87CEFA;
+    -fx-border-radius: 15;
+    -fx-border-weight: 0.5;
 }
 
 .label-title {
     -fx-font-size: 16px;
     -fx-font-weight: bold;
-    -fx-text-fill: #444;
+    -fx-text-fill: black;
+    -fx-font-family: "Arial"
 }
 
 .label-value {
     -fx-font-size: 14px;
-    -fx-text-fill: #555;
-}
-
-.button {
-    -fx-background-color: white;
-    -fx-text-fill: #c63f57;
-    -fx-border-color: #c63f57;
-    -fx-border-width: 1.5px;
-    -fx-border-radius: 8;
-    -fx-background-radius: 8;
-    -fx-padding: 6 16;
-    -fx-font-weight: bold;
-    -fx-cursor: hand;
-}
-
-.button:hover {
-    -fx-background-color: #ffe6eb;
-}
-
-.button:focused {
-    -fx-border-color: #9b2f40;
-    -fx-text-fill: #9b2f40;
+    -fx-text-fill: black;
+    -fx-font-family: "Arial"
 }
 
 #statusOnline {
-    -fx-fill: #00d26a;
+    -fx-font-size: 11px;
+    -fx-font-color: #00FF00;
+    -fx-font-style: italic;
+    -fx-font-family: "Arial"
 }
 
-#sectionTitle {
-    -fx-font-size: 18px;
+#profileName {
+    -fx-font-size: 20px;
     -fx-font-weight: bold;
-    -fx-text-fill: #2d2d2d;
-    -fx-padding: 5 0 10 0;
+    -fx-text-fill: black;
+    -fx-font-family: "Arial"
 }
 
-#infoBox {
-    -fx-background-color: #f8f8ff;
-    -fx-border-color: #e0e0e0;
-    -fx-border-radius: 10;
+.label-cardInfo {
+    -fx-font-size: 11px;
+    -fx-text-fill: black;
+    -fx-font-family: "Arial"
+}
+
+.profileIcon {
+    -fx-fit-width: 23;
+    -fx-fit-height: 23;
+}
+
+#footerLabel {
+    -fx-font-size: 10px;
+    -fx-text-fill: black;
+    -fx-font-family: "Arial";
+    -fx-opacity: 0.3
+}
+
+.button {
+    -fx-font-size: 14px;
+    -fx-background-color: white;
+    -fx-text-fill: #c63f57;
+    -fx-border-color: #c63f57;
+    -fx-border-width: 0.5px;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-font-family: "Arial"
+}
+
+.infoBox {
+    -fx-background-color: #E6E6FA;
     -fx-background-radius: 10;
-    -fx-padding: 10;
+}
+
+.infoBoxValue {
+    -fx-font-size: 13px;
+    -fx-text-fill: black;
+    -fx-font-family: "Arial";
 }

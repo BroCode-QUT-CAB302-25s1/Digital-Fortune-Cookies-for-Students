@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.animation.PauseTransition;
+import javafx.scene.image.Image;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import javafx.fxml.FXMLLoader;
@@ -39,16 +40,13 @@ public class MainController {
             try {
                 // Load sign-in FXML
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/signin-view.fxml"));
-                if (loader.getLocation() == null) {
-                    System.err.println("Error: signin-view.fxml not found at /com/example/project/signin-view.fxml");
-                    return;
-                }
                 Scene signInScene = new Scene(loader.load());
                 Stage signInStage = new Stage();
                 signInStage.setTitle("Sign In");
                 signInStage.initStyle(StageStyle.DECORATED);
                 signInStage.setResizable(false);
                 signInStage.setScene(signInScene);
+                signInStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/symbol/circleFortuneIcon.png")));
 
                 // Pass the stage to SignInController
                 SignInController signInController = loader.getController();

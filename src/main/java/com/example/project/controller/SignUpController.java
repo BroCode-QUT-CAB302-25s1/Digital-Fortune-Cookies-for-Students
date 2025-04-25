@@ -3,6 +3,7 @@ package com.example.project.controller;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -37,40 +38,20 @@ public class SignUpController {
     private Stage signUpStage;
     private Scene signInScene; // Store the sign-in scene
     private SignInController signInController; // Store the SignInController instance
-    private boolean initialized = false; // Prevent double initialization
 
     // Setter to pass the Stage from SignInController
     public void setSignUpStage(Stage stage) {
         this.signUpStage = stage;
-        System.out.println("SignUpController: Stage set with title: " + (stage != null ? stage.getTitle() : "null"));
     }
 
     // Setter to pass the sign-in Scene and SignInController
     public void setSignInScene(Scene signInScene, SignInController signInController) {
         this.signInScene = signInScene;
         this.signInController = signInController;
-        System.out.println("SignUpController: Sign-in Scene and Controller set.");
     }
 
     @FXML
     private void initialize() {
-        if (initialized) {
-            System.out.println("SignUpController: Already initialized, skipping.");
-            return;
-        }
-        initialized = true;
-
-        System.out.println("SignUpController: Initializing...");
-        if (signUpStage != null) {
-            System.out.println("SignUpController: Initialized with stage title: " + signUpStage.getTitle());
-        } else {
-            System.out.println("SignUpController: Stage is null during initialization.");
-        }
-
-        // Clear any existing handlers to prevent duplicates
-        signupButton.setOnAction(null);
-        backButton.setOnAction(null);
-
         // Optional: Initialize UI components, e.g., set default values or styles
         signupButton.setOnAction(event -> handleSignupButton());
         backButton.setOnAction(event -> handleBackButton());
@@ -91,7 +72,6 @@ public class SignUpController {
             }
 
         } catch (Exception e) {
-            System.err.println("SignUpController: Exception while restoring sign-in scene");
             e.printStackTrace();
         }
     }
@@ -126,6 +106,7 @@ public class SignUpController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/view/dashboard.fxml"));
             Stage stage = (Stage) signupButton.getScene().getWindow();
             stage.setScene(new Scene(loader.load()));
+
             stage.show();
         } catch (IOException e) {
             showAlert("Error", "Failed to load dashboard.");

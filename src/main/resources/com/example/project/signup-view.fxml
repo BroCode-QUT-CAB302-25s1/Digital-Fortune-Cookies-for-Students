@@ -11,7 +11,6 @@
 
 <AnchorPane prefHeight="500.0" prefWidth="700.0"
             stylesheets="@style_sheet/signup-stylesheet.css"
-            xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.project.controller.SignUpController">
    <children>

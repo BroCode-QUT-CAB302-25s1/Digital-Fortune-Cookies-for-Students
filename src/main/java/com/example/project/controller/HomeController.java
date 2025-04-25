@@ -8,9 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -44,7 +46,6 @@ public class HomeController {
     public void setHomeStage(Stage stage, SignInController signInController) {
         this.homeStage = stage;
         this.signInController = signInController;
-        System.out.println("SignUpController: Sign-in Scene and Controller set.");
     }
 
     @FXML
@@ -72,13 +73,13 @@ public class HomeController {
             root = loader.load();
             Stage userDisplayStage = (Stage) ((Node)event.getSource()).getScene().getWindow(); // New stage for signup
             Scene userDisplayScene = new Scene(root);
-            userDisplayStage.setTitle("User Display");
+            userDisplayStage.setTitle("Profile");
             userDisplayStage.setScene(userDisplayScene);
 
             // Pass the new stage and sign-in scene to userDisplayController
             UserDisplayController userDisplayController = loader.getController();
-
-            userDisplayController.setHomeStage(homeStage, this);
+            userDisplayController.setHomeStage(userDisplayStage);
+            userDisplayController.setHomeScene(userDisplayButton.getScene(), this);
 
             userDisplayStage.show();
 
