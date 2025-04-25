@@ -46,7 +46,7 @@ public class MainController {
                 signInStage.initStyle(StageStyle.DECORATED);
                 signInStage.setResizable(false);
                 signInStage.setScene(signInScene);
-                signInStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/symbol/circleFortuneIcon.png")));
+                signInStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/symbol/digitalCookieMainIcon2.png")));
 
                 // Pass the stage to SignInController
                 SignInController signInController = loader.getController();
