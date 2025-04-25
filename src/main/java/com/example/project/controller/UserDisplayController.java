@@ -13,11 +13,11 @@ import javafx.stage.Stage;
 public class UserDisplayController {
 
 
-    private Stage homeStage;
+    private Stage userDisplayStage;
     private HomeController homeController; // Store the SignInController instance
 
     public void setHomeStage(Stage stage, HomeController homeController) {
-        this.homeStage = stage;
+        this.userDisplayStage = stage;
         this.homeController = homeController;
     }
 
