@@ -43,8 +43,11 @@ public class HomeController {
     private void initialize() {
         // Add click event to the fortune cookie image
         fortuneCookieImage.setOnMouseClicked(this::openFortuneScreen);
-
         userDisplayButton.setOnAction(this::handleProfileButton);
+
+        // Optional: Add visual feedback for interactivity
+        userDisplayButton.setStyle("-fx-cursor: hand;"); // Makes cursor a hand on hover
+        fortuneCookieImage.setStyle("-fx-cursor: hand;");
     }
 
     /**
