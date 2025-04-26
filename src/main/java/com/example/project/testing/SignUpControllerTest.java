@@ -1,19 +1,19 @@
-//package com.example.project.testing;
-//import com.example.project.controller.SignUpController;
-//import com.example.project.dao.MockUserDAO;
-//import com.example.project.model.User;
-//import javafx.scene.Scene;
-//import javafx.scene.control.Button;
-//import javafx.scene.control.PasswordField;
-//import javafx.scene.control.TextField;
-//import javafx.scene.layout.VBox;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//import static org.junit.jupiter.api.Assertions.*;
-//
-//public class SignUpControllerTest {
-//    private SignUpController controller;
-//    private MockUserDAO mockUserDAO;
+package com.example.project.testing;
+import com.example.project.controller.SignUpController;
+import com.example.project.dao.MockUserDAO;
+import com.example.project.model.User;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class SignUpControllerTest {
+    private SignUpController controller;
+    private MockUserDAO mockUserDAO;
 //
 //    @BeforeEach
 //    void setUp() {
@@ -103,4 +103,4 @@
 //        User user = mockUserDAO.getUser("test@example.com");
 //        assertNull(user); // No user should be added
 //    }
-//}
+}

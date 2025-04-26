@@ -7,12 +7,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DatabaseInitializer {
-    private static final String USERS_TABLE = "CREATE TABLE IF NOT EXISTS users (" +
+    private static final String USERS_TABLE = "CREATE TABLE users (" +
             "id INTEGER PRIMARY KEY AUTOINCREMENT," +
             "username VARCHAR NOT NULL," +
             "preferred_name VARCHAR," +
-            "first_name VARCHAR NOT NULL," +
-            "last_name VARCHAR NOT NULL," +
+            "first_name VARCHAR," +
+            "last_name VARCHAR," +
             "email VARCHAR UNIQUE NOT NULL," +
             "github VARCHAR," +
             "phone VARCHAR," +

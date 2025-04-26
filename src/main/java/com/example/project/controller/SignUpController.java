@@ -116,7 +116,7 @@ public class SignUpController {
             return;
         }
 
-        if (username.isEmpty() || !username.matches("\\d+")) {
+        if (username.isEmpty()) {
             ErrorAlert.show("Invalid Username", "Invalid username input");
             return;
         }
@@ -126,15 +126,10 @@ public class SignUpController {
         // Save to database
         try {
             userDAO.addUser(newUser);
+            ErrorAlert.show("Congratulation!", "Your Email: " + email + " is registered successfully!");
+            // Update the stage in SignInController
+            signUpStage.setScene(signInScene);
 
-
-            // Navigate to dashboard
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/view/dashboard.fxml"));
-            Stage stage = (Stage) signupButton.getScene().getWindow();
-            stage.setScene(new Scene(loader.load()));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
