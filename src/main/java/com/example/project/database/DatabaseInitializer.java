@@ -1,4 +1,4 @@
-package com.example.project.model;
+package com.example.project.database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,11 +9,11 @@ import java.sql.Statement;
 public class DatabaseInitializer {
     private static final String USERS_TABLE = "CREATE TABLE IF NOT EXISTS users (" +
             "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-            "username VARCHAR UNIQUE," +
+            "username VARCHAR NOT NULL," +
             "preferred_name VARCHAR," +
             "first_name VARCHAR NOT NULL," +
             "last_name VARCHAR NOT NULL," +
-            "email VARCHAR NOT NULL," +
+            "email VARCHAR UNIQUE NOT NULL," +
             "github VARCHAR," +
             "phone VARCHAR," +
             "location VARCHAR," +

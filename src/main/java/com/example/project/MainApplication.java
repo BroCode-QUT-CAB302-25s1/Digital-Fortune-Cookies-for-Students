@@ -1,17 +1,13 @@
 package com.example.project;
 
 import com.example.project.controller.MainController;
-import com.example.project.model.DatabaseInitializer;
-import javafx.animation.PauseTransition;
+import com.example.project.database.DatabaseInitializer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.Parent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.Duration;
 
-import java.io.File;
 import java.io.IOException;
 
 public class MainApplication extends Application {

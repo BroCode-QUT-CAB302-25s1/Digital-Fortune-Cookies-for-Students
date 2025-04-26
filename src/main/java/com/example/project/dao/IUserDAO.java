@@ -1,4 +1,6 @@
-package com.example.project.model;
+package com.example.project.dao;
+
+import com.example.project.model.User;
 
 import java.util.List;
 
@@ -22,11 +24,11 @@ public interface IUserDAO {
     void deleteUser(User user);
 
     /**
-     * Retrieves a user from the database by username.
-     * @param username The username of the user to retrieve.
-     * @return The user with the given username, or null if not found.
+     * Retrieves a user from the database by email.
+     * @param email The email of the user to retrieve.
+     * @return The user with the given email, or null if not found.
      */
-    User getUser(String username);
+    User getUser(String email);
 
     /**
      * Retrieves all users from the database.

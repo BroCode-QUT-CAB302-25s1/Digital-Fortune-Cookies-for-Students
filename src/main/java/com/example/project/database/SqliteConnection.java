@@ -1,4 +1,4 @@
-package com.example.project.model;
+package com.example.project.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

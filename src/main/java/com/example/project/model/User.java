@@ -32,9 +32,10 @@ public class User {
         this.password = password;
     }
 
-    public User(String email, String password){
+    public User(String email, String password, String username){
         this.email = email;
         this.password = password;
+        this.username = username;
     }
 
     // Getters and Setters

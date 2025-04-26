@@ -9,10 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="700.0"
-            stylesheets="@style_sheet/signup-stylesheet.css"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.project.controller.SignUpController">
+<AnchorPane prefHeight="500.0" prefWidth="700.0" stylesheets="@style_sheet/signup-stylesheet.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.controller.SignUpController">
    <children>
       <ImageView fitHeight="400.0" fitWidth="400.0" layoutX="229.0" layoutY="91.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -26,10 +23,10 @@
          </font></Label>
       <Label layoutX="185.0" layoutY="185.0" text="Email" />
       <Label layoutX="185.0" layoutY="272.0" text="Password" />
-      <Label fx:id="studygoalField" layoutX="185.0" layoutY="364.0" text="Study Time Goal" />
-      <TextField fx:id="emailField" promptText="youremail@gmail.com" layoutX="185.0" layoutY="213.0" prefHeight="40.0" prefWidth="511.0" />
-      <PasswordField fx:id="passwordField" promptText="Password" layoutX="185.0" layoutY="299.0" prefWidth="511.0" />
-      <TextField layoutX="185.0" layoutY="388.0" prefHeight="40.0" prefWidth="511.0" />
+      <Label layoutX="185.0" layoutY="364.0" text="User name" />
+      <TextField fx:id="emailField" layoutX="185.0" layoutY="213.0" prefHeight="40.0" prefWidth="511.0" promptText="youremail@gmail.com" />
+      <PasswordField fx:id="passwordField" layoutX="185.0" layoutY="299.0" prefWidth="511.0" promptText="Password" />
+      <TextField fx:id="usernameField" layoutX="185.0" layoutY="388.0" prefHeight="40.0" prefWidth="511.0" promptText="your user name" />
       <Button fx:id="backButton" layoutX="289.0" layoutY="463.0" mnemonicParsing="false" text="Back" />
       <Button fx:id="signupButton" layoutX="453.0" layoutY="463.0" mnemonicParsing="false" text="Sign up" />
    </children>

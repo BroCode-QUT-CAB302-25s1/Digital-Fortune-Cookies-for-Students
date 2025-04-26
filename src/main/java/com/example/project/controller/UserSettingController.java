@@ -1,14 +1,13 @@
 package com.example.project.controller;
 
-import com.example.project.model.IUserDAO;
-import com.example.project.model.SqliteUserDAO;
+import com.example.project.dao.IUserDAO;
+import com.example.project.dao.SqliteUserDAO;
 import com.example.project.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.util.logging.Logger;
@@ -131,18 +130,18 @@ public class UserSettingController {
     private boolean saveToDB(User user) {
         // Input validation
         if (!validateUserInput(user)) {
-            LOGGER.warning("Validation failed for user: " + user.getUsername());
+            LOGGER.warning("Validation failed for user: " + user.getEmail());
             return false;
         }
 
         try {
-            User existingUser = userDAO.getUser(user.getUsername());
+            User existingUser = userDAO.getUser(user.getEmail());
             if (existingUser != null) {
                 userDAO.updateUser(user);
-                LOGGER.info("User updated successfully: " + user.getUsername());
+                LOGGER.info("User updated successfully: " + user.getEmail());
             } else {
                 userDAO.addUser(user);
-                LOGGER.info("User added successfully: " + user.getUsername());
+                LOGGER.info("User added successfully: " + user.getEmail());
             }
             return true;
         } catch (Exception e) {
@@ -152,10 +151,7 @@ public class UserSettingController {
     }
 
     private boolean validateUserInput(User user) {
-        if (user.getUsername() == null || user.getUsername().trim().isEmpty()) {
-            return false;
-        }
-        if (user.getEmail() == null || !user.getEmail().matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+        if (user.getEmail() == null || user.getEmail().trim().isEmpty() || !user.getEmail().matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
             return false;
         }
         if (user.getFirstName() == null || user.getFirstName().trim().isEmpty()) {
@@ -164,7 +160,9 @@ public class UserSettingController {
         if (user.getLastName() == null || user.getLastName().trim().isEmpty()) {
             return false;
         }
-        // Add more validation as needed (e.g., phone number format, date of birth format)
+        if (user.getPassword() == null || user.getPassword().length() < 6) {
+            return false;
+        }
         return true;
     }
 }

@@ -7,6 +7,7 @@ module com.example.project {
     requires java.xml;
     requires java.sql;
     requires org.xerial.sqlitejdbc;
+    requires org.junit.jupiter.api;
 
     opens com.example.project to javafx.fxml;
     exports com.example.project;

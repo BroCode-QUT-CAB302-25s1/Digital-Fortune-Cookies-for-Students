@@ -1,5 +1,9 @@
 package com.example.project.controller;
 
+import com.example.project.dao.IUserDAO;
+import com.example.project.dao.SqliteUserDAO;
+import com.example.project.model.User;
+import com.example.project.util.ErrorAlert;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -51,6 +55,18 @@ public class SignInController {
 
     @FXML
     private Label forgotLabel;
+
+    private final IUserDAO userDAO;
+
+    // Default constructor for production
+    public SignInController() {
+        this.userDAO = new SqliteUserDAO();
+    }
+
+    // Constructor for testing with dependency injection
+    public SignInController(IUserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
 
 
     private Scene scene;
@@ -121,37 +137,40 @@ public class SignInController {
 
     @FXML
     private void handleLoginButton(ActionEvent event) {
-        String email = emailField.getText();
-        String password = passwordField.getText();
+        String email = emailField.getText().trim();
+        String password = passwordField.getText().trim();
 
         if (email.isEmpty() || password.isEmpty()) {
-            descriptionLabel.setText("Please enter both email and password.");
-            descriptionLabel.setStyle("-fx-text-fill: red;");
-        }else {
-            // Placeholder for authentication logic
-            descriptionLabel.setText("Attempting to sign in...");
-            descriptionLabel.setStyle("-fx-text-fill: black;");
-            // Add your authentication logic here (e.g., check credentials against a database)
-            try {
-                // Example: Load a new scene after successful login
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/home-view.fxml"));
-                Stage homeStage = (Stage) ((Node)loginButton).getScene().getWindow();
-                root = loader.load();
-                Scene homeScene = new Scene(root);
-                homeStage.setTitle("Home");
-                homeStage.setScene(homeScene);
+            ErrorAlert.show("Input Error", "Please enter both email and password.");
+            return;
+        }
+
+        // Authenticate user
+        User user = userDAO.getUser(email);
+        if (user == null || !user.getPassword().equals(password)) {
+            ErrorAlert.show("Authentication Error", "Invalid email or password.");
+            return;
+        }
+
+        // Successful login
+        try {
+            // Example: Load a new scene after successful login
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/home-view.fxml"));
+            Stage homeStage = (Stage) ((Node)loginButton).getScene().getWindow();
+            root = loader.load();
+            Scene homeScene = new Scene(root);
+            homeStage.setTitle("Home");
+            homeStage.setScene(homeScene);
 
 
-                // Pass the new stage and sign-in scene to SignUpController
-                HomeController homeController = loader.getController();
-                homeController.setHomeStage(homeStage, this);
+            // Pass the new stage and sign-in scene to SignUpController
+            HomeController homeController = loader.getController();
+            homeController.setHomeStage(homeStage, this);
 
-                homeStage.show();
-            } catch (IOException e) {
-                descriptionLabel.setText("Error loading dashboard.");
-                descriptionLabel.setStyle("-fx-text-fill: red;");
-                e.printStackTrace();
-            }
+            homeStage.show();
+        } catch (IOException e) {
+            ErrorAlert.show("Navigation Error", "Error loading dashboard.");
+            e.printStackTrace();
         }
 
     }
