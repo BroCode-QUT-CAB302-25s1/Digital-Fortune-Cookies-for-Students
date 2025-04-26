@@ -1,5 +1,6 @@
 package com.example.project.controller;
 
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -11,6 +12,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -40,13 +42,15 @@ public class HomeController {
     @FXML
     private void initialize() {
         // Add click event to the fortune cookie image
-        fortuneCookieImage.setOnMouseClicked(event -> openFortuneScreen());
+        fortuneCookieImage.setOnMouseClicked(this::openFortuneScreen);
+
+        userDisplayButton.setOnAction(this::handleProfileButton);
     }
 
     /**
      * Opens a new window displaying a fortune with a cracked cookie image
      */
-    private void openFortuneScreen() {
+    private void openFortuneScreen(Event event) {
         try {
             // Load the cracked fortune cookie screen
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/fortune-screen.fxml"));
@@ -61,6 +65,7 @@ public class HomeController {
             Stage fortuneStage = new Stage();
             fortuneStage.setTitle("Your Fortune");
             fortuneStage.setScene(fortuneScene);
+            fortuneStage.initStyle(StageStyle.UTILITY);
 
             // Show the new stage
             fortuneStage.show();
