@@ -1,0 +1,83 @@
+.root {
+    -fx-background-color: #f9fdf6;
+    -fx-font-family: "Arial"
+}
+
+#titleHeader {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+    -fx-font-family: "Arial"
+}
+
+#infoPanel {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 15;
+    -fx-border-color: #87CEFA;
+    -fx-border-radius: 15;
+    -fx-border-weight: 1;
+    -fx-padding: 20;
+    -fx-spacing: 15;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);
+}
+
+.text-field {
+    -fx-background-color: #E6E6FA;
+    -fx-background-radius: 5;
+    -fx-border-color: #ffffff;
+    -fx-border-radius: 5;
+    -fx-border-weight: 1
+}
+
+.choice-box {
+    -fx-background-color: #E6E6FA;
+    -fx-border-color: #ffffff;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5
+}
+
+.combo-box {
+    -fx-background-color: #E6E6FA;
+    -fx-border-color: #ffffff;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5
+}
+
+.label-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+    -fx-font-family: "Arial"
+}
+
+.label-value {
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
+    -fx-font-family: "Arial"
+}
+
+.profileIcon {
+    -fx-fit-width: 23;
+    -fx-fit-height: 23;
+}
+
+
+.button {
+    -fx-font-size: 14px;
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #c63f57;
+    -fx-border-color: #c63f57;
+    -fx-border-width: 0.5px;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-font-family: "Arial"
+}
+
+.button:hover {
+    -fx-background-color: #b4f7cb;
+}
+
+

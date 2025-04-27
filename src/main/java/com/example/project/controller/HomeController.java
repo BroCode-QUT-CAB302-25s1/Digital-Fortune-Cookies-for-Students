@@ -1,5 +1,6 @@
 package com.example.project.controller;
 
+import com.example.project.model.User;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,13 +31,19 @@ public class HomeController {
     @FXML
     private Button userDisplayButton;
 
+    private User currentUser;
+
     private Parent root;
     private Stage homeStage;
-    private SignInController signInController; // Store the SignInController instance
+    private SignInController signInController;
 
     public void setHomeStage(Stage stage, SignInController signInController) {
         this.homeStage = stage;
         this.signInController = signInController;
+    }
+
+    public void setCurrentUser(User user) {
+        this.currentUser = user;
     }
 
     @FXML
@@ -46,13 +53,10 @@ public class HomeController {
         userDisplayButton.setOnAction(this::handleProfileButton);
 
         // Optional: Add visual feedback for interactivity
-        userDisplayButton.setStyle("-fx-cursor: hand;"); // Makes cursor a hand on hover
+        userDisplayButton.setStyle("-fx-cursor: hand;");
         fortuneCookieImage.setStyle("-fx-cursor: hand;");
     }
 
-    /**
-     * Opens a new window displaying a fortune with a cracked cookie image
-     */
     private void openFortuneScreen(Event event) {
         try {
             // Load the cracked fortune cookie screen
@@ -72,15 +76,12 @@ public class HomeController {
 
             // Show the new stage
             fortuneStage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    // Placeholder fortune messages - REMOVE LATER
     public String getRandomFortune() {
-        // Array of fortune messages
         String[] fortunes = {
                 "Good things come to those who wait... but better things come to those who work for it.",
                 "Your creativity will lead you to success.",
@@ -93,8 +94,6 @@ public class HomeController {
                 "Your ability to accomplish tasks will follow with success.",
                 "You will be rewarded for your patience and persistence."
         };
-
-        // Return a random fortune
         return fortunes[(int) (Math.random() * fortunes.length)];
     }
 
@@ -111,21 +110,21 @@ public class HomeController {
     @FXML
     private void handleProfileButton(ActionEvent event) {
         try {
-            // Load signup FXML
+            // Load user display FXML
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/userdisplay-view.fxml"));
             root = loader.load();
-            Stage userDisplayStage = (Stage) ((Node)event.getSource()).getScene().getWindow(); // New stage for signup
+            Stage userDisplayStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene userDisplayScene = new Scene(root);
             userDisplayStage.setTitle("Profile");
             userDisplayStage.setScene(userDisplayScene);
 
-            // Pass the new stage and sign-in scene to userDisplayController
+            // Pass the stage, scene, and current user to UserDisplayController
             UserDisplayController userDisplayController = loader.getController();
             userDisplayController.setStage(userDisplayStage);
             userDisplayController.setScene(userDisplayButton.getScene(), this);
+            userDisplayController.setUser(currentUser);
 
             userDisplayStage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
         }

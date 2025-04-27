@@ -12,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -68,11 +67,9 @@ public class SignInController {
         this.userDAO = userDAO;
     }
 
-
     private Scene scene;
     private Stage signInStage;
     private Parent root;
-
 
     // Setter to pass the Stage from MainController or SignUpController
     public void setSignInStage(Stage stage) {
@@ -101,7 +98,6 @@ public class SignInController {
     @FXML
     private void handleKeyPressed(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
-//            System.out.println("SignInController: Enter key pressed, triggering login");
             handleLoginButton(new ActionEvent(loginButton, null));
         }
     }
@@ -116,7 +112,7 @@ public class SignInController {
                 return;
             }
             root = loader.load();
-            Stage signUpStage = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow(); // New stage for signup
+            Stage signUpStage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
             Scene signUpScene = new Scene(root);
             signUpStage.setTitle("Sign Up");
             signUpStage.setScene(signUpScene);
@@ -127,7 +123,6 @@ public class SignInController {
             signUpController.setSignInScene(signupLink.getScene(), this);
 
             signUpStage.show();
-
         } catch (IOException e) {
             descriptionLabel.setText("Error loading signup page.");
             descriptionLabel.setStyle("-fx-text-fill: red;");
@@ -154,26 +149,26 @@ public class SignInController {
 
         // Successful login
         try {
-            // Example: Load a new scene after successful login
+            // Load home FXML
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/home-view.fxml"));
-            Stage homeStage = (Stage) ((Node)loginButton).getScene().getWindow();
             root = loader.load();
+            Stage homeStage = (Stage) ((Node) loginButton).getScene().getWindow();
             Scene homeScene = new Scene(root);
             homeStage.setTitle("Home");
             homeStage.setScene(homeScene);
 
-
-            // Pass the new stage and sign-in scene to SignUpController
+            // Pass the stage, sign-in controller, and authenticated user to HomeController
             HomeController homeController = loader.getController();
             homeController.setHomeStage(homeStage, this);
+            homeController.setCurrentUser(user);
+
+            // Check user passing
+//            System.out.println(user.toString());
 
             homeStage.show();
         } catch (IOException e) {
             ErrorAlert.show("Navigation Error", "Error loading dashboard.");
             e.printStackTrace();
         }
-
     }
-
-
 }

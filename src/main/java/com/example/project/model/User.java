@@ -16,10 +16,32 @@ public class User {
     private String gender;
     private String dob;
     private String password;
+    private String languages;
+    private String cookiesType;
+
+    // Constructor
+    public User(String username, String preferredName, String firstName, String lastName,
+                String email, String github, String phone, String location, String job,
+                String gender, String dob, String password, String languages, String cookiesType) {
+        this.username = username;
+        this.preferredName = preferredName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.github = github;
+        this.phone = phone;
+        this.location = location;
+        this.job = job;
+        this.gender = gender;
+        this.dob = dob;
+        this.password = password;
+        this.languages = languages;
+        this.cookiesType = cookiesType;
+    }
 
     public User(String username, String preferredName, String firstName, String lastName,
-                String email, String github, String phone, String location,
-                String job, String gender, String dob, String password) {
+                String email, String github, String phone, String location, String job,
+                String gender, String dob, String password) {
         this.username = username;
         this.preferredName = preferredName;
         this.firstName = firstName;
@@ -79,4 +101,32 @@ public class User {
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
+
+    public String getLanguages() { return languages; }
+    public void setLanguages(String languages) { this.languages = languages; }
+
+    public String getCookiesType() { return cookiesType; }
+    public void setCookiesType(String cookiesType) { this.cookiesType = cookiesType; }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", preferredName='" + preferredName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", github='" + github + '\'' +
+                ", phone='" + phone + '\'' +
+                ", location='" + location + '\'' +
+                ", job='" + job + '\'' +
+                ", gender='" + gender + '\'' +
+                ", dob='" + dob + '\'' +
+                ", password='" + password + '\'' +
+                ", languages='" + languages + '\'' +
+                ", cookiesType='" + cookiesType + '\'' +
+                '}';
+    }
 }
+
