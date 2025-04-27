@@ -1,4 +1,6 @@
 package com.example.project.model;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class User {
     private int id;
