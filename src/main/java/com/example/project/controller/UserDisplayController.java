@@ -1,5 +1,10 @@
 package com.example.project.controller;
 
+import com.example.project.dao.SqliteUserDAO;
+import com.example.project.dao.UserPreferencesDAO;
+import com.example.project.model.User;
+import com.example.project.util.ErrorAlert;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -7,18 +12,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
-import javafx.event.ActionEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-
 public class UserDisplayController {
-
     @FXML
     private ImageView profileImage;
 
@@ -42,9 +43,6 @@ public class UserDisplayController {
 
     @FXML
     private Label currentJob;
-
-    @FXML
-    private Label currentPosition;
 
     @FXML
     private Label currentLocation;
@@ -77,10 +75,16 @@ public class UserDisplayController {
     private Label userGender;
 
     @FXML
+    private Label languagesLabel;
+
+    @FXML
+    private Label cookiesTypeLabel;
+
+    @FXML
     private Label titleHeader;
 
     @FXML
-    private Button cancelButton;
+    private Button backButton;
 
     @FXML
     private Button editButton;
@@ -91,9 +95,17 @@ public class UserDisplayController {
     private Parent root;
     private Stage userDisplayStage;
     private Scene homeScene;
-    private HomeController homeController; // Store the SignInController instance
+    private HomeController homeController;
+    private User currentUser;
+    private SqliteUserDAO userDAO;
+    private UserPreferencesDAO preferencesDAO;
 
-    public void setStage(Stage stage){
+    public UserDisplayController() {
+        userDAO = new SqliteUserDAO();
+        preferencesDAO = new UserPreferencesDAO();
+    }
+
+    public void setStage(Stage stage) {
         this.userDisplayStage = stage;
     }
 
@@ -102,73 +114,99 @@ public class UserDisplayController {
         this.homeController = homeController;
 
         // Clip the image into a circle
-        Circle clip = new Circle(75,75,75); // x, y, radius
+        Circle clip = new Circle(75, 75, 75); // x, y, radius
         profileImage.setClip(clip);
+    }
+
+    public void setUser(User user) {
+        this.currentUser = user;
+        updateUser(user);
+    }
+
+    public void updateUser(User user) {
+        this.currentUser = user;
+        if (user != null && user.getEmail() != null) {
+            try {
+                // Fetch user from database
+                User dbUser = userDAO.fetchUserByEmail(user.getEmail());
+                if (dbUser != null) {
+                    this.currentUser = dbUser;
+                    // Update UI with user data
+                    profileName.setText(dbUser.getPreferredName() != null ? dbUser.getPreferredName() : "");
+                    githubLink.setText(dbUser.getGithub() != null ? dbUser.getGithub() : "");
+                    emailLink.setText(dbUser.getEmail() != null ? dbUser.getEmail() : "");
+                    phoneNumberLink.setText(dbUser.getPhone() != null ? dbUser.getPhone() : "");
+                    currentJob.setText(dbUser.getJob() != null ? dbUser.getJob() : "");
+                    currentLocation.setText(dbUser.getLocation() != null ? dbUser.getLocation() : "");
+                    footerLabel.setText("Joined from April 2025"); // Static, update if dynamic
+                    userName.setText(dbUser.getUsername() != null ? dbUser.getUsername() : "");
+                    firstName.setText(dbUser.getFirstName() != null ? dbUser.getFirstName() : "");
+                    lastName.setText(dbUser.getLastName() != null ? dbUser.getLastName() : "");
+                    preferredName.setText(dbUser.getPreferredName() != null ? dbUser.getPreferredName() : "");
+                    dateOfBirth.setText(dbUser.getDob() != null ? dbUser.getDob() : "");
+                    userEmail.setText(dbUser.getEmail() != null ? dbUser.getEmail() : "");
+                    userGender.setText(dbUser.getGender() != null ? dbUser.getGender() : "");
+                    languagesLabel.setText(dbUser.getLanguages() != null ? dbUser.getLanguages() : "");
+                    cookiesTypeLabel.setText(dbUser.getCookiesType() != null ? dbUser.getCookiesType() : "");
+                    statusOnline.setText("Online"); // Static
+                    titleHeader.setText("My Profile");
+                } else {
+                    ErrorAlert.show("Database Error", "No user found with email: " + user.getEmail());
+                }
+            } catch (Exception e) {
+                ErrorAlert.show("Database Error", "Failed to fetch user data: " + e.getMessage());
+            }
+        } else {
+            ErrorAlert.show("Display Error", "No user data or email provided.");
+        }
     }
 
     @FXML
     private void initialize() {
-        userDataDisplay();
-        cancelButton.setOnAction(this::handleCancelButton);
+
+        if (currentUser != null) {
+            updateUser(currentUser);
+        }
+        backButton.setOnAction(this::handleBackButton);
         editButton.setOnAction(this::handleEditButton);
 
-    }
-
-    // Temporarily
-    private void userDataDisplay(){
-        // Set text fields with values from FXML
-        profileName.setText("BroCode");
-        githubLink.setText("@BroCode-QUT");
-        emailLink.setText("brocode.QUT@gmail.com");
-        phoneNumberLink.setText("0000 000 0001");
-        currentJob.setText("Backend Developer");
-        currentPosition.setText("Software Developer");
-        currentLocation.setText("Australia");
-        footerLabel.setText("Joined from April 2025");
-        userName.setText("brocodeTest01");
-        firstName.setText("BroCode");
-        lastName.setText("QUT");
-        preferredName.setText("BroCode");
-        dateOfBirth.setText("01/01/2025");
-        userEmail.setText("brocode.QUT@gmail.com");
-        userGender.setText("Male");
-        statusOnline.setText("Online");
-        titleHeader.setText("My Profile");
+        // Optional: Add visual feedback for interactivity
+        backButton.setStyle("-fx-cursor: hand;");
+        editButton.setStyle("-fx-cursor: hand;");
     }
 
     @FXML
     private void handleChangePasswordButton(ActionEvent event) {
+        // Implement if needed
     }
 
     @FXML
     private void handleEditButton(ActionEvent event) {
         try {
-            // Load signup FXML
+            // Load UserSetting FXML
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/usersetting-view.fxml"));
             root = loader.load();
-            Stage userDisplayStage = (Stage) ((Node)event.getSource()).getScene().getWindow(); // New stage for signup
+            Stage userDisplayStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene userDisplayScene = new Scene(root);
             userDisplayStage.setTitle("Profile");
             userDisplayStage.setScene(userDisplayScene);
 
-            // Pass the new stage and scene to UserSettingController
+            // Pass the stage and scene to UserSettingController
             UserSettingController userSettingController = loader.getController();
             userSettingController.setStage(userDisplayStage);
             userSettingController.setScene(editButton.getScene(), this);
+            userSettingController.setUser(currentUser);
 
             userDisplayStage.show();
-
         } catch (IOException e) {
-            e.printStackTrace();
+            ErrorAlert.show("Navigation Error", "Failed to load settings screen: " + e.getMessage());
         }
-
     }
 
     @FXML
-    private void handleCancelButton(ActionEvent event) {
+    private void handleBackButton(ActionEvent event) {
         if (homeController != null) {
             userDisplayStage.setScene(homeScene);
         }
     }
-
 }

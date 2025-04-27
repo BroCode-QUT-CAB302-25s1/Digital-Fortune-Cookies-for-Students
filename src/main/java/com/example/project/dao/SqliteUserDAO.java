@@ -2,6 +2,7 @@ package com.example.project.dao;
 
 import com.example.project.database.SqliteConnection;
 import com.example.project.model.User;
+import com.example.project.util.ErrorAlert;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,9 +16,44 @@ public class SqliteUserDAO implements IUserDAO {
     private static final String DELETE_USER = "DELETE FROM users WHERE email = ?";
 
     private Connection connection;
+    private UserPreferencesDAO preferencesDAO;
 
     public SqliteUserDAO() {
         connection = SqliteConnection.getInstance();
+        preferencesDAO = new UserPreferencesDAO();
+    }
+
+    public User fetchUserByEmail(String email) {
+        try (PreparedStatement statement = connection.prepareStatement(GET_USER_BY_EMAIL)) {
+            statement.setString(1, email);
+            ResultSet results = statement.executeQuery();
+            if (results.next()) {
+                // Fetch preferences
+                String[] preferences = preferencesDAO.getPreferences(email);
+                String languages = preferences != null ? preferences[0] : null;
+                String cookiesType = preferences != null ? preferences[1] : null;
+
+                return new User(
+                        results.getString("username"),
+                        results.getString("preferred_name"),
+                        results.getString("first_name"),
+                        results.getString("last_name"),
+                        results.getString("email"),
+                        results.getString("github"),
+                        results.getString("phone"),
+                        results.getString("location"),
+                        results.getString("job"),
+                        results.getString("gender"),
+                        results.getString("dob"),
+                        results.getString("password"),
+                        languages,
+                        cookiesType
+                );
+            }
+        } catch (SQLException ex) {
+            ErrorAlert.show("Database Error", "Failed to fetch user by email: " + ex.getMessage());
+        }
+        return null;
     }
 
     @Override
@@ -42,9 +78,11 @@ public class SqliteUserDAO implements IUserDAO {
             if (generatedKeys.next()) {
                 user.setId(generatedKeys.getInt(1));
             }
+
+            // Save preferences
+            preferencesDAO.savePreferences(user.getEmail(), user.getLanguages(), user.getCookiesType());
         } catch (SQLException ex) {
-            System.err.println("Failed to add user: " + ex.getMessage());
-            ex.printStackTrace();
+            ErrorAlert.show("Database Error", "Failed to add user: " + ex.getMessage());
         }
     }
 
@@ -65,11 +103,13 @@ public class SqliteUserDAO implements IUserDAO {
             statement.setString(12, user.getEmail());
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated == 0) {
-                System.err.println("No user found with email: " + user.getEmail());
+                ErrorAlert.show("Database Error", "No user found with email: " + user.getEmail());
+            } else {
+                // Update preferences
+                preferencesDAO.savePreferences(user.getEmail(), user.getLanguages(), user.getCookiesType());
             }
         } catch (SQLException ex) {
-            System.err.println("Failed to update user: " + ex.getMessage());
-            ex.printStackTrace();
+            ErrorAlert.show("Database Error", "Failed to update user: " + ex.getMessage());
         }
     }
 
@@ -79,8 +119,7 @@ public class SqliteUserDAO implements IUserDAO {
             statement.setString(1, user.getEmail());
             statement.executeUpdate();
         } catch (SQLException ex) {
-            System.err.println("Failed to delete user: " + ex.getMessage());
-            ex.printStackTrace();
+            ErrorAlert.show("Database Error", "Failed to delete user: " + ex.getMessage());
         }
     }
 
@@ -90,6 +129,11 @@ public class SqliteUserDAO implements IUserDAO {
             statement.setString(1, email);
             ResultSet results = statement.executeQuery();
             if (results.next()) {
+                // Fetch preferences
+                String[] preferences = preferencesDAO.getPreferences(email);
+                String languages = preferences != null ? preferences[0] : null;
+                String cookiesType = preferences != null ? preferences[1] : null;
+
                 return new User(
                         results.getString("username"),
                         results.getString("preferred_name"),
@@ -102,12 +146,13 @@ public class SqliteUserDAO implements IUserDAO {
                         results.getString("job"),
                         results.getString("gender"),
                         results.getString("dob"),
-                        results.getString("password")
+                        results.getString("password"),
+                        languages,
+                        cookiesType
                 );
             }
         } catch (SQLException ex) {
-            System.err.println("Failed to retrieve user: " + ex.getMessage());
-            ex.printStackTrace();
+            ErrorAlert.show("Database Error", "Failed to retrieve user: " + ex.getMessage());
         }
         return null;
     }
@@ -118,24 +163,31 @@ public class SqliteUserDAO implements IUserDAO {
         try (Statement statement = connection.createStatement();
              ResultSet results = statement.executeQuery(GET_ALL_USERS)) {
             while (results.next()) {
+                // Fetch preferences
+                String email = results.getString("email");
+                String[] preferences = preferencesDAO.getPreferences(email);
+                String languages = preferences != null ? preferences[0] : null;
+                String cookiesType = preferences != null ? preferences[1] : null;
+
                 users.add(new User(
                         results.getString("username"),
                         results.getString("preferred_name"),
                         results.getString("first_name"),
                         results.getString("last_name"),
-                        results.getString("email"),
+                        email,
                         results.getString("github"),
                         results.getString("phone"),
                         results.getString("location"),
                         results.getString("job"),
                         results.getString("gender"),
                         results.getString("dob"),
-                        results.getString("password")
+                        results.getString("password"),
+                        languages,
+                        cookiesType
                 ));
             }
         } catch (SQLException ex) {
-            System.err.println("Failed to retrieve all users: " + ex.getMessage());
-            ex.printStackTrace();
+            ErrorAlert.show("Database Error", "Failed to retrieve all users: " + ex.getMessage());
         }
         return users;
     }
