@@ -4,4 +4,5 @@
      3	Thompson
      1	Brian-brocode
      1	Iphone13Pro3139
+     1	Van Thien Phuoc Mai
 -e "\n\n===== Detailed Commit Log ====="
