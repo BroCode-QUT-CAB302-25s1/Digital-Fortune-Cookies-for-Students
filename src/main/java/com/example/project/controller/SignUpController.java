@@ -1,12 +1,13 @@
 package com.example.project.controller;
 
 import com.example.project.dao.IUserDAO;
+import com.example.project.dao.ProfileImageDAO;
 import com.example.project.dao.SqliteUserDAO;
+import com.example.project.dao.UserPreferencesDAO;
 import com.example.project.model.User;
 import com.example.project.util.ErrorAlert;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,7 +17,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.sql.SQLException;
 
 public class SignUpController {
 
@@ -42,17 +43,22 @@ public class SignUpController {
     private Label subtitleLabel;
 
     private final IUserDAO userDAO;
+    private final UserPreferencesDAO preferencesDAO;
+    private final ProfileImageDAO profileImageDAO;
 
     // Default constructor for production
     public SignUpController() {
         this.userDAO = new SqliteUserDAO();
+        this.preferencesDAO = new UserPreferencesDAO();
+        this.profileImageDAO = new ProfileImageDAO();
     }
 
     // Constructor for testing with dependency injection
     public SignUpController(IUserDAO userDAO) {
         this.userDAO = userDAO;
+        this.preferencesDAO = new UserPreferencesDAO();
+        this.profileImageDAO = new ProfileImageDAO();
     }
-    
 
     private Stage signUpStage;
     private Scene signInScene; // Store the sign-in scene
@@ -105,12 +111,10 @@ public class SignUpController {
             } else {
                 System.err.println("SignUpController: Warning: signInController is null");
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
     @FXML
     private void handleSignupButton(ActionEvent event) {
@@ -128,31 +132,45 @@ public class SignUpController {
             ErrorAlert.show("Invalid Password", "Password must be at least 6 characters long.");
             return;
         }
-        
-        // Check if email (usernameField) already exists
-        if (userDAO.getUser(email) != null) {
-            ErrorAlert.show("Email Registered", "Email already registered.");
-            return;
-        }
 
         if (username.isEmpty()) {
             ErrorAlert.show("Invalid Username", "Invalid username input");
             return;
         }
+
+        // Check if email or username already exists
+        if (userDAO.getUser(email) != null) {
+            ErrorAlert.show("Email Registered", "Email already registered.");
+            return;
+        }
+        if (userDAO.getAllUsers().stream().anyMatch(u -> u.getUsername().equals(username))) {
+            ErrorAlert.show("Username Taken", "Username already taken.");
+            return;
+        }
+
         // Create new user
         User newUser = new User(email, password, username);
 
         // Save to database
         try {
             userDAO.addUser(newUser);
+            // Save default preferences to user_preferences table
+            preferencesDAO.savePreferences(email, "", "");
+            // Save default profile image to preferences table
+            profileImageDAO.saveProfileImage(email, "/com/example/project/symbol/digitalCookieMainIcon1.png");
             ErrorAlert.show("Congratulation!", "Your Email: " + email + " is registered successfully!");
-            // Update the stage in SignInController
-            signUpStage.setScene(signInScene);
-
+            // Navigate back to sign-in scene
+            if (signInScene != null && signUpStage != null) {
+                signUpStage.setScene(signInScene);
+            } else {
+                System.err.println("SignUpController: Error: signInScene or signUpStage is null");
+            }
+        } catch (SQLException e) {
+            ErrorAlert.show("Database Error", "Failed to save user or preferences: " + e.getMessage());
+            e.printStackTrace();
         } catch (Exception e) {
+            ErrorAlert.show("Unexpected Error", "An unexpected error occurred: " + e.getMessage());
             e.printStackTrace();
         }
     }
-
-
 }

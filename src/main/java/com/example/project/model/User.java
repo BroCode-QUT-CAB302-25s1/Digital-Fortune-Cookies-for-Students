@@ -16,6 +16,7 @@ public class User {
     private String password;
     private String languages;
     private String cookiesType;
+    private String profileImageURL;
 
     // Constructor
     public User(String username, String preferredName, String firstName, String lastName,
@@ -35,6 +36,24 @@ public class User {
         this.password = password;
         this.languages = languages;
         this.cookiesType = cookiesType;
+    }
+
+    public User(String username, String preferredName, String firstName, String lastName,
+                String email, String github, String phone, String location, String job,
+                String gender, String dob, String password, String profileImageURL) {
+        this.username = username;
+        this.preferredName = preferredName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.github = github;
+        this.phone = phone;
+        this.location = location;
+        this.job = job;
+        this.gender = gender;
+        this.dob = dob;
+        this.password = password;
+        this.profileImageURL = profileImageURL;
     }
 
     public User(String username, String preferredName, String firstName, String lastName,
@@ -105,6 +124,9 @@ public class User {
 
     public String getCookiesType() { return cookiesType; }
     public void setCookiesType(String cookiesType) { this.cookiesType = cookiesType; }
+
+    public String getProfileImageURL() { return profileImageURL; }
+    public void setProfileImageURL(String profileImageURL) { this.profileImageURL = profileImageURL; }
 
     @Override
     public String toString() {

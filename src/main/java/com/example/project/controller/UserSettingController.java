@@ -1,6 +1,7 @@
 package com.example.project.controller;
 
 import com.example.project.dao.IUserDAO;
+import com.example.project.dao.ProfileImageDAO;
 import com.example.project.dao.SqliteUserDAO;
 import com.example.project.dao.UserPreferencesDAO;
 import com.example.project.model.User;
@@ -12,9 +13,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.io.File;
 
 public class UserSettingController {
     @FXML
@@ -69,22 +75,24 @@ public class UserSettingController {
     private Button cancelButton;
 
     private User currentUser;
-    private IUserDAO userDAO;
-    private UserPreferencesDAO userPreferencesDAO;
+    private final IUserDAO userDAO;
+    private final UserPreferencesDAO userPreferencesDAO;
+    private final ProfileImageDAO profileImageDAO;
+
+    private Stage userSettingStage;
+    private Scene userDisplayScene;
+    private UserDisplayController userDisplayController;
 
     public UserSettingController() {
         userDAO = new SqliteUserDAO();
         userPreferencesDAO = new UserPreferencesDAO();
+        profileImageDAO = new ProfileImageDAO();
     }
 
     public void setUser(User user) {
         this.currentUser = user;
         displayUserData();
     }
-
-    private Stage userSettingStage;
-    private Scene userDisplayScene;
-    private UserDisplayController userDisplayController;
 
     public void setStage(Stage stage) {
         this.userSettingStage = stage;
@@ -137,10 +145,39 @@ public class UserSettingController {
         }
         cancelButton.setOnAction(this::handleCancelButton);
         saveButton.setOnAction(this::handleSaveButton);
+        editProfile.setOnMouseClicked(this::handleEditProfile);
 
         // Optional: Add visual feedback for interactivity
         cancelButton.setStyle("-fx-cursor: hand;");
         saveButton.setStyle("-fx-cursor: hand;");
+        editProfile.setStyle("-fx-cursor: hand;");
+    }
+
+    @FXML
+    private void handleEditProfile(MouseEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Profile Image");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
+        );
+        File selectedFile = fileChooser.showOpenDialog(userSettingStage);
+        if (selectedFile != null) {
+            try {
+                String imageUrl = selectedFile.toURI().toString();
+                System.out.println("Selected profile image: " + imageUrl);
+                // Update ImageView
+                Image image = new Image(imageUrl, true);
+                if (image.isError()) {
+                    throw new IllegalArgumentException("Failed to load image: " + image.getException().getMessage());
+                }
+                profileImage.setImage(image);
+                // Save to database
+                profileImageDAO.saveProfileImage(currentUser.getEmail(), imageUrl);
+            } catch (Exception e) {
+                ErrorAlert.show("Image Error", "Failed to set profile image: " + e.getMessage());
+                System.err.println("Failed to set profile image: " + e.getMessage());
+            }
+        }
     }
 
     @FXML
@@ -163,8 +200,6 @@ public class UserSettingController {
             if (jobField != null) jobField.setValue(currentUser.getJob());
             if (genderField != null) genderField.setValue(currentUser.getGender());
             if (dobField != null) dobField.setText(currentUser.getDob() != null ? currentUser.getDob() : "");
-            if (languagesField != null) languagesField.setText(currentUser.getLanguages() != null ? currentUser.getLanguages() : "");
-            if (cookiesTypeField != null) cookiesTypeField.setText(currentUser.getCookiesType() != null ? currentUser.getCookiesType() : "");
 
             // Load preferences from user_preferences table
             try {
@@ -175,6 +210,23 @@ public class UserSettingController {
                 }
             } catch (Exception e) {
                 ErrorAlert.show("Database Error", "Failed to load preferences: " + e.getMessage());
+            }
+
+            // Load profile image from preferences table
+            try {
+                String profileImageUrl = profileImageDAO.getProfileImage(currentUser.getEmail());
+                if (profileImageUrl != null && !profileImageUrl.isEmpty()) {
+                    Image image = new Image(getClass().getResourceAsStream(profileImageUrl));
+                    if (!image.isError()) {
+                        profileImage.setImage(image);
+                    } else {
+                        profileImage.setImage(null);
+                    }
+                } else {
+                    profileImage.setImage(null);
+                }
+            } catch (Exception e) {
+                ErrorAlert.show("Image Error", "Failed to load profile image: " + e.getMessage());
             }
         }
     }
@@ -198,8 +250,6 @@ public class UserSettingController {
         currentUser.setJob(jobField != null ? jobField.getValue() : null);
         currentUser.setGender(genderField != null ? genderField.getValue() : null);
         currentUser.setDob(dobField != null ? dobField.getText() : null);
-        currentUser.setLanguages(languagesField != null ? languagesField.getText() : null);
-        currentUser.setCookiesType(cookiesTypeField != null ? cookiesTypeField.getText() : null);
 
         // Save to database
         if (saveToDB(currentUser)) {
@@ -221,10 +271,10 @@ public class UserSettingController {
 
     private boolean saveToDB(User user) {
         // Input validation
-//        if (!validateUserInput(user)) {
-//            ErrorAlert.show("Validation Error", "Invalid input. Please check your details.");
-//            return false;
-//        }
+        if (!validateUserInput(user)) {
+            ErrorAlert.show("Validation Error", "Invalid input. Please check your details.");
+            return false;
+        }
 
         try {
             User existingUser = userDAO.getUser(user.getEmail());
@@ -245,15 +295,15 @@ public class UserSettingController {
                 !user.getEmail().matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
             return false;
         }
-        if (user.getFirstName() == null || user.getFirstName().trim().isEmpty()) {
-            return false;
-        }
-        if (user.getLastName() == null || user.getLastName().trim().isEmpty()) {
-            return false;
-        }
-        if (user.getPassword() == null || user.getPassword().length() < 6) {
-            return false;
-        }
+//        if (user.getFirstName() == null || user.getFirstName().trim().isEmpty()) {
+//            return false;
+//        }
+//        if (user.getLastName() == null || user.getLastName().trim().isEmpty()) {
+//            return false;
+//        }
+//        if (user.getPassword() == null || user.getPassword().length() < 6) {
+//            return false;
+//        }
         return true;
     }
 }

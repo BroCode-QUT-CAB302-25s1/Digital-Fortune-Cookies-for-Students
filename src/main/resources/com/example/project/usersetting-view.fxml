@@ -58,7 +58,7 @@
                </children>
             </Pane>
             <Label layoutX="31.0" layoutY="225.0" styleClass="label-title" text="Profile picture" />
-            <ImageView fx:id="editProfile" fitHeight="30.0" fitWidth="30.0" layoutX="206.0" layoutY="438.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="editProfile" fitHeight="30.0" fitWidth="30.0" layoutX="221.0" layoutY="450.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@symbol/EditorIcon1.png" />
                </image>

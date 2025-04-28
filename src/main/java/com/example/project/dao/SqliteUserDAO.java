@@ -10,17 +10,23 @@ import java.util.List;
 
 public class SqliteUserDAO implements IUserDAO {
     private static final String GET_ALL_USERS = "SELECT * FROM users";
-    private static final String ADD_USER = "INSERT INTO users (username, preferred_name, first_name, last_name, email, github, phone, location, job, gender, dob, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    private static final String GET_USER_BY_EMAIL = "SELECT * FROM users WHERE email = ?";
-    private static final String UPDATE_USER = "UPDATE users SET username = ?, preferred_name = ?, first_name = ?, last_name = ?, github = ?, phone = ?, location = ?, job = ?, gender = ?, dob = ?, password = ? WHERE email = ?";
-    private static final String DELETE_USER = "DELETE FROM users WHERE email = ?";
+    private static final String ADD_USER =
+            "INSERT INTO users (username, preferred_name, first_name, last_name, email, github, phone, location, job, gender, dob, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String GET_USER_BY_EMAIL =
+            "SELECT * FROM users WHERE email = ?";
+    private static final String UPDATE_USER =
+            "UPDATE users SET username = ?, preferred_name = ?, first_name = ?, last_name = ?, github = ?, phone = ?, location = ?, job = ?, gender = ?, dob = ?, password = ? WHERE email = ?";
+    private static final String DELETE_USER =
+            "DELETE FROM users WHERE email = ?";
 
-    private Connection connection;
-    private UserPreferencesDAO preferencesDAO;
+    private final Connection connection;
+    private final UserPreferencesDAO preferencesDAO;
+    private final ProfileImageDAO profileImageDAO;
 
     public SqliteUserDAO() {
         connection = SqliteConnection.getInstance();
         preferencesDAO = new UserPreferencesDAO();
+        profileImageDAO = new ProfileImageDAO();
     }
 
     public User fetchUserByEmail(String email) {
@@ -28,11 +34,6 @@ public class SqliteUserDAO implements IUserDAO {
             statement.setString(1, email);
             ResultSet results = statement.executeQuery();
             if (results.next()) {
-                // Fetch preferences
-                String[] preferences = preferencesDAO.getPreferences(email);
-                String languages = preferences != null ? preferences[0] : null;
-                String cookiesType = preferences != null ? preferences[1] : null;
-
                 return new User(
                         results.getString("username"),
                         results.getString("preferred_name"),
@@ -45,9 +46,7 @@ public class SqliteUserDAO implements IUserDAO {
                         results.getString("job"),
                         results.getString("gender"),
                         results.getString("dob"),
-                        results.getString("password"),
-                        languages,
-                        cookiesType
+                        results.getString("password")
                 );
             }
         } catch (SQLException ex) {
@@ -78,9 +77,6 @@ public class SqliteUserDAO implements IUserDAO {
             if (generatedKeys.next()) {
                 user.setId(generatedKeys.getInt(1));
             }
-
-            // Save preferences
-            preferencesDAO.savePreferences(user.getEmail(), user.getLanguages(), user.getCookiesType());
         } catch (SQLException ex) {
             ErrorAlert.show("Database Error", "Failed to add user: " + ex.getMessage());
         }
@@ -104,9 +100,6 @@ public class SqliteUserDAO implements IUserDAO {
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated == 0) {
                 ErrorAlert.show("Database Error", "No user found with email: " + user.getEmail());
-            } else {
-                // Update preferences
-                preferencesDAO.savePreferences(user.getEmail(), user.getLanguages(), user.getCookiesType());
             }
         } catch (SQLException ex) {
             ErrorAlert.show("Database Error", "Failed to update user: " + ex.getMessage());
@@ -129,11 +122,6 @@ public class SqliteUserDAO implements IUserDAO {
             statement.setString(1, email);
             ResultSet results = statement.executeQuery();
             if (results.next()) {
-                // Fetch preferences
-                String[] preferences = preferencesDAO.getPreferences(email);
-                String languages = preferences != null ? preferences[0] : null;
-                String cookiesType = preferences != null ? preferences[1] : null;
-
                 return new User(
                         results.getString("username"),
                         results.getString("preferred_name"),
@@ -146,9 +134,7 @@ public class SqliteUserDAO implements IUserDAO {
                         results.getString("job"),
                         results.getString("gender"),
                         results.getString("dob"),
-                        results.getString("password"),
-                        languages,
-                        cookiesType
+                        results.getString("password")
                 );
             }
         } catch (SQLException ex) {
@@ -163,28 +149,21 @@ public class SqliteUserDAO implements IUserDAO {
         try (Statement statement = connection.createStatement();
              ResultSet results = statement.executeQuery(GET_ALL_USERS)) {
             while (results.next()) {
-                // Fetch preferences
-                String email = results.getString("email");
-                String[] preferences = preferencesDAO.getPreferences(email);
-                String languages = preferences != null ? preferences[0] : null;
-                String cookiesType = preferences != null ? preferences[1] : null;
-
-                users.add(new User(
+                User user = new User(
                         results.getString("username"),
                         results.getString("preferred_name"),
                         results.getString("first_name"),
                         results.getString("last_name"),
-                        email,
+                        results.getString("email"),
                         results.getString("github"),
                         results.getString("phone"),
                         results.getString("location"),
                         results.getString("job"),
                         results.getString("gender"),
                         results.getString("dob"),
-                        results.getString("password"),
-                        languages,
-                        cookiesType
-                ));
+                        results.getString("password")
+                );
+                users.add(user);
             }
         } catch (SQLException ex) {
             ErrorAlert.show("Database Error", "Failed to retrieve all users: " + ex.getMessage());

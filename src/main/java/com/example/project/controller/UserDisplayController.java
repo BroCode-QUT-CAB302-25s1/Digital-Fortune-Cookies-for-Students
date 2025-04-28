@@ -1,5 +1,6 @@
 package com.example.project.controller;
 
+import com.example.project.dao.ProfileImageDAO;
 import com.example.project.dao.SqliteUserDAO;
 import com.example.project.dao.UserPreferencesDAO;
 import com.example.project.model.User;
@@ -12,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
@@ -97,12 +99,16 @@ public class UserDisplayController {
     private Scene homeScene;
     private HomeController homeController;
     private User currentUser;
-    private SqliteUserDAO userDAO;
-    private UserPreferencesDAO preferencesDAO;
+    private final SqliteUserDAO userDAO;
+    private final UserPreferencesDAO preferencesDAO;
+    private final ProfileImageDAO profileImageDAO;
+
+    private static final String DEFAULT_PROFILE_IMAGE = "/com/example/project/symbol/digitalCookieMainIcon1.png";
 
     public UserDisplayController() {
         userDAO = new SqliteUserDAO();
         preferencesDAO = new UserPreferencesDAO();
+        profileImageDAO = new ProfileImageDAO();
     }
 
     public void setStage(Stage stage) {
@@ -131,14 +137,21 @@ public class UserDisplayController {
                 User dbUser = userDAO.fetchUserByEmail(user.getEmail());
                 if (dbUser != null) {
                     this.currentUser = dbUser;
+                    // Fetch preferences
+                    String[] preferences = preferencesDAO.getPreferences(user.getEmail());
+                    String languages = preferences != null ? preferences[0] : "";
+                    String cookiesType = preferences != null ? preferences[1] : "";
+                    // Fetch profile image
+                    String profileImageUrl = profileImageDAO.getProfileImage(user.getEmail());
+
                     // Update UI with user data
-                    profileName.setText(dbUser.getPreferredName() != null ? dbUser.getPreferredName() : "");
+                    profileName.setText(dbUser.getPreferredName() != null ? dbUser.getPreferredName() : dbUser.getUsername());
                     githubLink.setText(dbUser.getGithub() != null ? dbUser.getGithub() : "");
                     emailLink.setText(dbUser.getEmail() != null ? dbUser.getEmail() : "");
                     phoneNumberLink.setText(dbUser.getPhone() != null ? dbUser.getPhone() : "");
                     currentJob.setText(dbUser.getJob() != null ? dbUser.getJob() : "");
                     currentLocation.setText(dbUser.getLocation() != null ? dbUser.getLocation() : "");
-                    footerLabel.setText("Joined from April 2025"); // Static, update if dynamic
+                    footerLabel.setText("BroCode © 2025");
                     userName.setText(dbUser.getUsername() != null ? dbUser.getUsername() : "");
                     firstName.setText(dbUser.getFirstName() != null ? dbUser.getFirstName() : "");
                     lastName.setText(dbUser.getLastName() != null ? dbUser.getLastName() : "");
@@ -146,15 +159,34 @@ public class UserDisplayController {
                     dateOfBirth.setText(dbUser.getDob() != null ? dbUser.getDob() : "");
                     userEmail.setText(dbUser.getEmail() != null ? dbUser.getEmail() : "");
                     userGender.setText(dbUser.getGender() != null ? dbUser.getGender() : "");
-                    languagesLabel.setText(dbUser.getLanguages() != null ? dbUser.getLanguages() : "");
-                    cookiesTypeLabel.setText(dbUser.getCookiesType() != null ? dbUser.getCookiesType() : "");
-                    statusOnline.setText("Online"); // Static
+                    languagesLabel.setText(languages);
+                    cookiesTypeLabel.setText(cookiesType);
+                    statusOnline.setText("Online");
                     titleHeader.setText("My Profile");
+
+                    // Update profile image
+                    if (profileImageUrl != null && !profileImageUrl.isEmpty()) {
+                        try {
+                            System.out.println("Attempting to load profile image: " + profileImageUrl);
+                            Image image = new Image(profileImageUrl, true); // Load asynchronously
+                            profileImage.setImage(image);
+                            if (image.isError()) {
+                                throw new IllegalArgumentException("Image loading failed: " + image.getException().getMessage());
+                            }
+                        } catch (Exception e) {
+                            System.err.println("Failed to load profile image for URL '" + profileImageUrl + "': " + e.getMessage());
+                            profileImage.setImage(new Image(getClass().getResourceAsStream(DEFAULT_PROFILE_IMAGE)));
+                        }
+                    } else {
+                        System.out.println("No profile image URL found for user: " + user.getEmail());
+                        profileImage.setImage(new Image(getClass().getResourceAsStream(DEFAULT_PROFILE_IMAGE)));
+                    }
                 } else {
                     ErrorAlert.show("Database Error", "No user found with email: " + user.getEmail());
                 }
             } catch (Exception e) {
                 ErrorAlert.show("Database Error", "Failed to fetch user data: " + e.getMessage());
+                e.printStackTrace();
             }
         } else {
             ErrorAlert.show("Display Error", "No user data or email provided.");
@@ -163,7 +195,6 @@ public class UserDisplayController {
 
     @FXML
     private void initialize() {
-
         if (currentUser != null) {
             updateUser(currentUser);
         }
