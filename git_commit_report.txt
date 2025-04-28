@@ -1,0 +1,7 @@
+"===== Commit Summary ====="
+    26	Antares
+    13	Brian
+     3	Thompson
+     1	Brian-brocode
+     1	Iphone13Pro3139
+-e "\n\n===== Detailed Commit Log ====="
