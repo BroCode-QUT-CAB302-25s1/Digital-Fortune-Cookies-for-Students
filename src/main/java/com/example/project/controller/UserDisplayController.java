@@ -17,6 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -165,16 +166,11 @@ public class UserDisplayController {
                     titleHeader.setText("My Profile");
 
                     // Update profile image
-                    if (profileImageUrl != null && !profileImageUrl.isEmpty()) {
+                    if (profileImageUrl != null && !profileImageUrl.isEmpty() && profileImageUrl != DEFAULT_PROFILE_IMAGE) {
                         try {
-                            System.out.println("Attempting to load profile image: " + profileImageUrl);
-                            Image image = new Image(profileImageUrl, true); // Load asynchronously
-                            profileImage.setImage(image);
-                            if (image.isError()) {
-                                throw new IllegalArgumentException("Image loading failed: " + image.getException().getMessage());
-                            }
+//                            System.out.println("Attempting to load profile image: " + profileImageUrl);
+                            profileImage.setImage(new Image(profileImageUrl, true));
                         } catch (Exception e) {
-                            System.err.println("Failed to load profile image for URL '" + profileImageUrl + "': " + e.getMessage());
                             profileImage.setImage(new Image(getClass().getResourceAsStream(DEFAULT_PROFILE_IMAGE)));
                         }
                     } else {
@@ -200,15 +196,40 @@ public class UserDisplayController {
         }
         backButton.setOnAction(this::handleBackButton);
         editButton.setOnAction(this::handleEditButton);
+        changePasswordButton.setOnAction(this::handleChangePasswordButton);
 
         // Optional: Add visual feedback for interactivity
         backButton.setStyle("-fx-cursor: hand;");
         editButton.setStyle("-fx-cursor: hand;");
+        changePasswordButton.setStyle("-fx-cursor: hand;");
     }
 
     @FXML
     private void handleChangePasswordButton(ActionEvent event) {
-        // Implement if needed
+        try {
+            // Load PasswordSetup FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/passwordsetup-view.fxml"));
+            Parent root = loader.load();
+
+            // Create a new stage for the password setup dialog
+            Stage passwordStage = new Stage();
+//            passwordStage.initModality(Modality.APPLICATION_MODAL); // Makes it modal, blocking the user display
+            passwordStage.initOwner(userDisplayStage); // Sets user display as the parent
+            passwordStage.setTitle("Change Password");
+            Scene passwordScene = new Scene(root);
+            passwordStage.setScene(passwordScene);
+
+            // Pass necessary data to PasswordSetupController
+            PasswordSetupController passwordController = loader.getController();
+            passwordController.setStage(passwordStage);
+            passwordController.setScene(userDisplayStage.getScene(), this);
+            passwordController.setUser(currentUser);
+
+            // Show the password setup dialog (user display remains in background)
+            passwordStage.showAndWait();
+        } catch (IOException e) {
+            ErrorAlert.show("Navigation Error", "Failed to load password setup screen: " + e.getMessage());
+        }
     }
 
     @FXML

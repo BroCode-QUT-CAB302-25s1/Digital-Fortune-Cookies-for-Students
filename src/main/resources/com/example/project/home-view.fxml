@@ -16,7 +16,7 @@
 
 <!-- Main container for the home screen -->
 
-<BorderPane prefHeight="500.0" prefWidth="1000.0" styleClass="root" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="com.example.project.controller.HomeController">
+<BorderPane prefHeight="500.0" prefWidth="1000.0" styleClass="root" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.controller.HomeController">
 
     <!-- Link to the CSS stylesheet for this screen -->
     <stylesheets>
@@ -73,7 +73,7 @@
                 <!-- Navigation buttons -->
                 <Button styleClass="nav-button, selected" text="Home" />
                 <Button fx:id="userDisplayButton" styleClass="nav-button" text="Profile" />
-                <Button styleClass="nav-button" text="Settings" />
+                <Button fx:id="appSettingButton" styleClass="nav-button" text="Settings" />
             </HBox>
 
             <!-- Padding for the bottom section -->

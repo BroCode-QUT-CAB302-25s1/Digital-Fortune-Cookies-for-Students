@@ -1,6 +1,7 @@
 package com.example.project.controller;
 
 import com.example.project.model.User;
+import com.example.project.util.ErrorAlert;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Modality; // Add this import
 
 import java.io.IOException;
 
@@ -30,6 +32,9 @@ public class HomeController {
 
     @FXML
     private Button userDisplayButton;
+
+    @FXML
+    private Button appSettingButton;
 
     private User currentUser;
 
@@ -51,10 +56,12 @@ public class HomeController {
         // Add click event to the fortune cookie image
         fortuneCookieImage.setOnMouseClicked(this::openFortuneScreen);
         userDisplayButton.setOnAction(this::handleProfileButton);
+        appSettingButton.setOnAction(this::handleSettingsButton);
 
         // Optional: Add visual feedback for interactivity
         userDisplayButton.setStyle("-fx-cursor: hand;");
         fortuneCookieImage.setStyle("-fx-cursor: hand;");
+        appSettingButton.setStyle("-fx-cursor: hand;");
     }
 
     private void openFortuneScreen(Event event) {
@@ -104,7 +111,31 @@ public class HomeController {
 
     @FXML
     private void handleSettingsButton(ActionEvent event) {
-        // implement later
+        try {
+            // Load AppSetting FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/appsetting-view.fxml"));
+            Parent settingsRoot = loader.load();
+
+            // Create a new stage for the settings dialog
+            Stage settingsStage = new Stage();
+//            settingsStage.initModality(Modality.APPLICATION_MODAL); // Makes it modal, blocking the home screen
+            settingsStage.initOwner(homeStage); // Sets home stage as the parent
+            settingsStage.setTitle("Settings");
+            Scene settingsScene = new Scene(settingsRoot);
+            settingsStage.setScene(settingsScene);
+
+            // Get the AppSettingController and pass necessary data
+            AppSettingController settingController = loader.getController();
+            settingController.setStage(settingsStage);
+            settingController.setScene(homeStage.getScene(), this);
+            settingController.setUser(currentUser);
+
+            // Show the settings dialog (home screen remains in background)
+            settingsStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            ErrorAlert.show("Navigation Error", "Failed to load settings screen: " + e.getMessage());
+        }
     }
 
     @FXML

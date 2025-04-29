@@ -15,6 +15,8 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
@@ -147,10 +149,30 @@ public class UserSettingController {
         saveButton.setOnAction(this::handleSaveButton);
         editProfile.setOnMouseClicked(this::handleEditProfile);
 
+        // Add Enter key handler to input field
+        usernameField.setOnKeyPressed(this::handleKeyPressed);
+        preferredNameField.setOnKeyPressed(this::handleKeyPressed);
+        firstNameField.setOnKeyPressed(this::handleKeyPressed);
+        lastNameField.setOnKeyPressed(this::handleKeyPressed);
+        emailField.setOnKeyPressed(this::handleKeyPressed);
+        githubField.setOnKeyPressed(this::handleKeyPressed);
+        phoneField.setOnKeyPressed(this::handleKeyPressed);
+        locationField.setOnKeyPressed(this::handleKeyPressed);
+        dobField.setOnKeyPressed(this::handleKeyPressed);
+        languagesField.setOnKeyPressed(this::handleKeyPressed);
+        cookiesTypeField.setOnKeyPressed(this::handleKeyPressed);
+
         // Optional: Add visual feedback for interactivity
         cancelButton.setStyle("-fx-cursor: hand;");
         saveButton.setStyle("-fx-cursor: hand;");
         editProfile.setStyle("-fx-cursor: hand;");
+    }
+
+    @FXML
+    private void handleKeyPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            handleSaveButton(new ActionEvent(saveButton, null));
+        }
     }
 
     @FXML
@@ -263,8 +285,9 @@ public class UserSettingController {
             }
             // Switch back to display scene
             if (userDisplayController != null) {
+                ErrorAlert.show("Notification", "Your data is saved!");
                 userDisplayController.updateUser(currentUser);
-                userSettingStage.setScene(userDisplayScene);
+//                userSettingStage.setScene(userDisplayScene);
             }
         }
     }

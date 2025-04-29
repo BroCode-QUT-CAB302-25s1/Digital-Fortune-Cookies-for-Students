@@ -66,4 +66,11 @@ public class UserPreferencesDAO implements IUserPreferencesDAO {
             return null;
         }
     }
+
+    public void saveTheme(String email, String theme) {
+        // Save theme to database
+    }
+    public void saveRunOnStartup(String email, boolean runOnStartup) {
+        // Save run-on-startup setting to database
+    }
 }
