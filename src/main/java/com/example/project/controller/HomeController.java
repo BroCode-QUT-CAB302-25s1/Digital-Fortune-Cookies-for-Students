@@ -88,6 +88,7 @@ public class HomeController {
         }
     }
 
+    //
     public String getRandomFortune() {
         String[] fortunes = {
                 "Good things come to those who wait... but better things come to those who work for it.",
