@@ -218,6 +218,7 @@ public class UserDisplayController {
             passwordStage.setTitle("Change Password");
             Scene passwordScene = new Scene(root);
             passwordStage.setScene(passwordScene);
+            passwordStage.initModality(Modality.WINDOW_MODAL);
 
             // Pass necessary data to PasswordSetupController
             PasswordSetupController passwordController = loader.getController();
@@ -257,8 +258,9 @@ public class UserDisplayController {
 
     @FXML
     private void handleBackButton(ActionEvent event) {
-        if (homeController != null) {
-            userDisplayStage.setScene(homeScene);
-        }
+        userDisplayStage.close(); // Close the user display stage, home remains open
+//        if (homeController != null) {
+//            userDisplayStage.setScene(homeScene);
+//        }
     }
 }
