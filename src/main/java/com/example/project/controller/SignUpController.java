@@ -34,10 +34,10 @@ public class SignUpController {
     private Button backButton;
 
     @FXML
-    public ChoiceBox securityQuestion;
+    public ChoiceBox securityQuestionBox;
 
     @FXML
-    public TextField securityAnswer;
+    public TextField securityAnswerField;
 
     @FXML
     private Label titleLabel;
@@ -81,7 +81,7 @@ public class SignUpController {
     @FXML
     private void initialize() {
         // Initialise
-        securityQuestion.getItems().addAll("What is your mother's maiden name?",
+        securityQuestionBox.getItems().addAll("What is your mother's maiden name?",
                 "What was the name of your first pet?",
                 "What is your oldest sibling’s middle name?",
                 "What was the make of your first car?",
@@ -135,6 +135,8 @@ public class SignUpController {
         String email = emailField.getText().trim();
         String password = passwordField.getText();
         String username = usernameField.getText().trim();
+        String securityQuestion = securityQuestionBox.toString().trim();
+        String securityAnswer = securityAnswerField.getText().trim();
 
         // Basic validation
         if (email.isEmpty() || !email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
@@ -152,6 +154,11 @@ public class SignUpController {
             return;
         }
 
+        if (securityAnswer.isEmpty()) {
+            ErrorAlert.show("Invalid Answer", "Invalid answer input");
+            return;
+        }
+
         // Check if email or username already exists
         if (userDAO.getUser(email) != null) {
             ErrorAlert.show("Email Registered", "Email already registered.");
@@ -163,7 +170,7 @@ public class SignUpController {
         }
 
         // Create new user
-        User newUser = new User(email, password, username);
+        User newUser = new User(email, password, username, securityQuestion, securityAnswer);
 
         // Save to database
         try {
