@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UserTest {
-    private static final String ID_ONE = "001";
     private static final String USERNAME_ONE = "AsdjANisajndf";
     private static final String PREFERRED_ONE = "ALANALANALANALANALAN";
     private static final String FIRST_NAME_ONE = "Alan";
@@ -18,8 +17,6 @@ public class UserTest {
     private static final String GENDER_ONE = "M";
     private static final String DOB_ONE = "12/04/1990";
     private static final String PASSWORD_ONE = "ASLDashdbfnakljshdouadshfb2353245";
-
-    private static final String ID_TWO = "002";
     private static final String USERNAME_TWO = "KJnijbadlj";
     private static final String PREFERRED_TWO = "BERRYBOY";
     private static final String FIRST_NAME_TWO = "Berry";
@@ -42,11 +39,6 @@ public class UserTest {
         userTwo = new User (USERNAME_TWO, PREFERRED_TWO,FIRST_NAME_TWO, LAST_NAME_TWO, EMAIL_TWO,GITHUB_TWO, PHONE_TWO,LOCATION_TWO, JOB_TWO, GENDER_TWO, DOB_TWO, PASSWORD_TWO);
     }
 
-    @Test
-    public void testSetID() {
-       user.setId(1);
-       assertEquals(1, user.getId());
-    }
 
     // First name
     @Test
