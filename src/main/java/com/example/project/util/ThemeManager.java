@@ -15,17 +15,16 @@ public class ThemeManager {
     private static final Map<String, String> LIGHT_THEME = new HashMap<>();
     private static final Map<String, String> DARK_THEME = new HashMap<>();
 
-    // Replace colours when needed
     static {
-        // Light theme colors
-        LIGHT_THEME.put("background", "#F8F9FA");
+        // Light theme colours - Replace if needed
+        LIGHT_THEME.put("background", "#FFFAF0");
         LIGHT_THEME.put("primary", "#4285F4");
         LIGHT_THEME.put("secondary", "#34A853");
         LIGHT_THEME.put("textPrimary", "#202124");
         LIGHT_THEME.put("textSecondary", "#5F6368");
         LIGHT_THEME.put("border", "#DADCE0");
 
-        // Dark theme colors
+        // Dark theme colours - Replace if needed
         DARK_THEME.put("background", "#202124");
         DARK_THEME.put("primary", "#8AB4F8");
         DARK_THEME.put("secondary", "#81C995");
