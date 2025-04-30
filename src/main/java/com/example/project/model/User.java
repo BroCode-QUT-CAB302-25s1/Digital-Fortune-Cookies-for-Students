@@ -20,7 +20,10 @@ public class User {
     private String cookiesType;
     private String profileImageURL;
     private String theme = "Light";
+    private String securityQuestion;
+    private String securityAnswerHash;
     private boolean runOnStartup = false;
+
 
     // Constructor
     public User(String username, String preferredName, String firstName, String lastName,
