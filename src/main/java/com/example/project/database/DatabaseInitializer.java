@@ -36,6 +36,13 @@ public class DatabaseInitializer {
             "FOREIGN KEY (email) REFERENCES users(email)" +
             ")";
 
+    private static final String APP_SETTINGS_TABLE = "CREATE TABLE IF NOT EXISTS app_settings (" +
+            "email VARCHAR PRIMARY KEY," +
+            "theme VARCHAR NOT NULL," +
+            "run_on_startup BOOLEAN NOT NULL," +
+            "FOREIGN KEY (email) REFERENCES users(email)" +
+            ")";
+
     private static final String INSERT_INITIAL_USER = "INSERT INTO users (" +
             "username, preferred_name, first_name, last_name, email, github, phone, " +
             "location, job, gender, dob, password" +
@@ -55,9 +62,15 @@ public class DatabaseInitializer {
             "'brocode.QUT@gmail.com', '/com/example/project/symbol/digitalCookieMainIcon1.png'" +
             ")";
 
+    private static final String INSERT_INITIAL_APP_SETTINGS = "INSERT INTO app_settings (" +
+            "email, theme, run_on_startup) VALUES (" +
+            "'brocode.QUT@gmail.com', 'Light', 0" +
+            ")";
+
     private static final String CHECK_USER_EXISTS = "SELECT COUNT(*) FROM users WHERE username = ?";
     private static final String CHECK_PREFERENCES_EXISTS = "SELECT COUNT(*) FROM user_preferences WHERE email = ?";
     private static final String CHECK_PROFILE_IMAGE_EXISTS = "SELECT COUNT(*) FROM preferences WHERE email = ?";
+    private static final String CHECK_APP_SETTINGS_EXISTS = "SELECT COUNT(*) FROM app_settings WHERE email = ?";
 
     public static void initializeDatabase() {
         Connection connection = SqliteConnection.getInstance();
@@ -78,6 +91,10 @@ public class DatabaseInitializer {
             // Create the preferences table
             statement.execute(PREFERENCES_TABLE);
             System.out.println("Preferences table created successfully.");
+
+            // Create the app_settings table
+            statement.execute(APP_SETTINGS_TABLE);
+            System.out.println("App settings table created successfully.");
 
             // Check if initial user already exists
             try (PreparedStatement checkUserStmt = connection.prepareStatement(CHECK_USER_EXISTS)) {
@@ -117,6 +134,19 @@ public class DatabaseInitializer {
                     System.out.println("Initial profile image preferences already exist. Skipping profile image insertion.");
                 }
             }
+
+            // Check if initial app settings already exist
+            try (PreparedStatement checkSettingsStmt = connection.prepareStatement(CHECK_APP_SETTINGS_EXISTS)) {
+                checkSettingsStmt.setString(1, "brocode.QUT@gmail.com");
+                ResultSet rs = checkSettingsStmt.executeQuery();
+                if (rs.next() && rs.getInt(1) == 0) {
+                    // Insert initial app settings data
+                    statement.execute(INSERT_INITIAL_APP_SETTINGS);
+                    System.out.println("Initial app settings data inserted successfully.");
+                } else {
+                    System.out.println("Initial app settings already exist. Skipping app settings insertion.");
+                }
+            }
         } catch (SQLException ex) {
             System.err.println("Failed to initialize database: " + ex.getMessage());
             ex.printStackTrace();
@@ -126,6 +156,7 @@ public class DatabaseInitializer {
     private static final String DROP_USERS_TABLE = "DROP TABLE IF EXISTS users";
     private static final String DROP_USER_PREFERENCES_TABLE = "DROP TABLE IF EXISTS user_preferences";
     private static final String DROP_PREFERENCES_TABLE = "DROP TABLE IF EXISTS preferences";
+    private static final String DROP_APP_SETTINGS_TABLE = "DROP TABLE IF EXISTS app_settings";
 
     public static void dropUsersTable() {
         Connection connection = SqliteConnection.getInstance();
@@ -135,7 +166,10 @@ public class DatabaseInitializer {
         }
 
         try (Statement statement = connection.createStatement()) {
-            // Drop the preferences table first due to foreign key
+            // Drop the app_settings table first due to foreign key
+            statement.execute(DROP_APP_SETTINGS_TABLE);
+            System.out.println("App settings table dropped successfully.");
+            // Drop the preferences table due to foreign key
             statement.execute(DROP_PREFERENCES_TABLE);
             System.out.println("Preferences table dropped successfully.");
             // Drop the user_preferences table due to foreign key

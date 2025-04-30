@@ -19,6 +19,8 @@ public class User {
     private String languages;
     private String cookiesType;
     private String profileImageURL;
+    private String theme = "Light";
+    private boolean runOnStartup = false;
 
     // Constructor
     public User(String username, String preferredName, String firstName, String lastName,
@@ -129,6 +131,12 @@ public class User {
 
     public String getProfileImageURL() { return profileImageURL; }
     public void setProfileImageURL(String profileImageURL) { this.profileImageURL = profileImageURL; }
+
+    public String getTheme() { return theme; }
+    public void setTheme(String theme) {this.theme = theme; }
+
+    public boolean getRunOnStartup() { return runOnStartup; }
+    public void setRunOnStartup(boolean runOnStartup) { this.runOnStartup = runOnStartup; }
 
     @Override
     public String toString() {

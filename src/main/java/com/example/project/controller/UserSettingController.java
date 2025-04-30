@@ -76,6 +76,8 @@ public class UserSettingController {
     @FXML
     private Button cancelButton;
 
+    private static final String DEFAULT_PROFILE_IMAGE = "/com/example/project/symbol/digitalCookieMainIcon1.png";
+
     private User currentUser;
     private final IUserDAO userDAO;
     private final UserPreferencesDAO userPreferencesDAO;
@@ -237,15 +239,12 @@ public class UserSettingController {
             // Load profile image from preferences table
             try {
                 String profileImageUrl = profileImageDAO.getProfileImage(currentUser.getEmail());
-                if (profileImageUrl != null && !profileImageUrl.isEmpty()) {
-                    Image image = new Image(getClass().getResourceAsStream(profileImageUrl));
-                    if (!image.isError()) {
-                        profileImage.setImage(image);
-                    } else {
-                        profileImage.setImage(null);
-                    }
+//                System.out.println(profileImageUrl);
+                if (profileImageUrl.compareTo(DEFAULT_PROFILE_IMAGE) == 0) {
+                    profileImage.setImage(new Image(getClass().getResourceAsStream(DEFAULT_PROFILE_IMAGE)));
                 } else {
-                    profileImage.setImage(null);
+                    Image image = new Image(profileImageUrl, true);
+                    profileImage.setImage(image);
                 }
             } catch (Exception e) {
                 ErrorAlert.show("Image Error", "Failed to load profile image: " + e.getMessage());

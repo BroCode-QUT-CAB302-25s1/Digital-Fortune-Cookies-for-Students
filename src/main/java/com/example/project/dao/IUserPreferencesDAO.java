@@ -1,7 +1,6 @@
 package com.example.project.dao;
 
 import java.sql.SQLException;
-import java.util.Optional;
 
 public interface IUserPreferencesDAO {
 
@@ -18,10 +17,10 @@ public interface IUserPreferencesDAO {
     void savePreferences(String email, String languages, String cookiesType) throws SQLException;
 
     /**
-     * Retrieves the preferences of a user.
+     * Retrieves the preferences of a user, including languages, cookies type, theme, and run-on-startup settings.
      *
      * @param email The email of the user whose preferences are being fetched.
-     * @return An Optional containing an array of preferences, or empty if no preferences found.
+     * @return An array containing the user's preferences, or null if no preferences found.
      * @throws SQLException If there is an issue with the database operation.
      */
     String[] getPreferences(String email) throws SQLException;

@@ -7,7 +7,6 @@ import java.util.List;
 
 public class MockUserDAO implements IUserDAO {
     private List<User> users = new ArrayList<>();
-    private int nextId = 1;
 
     public MockUserDAO() {
         // Add an initial user to simulate DatabaseInitializer
