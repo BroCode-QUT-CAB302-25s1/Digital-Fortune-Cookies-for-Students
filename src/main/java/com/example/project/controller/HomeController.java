@@ -31,10 +31,10 @@ public class HomeController {
     private Label progressText;
 
     @FXML
-    private Button userDisplayButton;
+    private ImageView userDisplayButton;
 
     @FXML
-    private Button appSettingButton;
+    private ImageView appSettingButton;
 
     private User currentUser;
 
@@ -55,8 +55,8 @@ public class HomeController {
     private void initialize() {
         // Add click event to the fortune cookie image
         fortuneCookieImage.setOnMouseClicked(this::openFortuneScreen);
-        userDisplayButton.setOnAction(this::handleProfileButton);
-        appSettingButton.setOnAction(this::handleSettingsButton);
+        userDisplayButton.setOnMouseClicked(this::handleProfileButton);
+        appSettingButton.setOnMouseClicked(this::handleSettingsButton);
 
         // Optional: Add visual feedback for interactivity
         userDisplayButton.setStyle("-fx-cursor: hand;");
@@ -110,7 +110,7 @@ public class HomeController {
     }
 
     @FXML
-    private void handleSettingsButton(ActionEvent event) {
+    private void handleSettingsButton(Event event) {
         try {
             // Load AppSetting FXML
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/appsetting-view.fxml"));
@@ -139,7 +139,7 @@ public class HomeController {
     }
 
     @FXML
-    private void handleProfileButton(ActionEvent event) {
+    private void handleProfileButton(Event event) {
         try {
             // Load user display FXML
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/userdisplay-view.fxml"));

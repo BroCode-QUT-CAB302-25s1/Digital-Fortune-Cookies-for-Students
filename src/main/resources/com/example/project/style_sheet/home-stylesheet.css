@@ -1,73 +1,110 @@
 /* Base styles */
 .root {
-    -fx-background-color: #FFFAF0; /* Soft cream colour for background */
-    -fx-font-family: "Arial", sans-serif;
+    -fx-background-color: white;
+    -fx-font-family: "Arial";
 }
 
 /* Header styling */
 #welcomeTitle {
-    -fx-font-size: 32px;
+    -fx-font-size: 40px;
     -fx-font-weight: bold;
-    -fx-text-fill: #D2691E; /* Chocolate colour for main title */
+    -fx-text-fill: black;
+    -fx-font-family: "Arial";
 }
 
 #instructionHeading {
-    -fx-font-size: 18px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #000000;
+    -fx-font-size: 16px;
+    -fx-text-fill: #006400;
+    -fx-font-family: "Arial";
 }
 
 /* Fortune cookie image */
 .fortune-image-container {
     -fx-alignment: center;
     -fx-padding: 20px;
+    -fx-font-family: "Arial";
+}
+
+
+#trackingSetupBox{
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-color: #E0FFFF;
+    -fx-border-radius: 10;
+    -fx-border-weight: 10;
+    -fx-border-color: #FFF5EE;
+}
+
+#trackingProgressBox{
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 5);
+    -fx-background-radius: 10;
+    -fx-border-color: #FFFAFA;
+    -fx-border-radius: 10;
+    -fx-border-weight: 1;
+}
+
+.choice-box {
+    -fx-background-color: #FFFFE0;
+    -fx-border-color: #ffffff;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5
 }
 
 /* Progress area */
 .progress-pane {
-    -fx-background-color: #FFF8DC; /* Light cream colour */
+    -fx-background-color: white;
     -fx-background-radius: 10px;
     -fx-padding: 15px;
     -fx-spacing: 10px;
+    -fx-border-color: #87CEFA;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);
+    -fx-font-family: "Arial";
 }
 
 .progress-title {
     -fx-font-size: 16px;
     -fx-font-weight: bold;
-    -fx-text-fill: #8B4513; /* Dark brown colour */
+    -fx-text-fill: #3b3b3b;
+    -fx-font-family: "Arial";
 }
 
 .progress-bar {
-    -fx-accent: #D2691E; /* Chocolate colour */
+    -fx-accent: #32CD32;
+    -fx-font-family: "Arial";
 }
 
 .progress-text {
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-text-fill: #8B4513; /* Dark brown colour */
+    -fx-text-fill: #3b3b3b;
+    -fx-font-family: "Arial";
 }
 
 /* Navigation bar */
 .nav-bar {
-    -fx-background-color: #D2691E; /* Chocolate colour */
+    -fx-background-color: #87CEFA;
     -fx-padding: 10px;
     -fx-spacing: 5px;
+    -fx-font-family: "Arial";
 }
 
 .nav-button {
     -fx-background-color: transparent;
-    -fx-text-fill: #FFFFFF;
+    -fx-text-fill: black;
     -fx-font-size: 18px;
     -fx-font-weight: bold;
     -fx-background-radius: 5px;
     -fx-padding: 5px 10px;
+    -fx-font-family: "Arial";
 }
 
 .nav-button:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-background-color: rgba(0, 0, 0, 0.05);
 }
 
 .nav-button.selected {
-    -fx-background-color: rgba(255, 255, 255, 0.3);
+    -fx-background-color: rgba(135, 206, 250, 0.3);
     -fx-font-weight: bold;
 }
