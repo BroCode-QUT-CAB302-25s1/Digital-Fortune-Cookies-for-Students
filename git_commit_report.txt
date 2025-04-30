@@ -1,9 +1,9 @@
 "===== Commit Summary ====="
-    32	Antares
+    34	Antares
+     9	Brian-brocode
      6	Brian
-     3	Thompson
-     1	Brian-brocode
-     1	Iphone13Pro3139
-     1	Tomas
+     6	Thompson
+     5	Tomas
+     1	Darcy
      1	Van Thien Phuoc Mai
 -e "\n\n===== Detailed Commit Log ====="

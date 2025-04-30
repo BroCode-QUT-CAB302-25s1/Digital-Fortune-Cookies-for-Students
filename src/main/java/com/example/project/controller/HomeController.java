@@ -105,7 +105,7 @@ public class HomeController {
 
         // Initialize hour choice box
         updateHourChoiceBoxOptions();
-        hourChoiceBox.setValue(formatHours(2.0)); // Default to 2 hours
+        hourChoiceBox.setValue(formatHours(1.0)); // Default to 1 hours
 
         // Initialize progress bar
         progressBar.setProgress(0.0);
