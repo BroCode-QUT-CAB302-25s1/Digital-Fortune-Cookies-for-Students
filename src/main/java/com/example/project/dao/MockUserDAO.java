@@ -22,7 +22,8 @@ public class MockUserDAO implements IUserDAO {
                 "Backend Developer",
                 "Male",
                 "01/01/2025",
-                "123456"
+                "123456", "What was the make of your first car?",
+                "Mazda"
         );
         users.add(initialUser);
     }
