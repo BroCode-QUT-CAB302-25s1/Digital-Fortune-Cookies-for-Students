@@ -1,4 +1,7 @@
-![BroCode Logo](src/main/resources/com/example/project/symbol/BroCode.png)
+
+<p align="center">
+  ![BroCode Logo](src/main/resources/com/example/project/symbol/BroCode.png)
+</p>
 
 # Digital Fortune Cookies for Students
 
