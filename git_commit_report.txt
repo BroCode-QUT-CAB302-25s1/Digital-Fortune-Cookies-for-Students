@@ -1,6 +1,6 @@
 "===== Commit Summary ====="
-    34	Antares
-     9	Brian-brocode
+    39	Antares
+    14	Brian-brocode
      6	Brian
      6	Thompson
      5	Tomas

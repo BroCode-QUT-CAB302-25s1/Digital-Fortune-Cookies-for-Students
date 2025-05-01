@@ -106,7 +106,7 @@ public class HomeController {
 
         // Initialize hour choice box
         updateHourChoiceBoxOptions();
-        hourChoiceBox.setValue(formatHours(1.0)); // Default to 1 hours
+        hourChoiceBox.setValue(formatHours(1.0)); // Default to 1 hour
 
         // Initialize progress bar
         progressBar.setProgress(0.0);
@@ -120,13 +120,24 @@ public class HomeController {
                 "-fx-font-family: 'Arial';" +
                 "-fx-font-size: 14px;" +
                 "-fx-text-fill: black;";
-        Tooltip userDisplay = new Tooltip("User");
-        userDisplay.setStyle(toolTipStyle);
-        Tooltip.install(userDisplayButton, userDisplay);
 
-        Tooltip appSetting = new Tooltip("Setting");
-        appSetting.setStyle(toolTipStyle);
-        Tooltip.install(appSettingButton, appSetting);
+        Tooltip forUserDisplay = new Tooltip("User");
+        Tooltip forAppSetting = new Tooltip("Setting");
+        Tooltip forProgressBar = new Tooltip("Your learning progress");
+        Tooltip forCookieImg = new Tooltip("Let's open your cookie!");
+        Tooltip forPlaymodeBtn = new Tooltip("Run/Pause");
+
+        forUserDisplay.setStyle(toolTipStyle);
+        forAppSetting.setStyle(toolTipStyle);
+        forProgressBar.setStyle(toolTipStyle);
+        forCookieImg.setStyle(toolTipStyle);
+        forPlaymodeBtn.setStyle(toolTipStyle);
+
+        Tooltip.install(userDisplayButton, forUserDisplay);
+        Tooltip.install(appSettingButton, forAppSetting);
+        Tooltip.install(progressBar, forProgressBar);
+        Tooltip.install(fortuneCookieImage, forCookieImg);
+        Tooltip.install(playModeButton, forPlaymodeBtn);
 
     }
 
