@@ -9,6 +9,9 @@ public class ThemeManager {
         LIGHT, DARK
     }
 
+    // Singleton instance
+    private static final ThemeManager instance = new ThemeManager();
+
     private static Theme currentTheme = Theme.LIGHT;
 
     // Colour mappings
@@ -33,17 +36,32 @@ public class ThemeManager {
         DARK_THEME.put("border", "#5F6368");
     }
 
-    public static String getColour(String colourName) {
+    // Private constructor to prevent instantiation
+    private ThemeManager() {
+        // Initialize if needed
+    }
+
+    public static ThemeManager getInstance() {
+        return instance;
+    }
+
+    public String getColour(String colourName) {
         return currentTheme == Theme.LIGHT ?
                 LIGHT_THEME.get(colourName) :
                 DARK_THEME.get(colourName);
     }
 
-    public static void setTheme(Theme theme) {
+    public void setTheme(Theme theme) {
         currentTheme = theme;
     }
 
-    public static Theme getCurrentTheme() {
+    public Theme getCurrentTheme() {
         return currentTheme;
+    }
+
+    public String getThemeStylesheet() {
+        return currentTheme == Theme.LIGHT ?
+                "/styles/light-theme.css" :
+                "/styles/dark-theme.css";
     }
 }
