@@ -1,4 +1,6 @@
-![BroCode Logo](src/main/resources/com/example/project/symbol/BroCode.png)
+<div style="text-align: center;">
+    <img src="src/main/resources/com/example/project/symbol/BroCode.png" alt="BroCode Logo">
+</div>
 
 # Digital Fortune Cookies for Students
 
