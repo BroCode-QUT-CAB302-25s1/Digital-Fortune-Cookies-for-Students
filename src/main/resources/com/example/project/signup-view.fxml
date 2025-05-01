@@ -10,37 +10,29 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="500.0" prefWidth="700.0"
-            stylesheets="@style_sheet/signup-stylesheet.css" xmlns="http://javafx.com/javafx/23.0.1"
-            fx:controller="com.example.project.controller.SignUpController">
+<AnchorPane prefHeight="500.0" prefWidth="700.0" stylesheets="@style_sheet/signup-stylesheet.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.controller.SignUpController">
    <children>
-      <ImageView fitHeight="400.0" fitWidth="400.0" layoutX="229.0" layoutY="93.0" opacity="0.5" pickOnBounds="true"
-                 preserveRatio="true">
+      <ImageView fitHeight="400.0" fitWidth="400.0" layoutX="229.0" layoutY="93.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@symbol/transparentIcon.png" />
          </image>
       </ImageView>
-      <Label fx:id="titleLabel" alignment="CENTER" layoutX="75.0" layoutY="30.0" prefHeight="42.0" prefWidth="732.0"
-             text="Welcome to the Fortune Cookie App"/>
-      <Label fx:id="subtitleLabel" alignment="CENTER" layoutX="145.0" layoutY="82.0" prefHeight="22.0" prefWidth="593.0"
-             text="Enter your email, password and your desired study time goal" textAlignment="CENTER">
+      <Label fx:id="titleLabel" alignment="CENTER" layoutX="75.0" layoutY="30.0" prefHeight="42.0" prefWidth="732.0" text="Welcome to the Fortune Cookie App" />
+      <Label fx:id="subtitleLabel" alignment="CENTER" layoutX="145.0" layoutY="82.0" prefHeight="22.0" prefWidth="593.0" text="Enter your email, password and your desired study time goal" textAlignment="CENTER">
          <font>
             <Font name="Arial Italic" size="12.0" />
          </font></Label>
-      <Label layoutX="185.0" layoutY="127.0" text="Email"/>
-      <Label layoutX="185.0" layoutY="205.0" text="Password"/>
-      <Label layoutX="185.0" layoutY="282.0" text="User name"/>
-      <TextField fx:id="emailField" layoutX="185.0" layoutY="155.0" prefHeight="40.0" prefWidth="511.0"
-                 promptText="youremail@gmail.com"/>
-      <PasswordField fx:id="passwordField" layoutX="185.0" layoutY="232.0" prefWidth="511.0" promptText="Password"/>
-      <TextField fx:id="usernameField" layoutX="185.0" layoutY="306.0" prefHeight="40.0" prefWidth="511.0"
-                 promptText="your user name"/>
-      <Button fx:id="backButton" layoutX="292.0" layoutY="520.0" mnemonicParsing="false" text="Back"/>
-      <Button fx:id="signupButton" layoutX="456.0" layoutY="520.0" mnemonicParsing="false" text="Sign up"/>
-      <Label layoutX="185.0" layoutY="355.0" text="Security Question"/>
-      <ChoiceBox fx:id="securityQuestionBox" layoutX="186.0" layoutY="386.0" prefHeight="33.0" prefWidth="511.0"/>
-      <Label layoutX="185.0" layoutY="429.0" text="Answer"/>
-      <TextField fx:id="securityAnswerField" layoutX="185.0" layoutY="453.0" prefHeight="40.0" prefWidth="511.0"
-                 promptText="Answer to your security question"/>
+      <Label layoutX="185.0" layoutY="127.0" styleClass="subtitle-label" text="Email" />
+      <Label layoutX="185.0" layoutY="205.0" styleClass="subtitle-label" text="Password" />
+      <Label layoutX="185.0" layoutY="284.0" styleClass="subtitle-label" text="Username" />
+      <TextField fx:id="emailField" layoutX="185.0" layoutY="153.0" prefHeight="40.0" prefWidth="511.0" promptText="youremail@gmail.com" />
+      <PasswordField fx:id="passwordField" layoutX="185.0" layoutY="231.0" prefWidth="511.0" promptText="Password" />
+      <TextField fx:id="usernameField" layoutX="185.0" layoutY="308.0" prefHeight="40.0" prefWidth="511.0" promptText="Your username" />
+      <Button fx:id="backButton" layoutX="292.0" layoutY="538.0" mnemonicParsing="false" text="Back" />
+      <Button fx:id="signupButton" layoutX="456.0" layoutY="538.0" mnemonicParsing="false" text="Sign up" />
+      <Label layoutX="185.0" layoutY="362.0" styleClass="subtitle-label" text="Security Question" />
+      <ChoiceBox fx:id="securityQuestionBox" layoutX="186.0" layoutY="389.0" prefHeight="33.0" prefWidth="511.0" />
+      <Label layoutX="185.0" layoutY="434.0" styleClass="subtitle-label" text="Answer" />
+      <TextField fx:id="securityAnswerField" layoutX="185.0" layoutY="458.0" prefHeight="40.0" prefWidth="511.0" promptText="Answer to your security question" />
    </children>
 </AnchorPane>

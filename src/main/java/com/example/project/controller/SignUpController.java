@@ -103,6 +103,7 @@ public class SignUpController {
         // Optional: Add visual feedback for interactivity
         signupButton.setStyle("-fx-cursor: hand;");
         backButton.setStyle("-fx-cursor: hand;");
+        securityQuestionBox.setStyle("-fx-cursor: hand;");
     }
 
     @FXML
