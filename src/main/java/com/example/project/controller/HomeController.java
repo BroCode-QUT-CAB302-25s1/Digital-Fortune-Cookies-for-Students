@@ -21,6 +21,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -139,6 +141,23 @@ public class HomeController {
         Tooltip.install(fortuneCookieImage, forCookieImg);
         Tooltip.install(playModeButton, forPlaymodeBtn);
 
+        // Add DropShadow effect on mouse hover
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setRadius(10.585);
+        dropShadow.setWidth(23.34);
+        dropShadow.setColor(Color.rgb(110, 42, 41)); // #6E2A29
+
+        fortuneCookieImage.setOnMouseEntered(event -> fortuneCookieImage.setEffect(dropShadow));
+        fortuneCookieImage.setOnMouseExited(event -> fortuneCookieImage.setEffect(null));
+
+        userDisplayButton.setOnMouseEntered(event -> userDisplayButton.setEffect(dropShadow));
+        userDisplayButton.setOnMouseExited(event -> userDisplayButton.setEffect(null));
+
+        appSettingButton.setOnMouseEntered(event -> appSettingButton.setEffect(dropShadow));
+        appSettingButton.setOnMouseExited(event -> appSettingButton.setEffect(null));
+
+        playModeButton.setOnMouseEntered(mouseEvent -> playModeButton.setEffect(dropShadow));
+        playModeButton.setOnMouseExited(mouseEvent -> playModeButton.setEffect(null));
     }
 
     private void updateHourChoiceBoxOptions() {
@@ -210,6 +229,7 @@ public class HomeController {
             fortuneStage.setTitle("Your Fortune");
             fortuneStage.setScene(fortuneScene);
             fortuneStage.setResizable(false); // Keep non-resizable as in original
+            fortuneStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/symbol/digitalCookieMainIcon2.png")));
             fortuneStage.showAndWait(); // Show modal dialog
         } catch (IOException e) {
             e.printStackTrace();
@@ -262,6 +282,8 @@ public class HomeController {
             Scene settingsScene = new Scene(settingsRoot);
             settingsStage.setScene(settingsScene);
             settingsStage.initModality(Modality.WINDOW_MODAL);
+            settingsStage.setResizable(false);
+            settingsStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/symbol/createIcon1.png")));
 
             AppSettingController settingController = loader.getController();
             settingController.setStage(settingsStage);
@@ -287,6 +309,8 @@ public class HomeController {
             Scene userDisplayScene = new Scene(userDisplayRoot);
             userDisplayStage.setScene(userDisplayScene);
             userDisplayStage.initModality(Modality.WINDOW_MODAL);
+            userDisplayStage.setResizable(false);
+            userDisplayStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/symbol/userIcon1.png")));
 
             UserDisplayController userDisplayController = loader.getController();
             userDisplayController.setStage(userDisplayStage);

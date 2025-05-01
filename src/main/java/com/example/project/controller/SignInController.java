@@ -117,6 +117,8 @@ public class SignInController {
             Scene signUpScene = new Scene(root);
             signUpStage.setTitle("Sign Up");
             signUpStage.setScene(signUpScene);
+            signUpStage.setResizable(false);
+            signUpStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/symbol/digitalCookieMainIcon2.png")));
 
             // Pass the new stage and sign-in scene to SignUpController
             SignUpController signUpController = loader.getController();

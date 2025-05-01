@@ -177,6 +177,8 @@ public class AppSettingController {
             Scene signInScene = new Scene(signInRoot);
             signInStage.setScene(signInScene);
             signInStage.setTitle("Sign In");
+            signInStage.setResizable(false);
+            signInStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/symbol/digitalCookieMainIcon2.png")));
 
             // Pass the stage to the sign-in controller
             signInController.setSignInStage(signInStage);

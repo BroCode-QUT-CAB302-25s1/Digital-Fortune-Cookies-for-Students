@@ -264,9 +264,12 @@ public class UserSettingController {
 
     @FXML
     private void handleCancelButton(ActionEvent event) {
-        if (userDisplayController != null) {
-            userSettingStage.setScene(userDisplayScene);
-        }
+//        if (userDisplayController != null) {
+//            userSettingStage.setResizable(false);
+//            userSettingStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/symbol/userIcon3.png")));
+//            userSettingStage.setScene(userDisplayScene);
+//        }
+        userSettingStage.close();
     }
 
     private void displayUserData() {
@@ -301,8 +304,14 @@ public class UserSettingController {
                 if (profileImageUrl.compareTo(DEFAULT_PROFILE_IMAGE) == 0) {
                     profileImage.setImage(new Image(getClass().getResourceAsStream(DEFAULT_PROFILE_IMAGE)));
                 } else {
-                    Image image = new Image(profileImageUrl, true);
-                    profileImage.setImage(image);
+                    if (profileImageUrl.compareTo("/com/example/project/symbol/BroCode.png") == 0) {
+                        profileImage.setImage(new Image(getClass().getResourceAsStream(profileImageUrl)));
+                    }
+                    else {
+                        profileImage.setImage(new Image(profileImageUrl, true));
+                    }
+//                    Image image = new Image(profileImageUrl, true);
+//                    profileImage.setImage(image);
                 }
             } catch (Exception e) {
                 ErrorAlert.show("Image Error", "Failed to load profile image: " + e.getMessage());
