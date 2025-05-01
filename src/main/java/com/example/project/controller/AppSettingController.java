@@ -3,16 +3,15 @@ package com.example.project.controller;
 import com.example.project.dao.UserPreferencesDAO;
 import com.example.project.model.User;
 import com.example.project.util.ErrorAlert;
+import com.example.project.util.ThemeManager;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
+import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -20,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Objects;
 
 public class AppSettingController {
 
@@ -97,7 +97,6 @@ public class AppSettingController {
                     boolean runOnStartup = Boolean.parseBoolean(preferences[1]); // Assuming runOnStartup is stored in preferences[1]
                     lightButton.setSelected("Light".equals(theme));
                     darkButton.setSelected("Dark".equals(theme));
-                    runOnStartupCheckBox.setSelected(runOnStartup);
                 }
             } catch (Exception e) {
                 ErrorAlert.show("Database Error", "Failed to load preferences: " + e.getMessage());
