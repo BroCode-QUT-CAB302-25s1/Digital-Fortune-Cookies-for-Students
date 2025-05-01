@@ -1,11 +1,13 @@
-# Digital Fortune Cookies for Students
+![BroCode Logo](src/main/resources/com/example/project/symbol/BroCode.png)
 
-![Digital Fortune Cookies Logo](src/main/resources/com/example/project/symbol/digitalCookieMainIcon2.png)
+# Digital Fortune Cookies for Students
 
 ## Overview
 Digital Fortune Cookies for Students is a Java-based desktop application developed by the **BroCode** team for the CAB302 Software Development course at QUT (Semester 1, 2025). It enhances the learning experience by delivering personalized study tips, motivational quotes, and fun predictions through a user-friendly JavaFX interface. The app tracks learning progress against user-set study targets, with AI-generated content tailored to time spent studying or remaining time, making studying engaging and motivating. **User stories** prioritize features like setting study goals, tracking study hours, and receiving time-based feedback to support student progress. Built using an **Agile methodology**, the project employs **Object-Oriented Design (OOD)**, **Test-Driven Development (TDD)**, and **GitHub** for version control, aligning with industry standards (ACS CBOK: 1, 1.2-1.4, 1.6; SFIA: PROG).
 
 The application uses general AI integration to generate dynamic content. The Week 9 preliminary prototype includes a functional GUI, authentication, SQLite persistence, and unit tests, with a full feature set planned for Week 13.
+
+<img src="src/main/resources/com/example/project/symbol/digitalCookieMainIcon2.png" alt="Digital Fortune Cookies Logo" width="60%">
 
 ## Features
 - **Personalized Study Tips**: AI-generated advice tailored to study habits, progress, and time spent or remaining toward user-set targets.
