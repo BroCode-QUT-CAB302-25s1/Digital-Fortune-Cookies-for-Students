@@ -114,26 +114,18 @@ public class HomeController {
         currentSectionLearnedHours = 0.0;
 
         // Create and style tooltips for user and settings buttons with custom font and background
+        String toolTipStyle = "-fx-background-color: #FFFFE0;" +
+                "-fx-border-radius: 5;" +
+                "-fx-background-radius: 5;" +
+                "-fx-font-family: 'Arial';" +
+                "-fx-font-size: 14px;" +
+                "-fx-text-fill: black;";
         Tooltip userDisplay = new Tooltip("User");
-        userDisplay.setStyle(
-                "-fx-background-color: #FFFFE0;" +
-                        "-fx-border-radius: 5;" +
-                        "-fx-background-radius: 5;" +
-                        "-fx-font-family: 'Arial';" +
-                        "-fx-font-size: 14px;" +
-                        "-fx-text-fill: black;"
-        );
+        userDisplay.setStyle(toolTipStyle);
         Tooltip.install(userDisplayButton, userDisplay);
 
         Tooltip appSetting = new Tooltip("Setting");
-        appSetting.setStyle(
-                "-fx-background-color: #FFFFE0;" +
-                        "-fx-border-radius: 5;" +
-                        "-fx-background-radius: 5;" +
-                        "-fx-font-family: 'Arial';" +
-                        "-fx-font-size: 14px;" +
-                        "-fx-text-fill: black;"
-        );
+        appSetting.setStyle(toolTipStyle);
         Tooltip.install(appSettingButton, appSetting);
 
     }

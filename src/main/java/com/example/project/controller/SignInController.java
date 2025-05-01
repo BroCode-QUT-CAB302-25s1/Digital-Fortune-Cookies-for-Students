@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -156,6 +157,7 @@ public class SignInController {
             Scene homeScene = new Scene(root);
             homeStage.setTitle("Home");
             homeStage.setScene(homeScene);
+            homeStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/symbol/digitalCookieMainIcon2.png")));
 
             // Pass the stage, sign-in controller, and authenticated user to HomeController
             HomeController homeController = loader.getController();
