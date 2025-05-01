@@ -20,7 +20,7 @@ public class DatabaseInitializer {
             "job VARCHAR," +
             "gender VARCHAR," +
             "dob VARCHAR," +
-            "password VARCHAR NOT NULL," +
+            "password VARCHAR NOT NULL" +
             ")";
 
     private static final String USER_PREFERENCES_TABLE = "CREATE TABLE IF NOT EXISTS user_preferences (" +
