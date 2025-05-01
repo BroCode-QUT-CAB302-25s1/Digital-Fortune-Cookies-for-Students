@@ -10,9 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -53,7 +51,7 @@ public class UserSettingController {
     private ChoiceBox<String> jobField;
 
     @FXML
-    private ChoiceBox<String> genderField;
+    private ComboBox<String> genderField;
 
     @FXML
     private TextField dobField;
@@ -119,26 +117,74 @@ public class UserSettingController {
                 "Agender", "Bigender", "Transgender Male", "Transgender Female", "Transmasculine",
                 "Transfeminine", "Two-Spirit", "Intersex", "Demiboy", "Demigirl", "Pangender",
                 "Androgyne", "Neutrois", "Questioning", "Prefer not to say", "Other");
-        jobField.getItems().addAll("Accountant", "Actor", "Actuary", "Administrator", "Advertising Manager",
-                "Aerospace Engineer", "Agricultural Engineer", "Air Traffic Controller", "Animator",
-                "Anthropologist", "Architect", "Archivist", "Art Director", "Artist", "Astronomer",
-                "Athlete", "Attorney", "Auditor", "Author", "Baker", "Banker", "Barber", "Biologist",
-                "Biomedical Engineer", "Bricklayer", "Broker", "Builder", "Business Analyst", "Butcher",
-                "Camera Operator", "Carpenter", "Cashier", "Chef", "Chemical Engineer", "Chemist",
-                "Choreographer", "Civil Engineer", "Clergy", "Coach", "Computer Programmer",
-                "Construction Worker", "Consultant", "Copywriter", "Counselor", "Courier",
+        jobField.getItems().addAll(
+                "Accountant", "Actor", "Actuary", "Administrator", "Advertising Manager", "Aerospace Engineer",
+                "Agricultural Engineer", "Air Traffic Controller", "Animator", "Anthropologist", "Architect",
+                "Archivist", "Art Director", "Artist", "Astronomer", "Athlete", "Attorney", "Auditor", "Author",
+                "Baker", "Banker", "Barber", "Biologist", "Biomedical Engineer", "Bricklayer", "Broker", "Builder",
+                "Business Analyst", "Butcher", "Camera Operator", "Carpenter", "Cashier", "Chef",
+                "Chemical Engineer", "Chemist", "Choreographer", "Civil Engineer", "Clergy", "Coach",
+                "Computer Programmer", "Construction Worker", "Consultant", "Copywriter", "Counselor", "Courier",
                 "Customer Service Representative", "Dancer", "Data Analyst", "Data Scientist", "Dentist",
-                "Designer", "Dietitian", "Director", "Doctor", "Economist", "Editor", "Electrician",
-                "Engineer", "Event Planner", "Farmer", "Fashion Designer", "Financial Analyst",
-                "Firefighter", "Fisherman", "Flight Attendant", "Florist", "Graphic Designer",
-                "Hairdresser", "Healthcare Assistant", "Historian", "Hotel Manager",
-                "Human Resources Specialist", "Illustrator", "Industrial Designer", "Inspector",
-                "Interpreter", "Investigator", "IT Specialist", "Janitor", "Jeweler", "Journalist",
-                "Judge", "Laboratory Technician", "Lawyer", "Lecturer", "Librarian", "Lifeguard",
-                "Logistician", "Machinist", "Manager", "Marketing Specialist", "Mathematician",
-                "Mechanic", "Medical Assistant", "Meteorologist", "Model", "Musician", "Nurse",
-                "Nutritionist", "Occupational Therapist", "Office Clerk", "Optician", "Painter",
-                "Paramedic", "Pharmacist", "Photographer", "Physician", "Pilot");
+                "Designer", "Dietitian", "Director", "Doctor", "Economist", "Editor", "Electrician", "Engineer",
+                "Event Planner", "Farmer", "Fashion Designer", "Financial Analyst", "Firefighter", "Fisherman",
+                "Flight Attendant", "Florist", "Graphic Designer", "Hairdresser", "Healthcare Assistant",
+                "Historian", "Hotel Manager", "Human Resources Specialist", "Illustrator", "Industrial Designer",
+                "Inspector", "Interpreter", "Investigator", "IT Specialist", "Janitor", "Jeweler", "Journalist",
+                "Judge", "Laboratory Technician", "Lawyer", "Lecturer", "Librarian", "Lifeguard", "Logistician",
+                "Machinist", "Manager", "Marketing Specialist", "Mathematician", "Mechanic", "Medical Assistant",
+                "Meteorologist", "Model", "Musician", "Nurse", "Nutritionist", "Occupational Therapist",
+                "Office Clerk", "Optician", "Painter", "Paramedic", "Pharmacist", "Photographer", "Physician",
+                "Pilot", "Plumber", "Police Officer", "Political Scientist", "Postman", "Principal",
+                "Product Manager", "Professor", "Project Manager", "Psychologist", "Public Relations Specialist",
+                "Quality Assurance Analyst", "Radiologic Technologist", "Real Estate Agent", "Receptionist",
+                "Researcher", "Retail Manager", "Sailor", "Sales Representative", "Scientist", "Security Guard",
+                "Social Media Manager", "Social Worker", "Software Developer", "Software Engineer", "Statistician",
+                "Storekeeper", "Surgeon", "Surveyor", "Systems Analyst", "Tailor", "Taxi Driver", "Teacher",
+                "Technician", "Therapist", "Tour Guide", "Translator", "Travel Agent", "Truck Driver", "Tutor",
+                "UX Designer", "Veterinarian", "Video Editor", "Voice Actor", "Waiter", "Warehouse Worker",
+                "Web Developer", "Welder", "Writer", "Zoologist", "Acting Coach", "Acupuncturist", "Animal Trainer",
+                "App Developer", "Archaeologist", "Art Teacher", "Astrologer", "Auctioneer", "Ballet Dancer",
+                "Barista", "Blacksmith", "Blogger", "Bodyguard", "Botanist", "Broadcast Technician",
+                "Budget Analyst", "Cartographer", "Chiropractor", "Claims Adjuster", "Clinical Psychologist",
+                "Compliance Officer", "Composer", "Computer Scientist", "Conservationist", "Content Creator",
+                "Costume Designer", "Crane Operator", "Critic", "Cruise Director", "Curator", "Cybersecurity Analyst",
+                "Dance Instructor", "Database Administrator", "Demographer", "Dermatologist", "Dog Trainer",
+                "Drone Operator", "Ecologist", "Electric Line Installer", "Embryologist", "Emergency Dispatcher",
+                "Emissions Inspector", "Energy Consultant", "Environmental Engineer", "Ergonomist",
+                "Event Coordinator", "Exterminator", "Fabricator", "Film Director", "Fire Investigator",
+                "Forensic Analyst", "Fundraiser", "Furniture Designer", "Game Designer", "Geneticist",
+                "Geographer", "Geologist", "Glassblower", "Grant Writer", "Greenhouse Manager", "Guidance Counselor",
+                "Handyman", "Hazardous Materials Removal Worker", "Health Educator", "Helicopter Pilot",
+                "Home Inspector", "Horticulturist", "Hospital Administrator", "Hydrologist", "Hypnotherapist",
+                "Import/Export Specialist", "Industrial Engineer", "Infection Control Specialist", "Information Architect",
+                "Instructional Designer", "Intelligence Analyst", "Interior Decorator", "Interpreter",
+                "Inventory Manager", "Investment Banker", "Jewelry Designer", "Judicial Clerk", "Kindergarten Teacher",
+                "Landscape Architect", "Linguist", "Loan Officer", "Locksmith", "Makeup Artist", "Marine Biologist",
+                "Market Research Analyst", "Massage Therapist", "Mediator", "Medical Biller", "Microbiologist",
+                "Mining Engineer", "Mortgage Broker", "Music Producer", "Mycologist", "Naval Officer",
+                "Network Administrator", "Neuroscientist", "Notary Public", "Nuclear Engineer", "Oceanographer",
+                "Operations Manager", "Ophthalmologist", "Ornithologist", "Paralegal", "Park Ranger",
+                "Patent Examiner", "Pathologist", "Pediatrician", "Perfusionist", "Personal Trainer", "Pet Groomer",
+                "Phlebotomist", "Photojournalist", "Physical Therapist", "Physicist", "Pilot Instructor",
+                "Plant Manager", "Playwright", "Police Detective", "Polygraph Examiner", "Postsecondary Administrator",
+                "Private Investigator", "Probation Officer", "Producer", "Proofreader", "Property Manager",
+                "Psychiatrist", "Public Defender", "Quality Control Inspector", "Quantitative Analyst",
+                "Rabbi", "Radiologist", "Realtor", "Recreational Therapist", "Recycling Coordinator",
+                "Referee", "Registrar", "Rehabilitation Counselor", "Religious Educator", "Reporter",
+                "Research Analyst", "Risk Manager", "Robotics Engineer", "Safety Officer", "School Counselor",
+                "Scientific Illustrator", "Scrum Master", "Seismologist", "Set Designer", "Shipping Coordinator",
+                "Silversmith", "Ski Instructor", "Solar Panel Installer", "Sommelier", "Sound Engineer",
+                "Special Education Teacher", "Speech-Language Pathologist", "Statistician", "Stockbroker",
+                "Stonemason", "Strategic Planner", "Structural Engineer", "Substance Abuse Counselor",
+                "Supply Chain Manager", "Surgical Technician", "Tax Advisor", "Technical Writer",
+                "Telecommunications Technician", "Theater Manager", "Tour Operator", "Traffic Analyst",
+                "Transit Police", "Transportation Planner", "Travel Nurse", "Tree Surgeon", "Urban Planner",
+                "Usability Tester", "Veterinary Technician", "Video Game Tester", "Virologist", "Voice Coach",
+                "Volunteer Coordinator", "Watchmaker", "Water Treatment Specialist", "Wildlife Biologist",
+                "Wind Turbine Technician", "Yoga Instructor"
+        );
+
 
         // Make emailField non-editable
         emailField.setEditable(false);
@@ -168,6 +214,18 @@ public class UserSettingController {
         cancelButton.setStyle("-fx-cursor: hand;");
         saveButton.setStyle("-fx-cursor: hand;");
         editProfile.setStyle("-fx-cursor: hand;");
+
+        // Create and style tooltips for buttons with custom font and background
+        Tooltip profileEdit = new Tooltip("Edit your avatar");
+        profileEdit.setStyle(
+                "-fx-background-color: #FFFFE0;" +
+                        "-fx-border-radius: 5;" +
+                        "-fx-background-radius: 5;" +
+                        "-fx-font-family: 'Arial';" +
+                        "-fx-font-size: 14px;" +
+                        "-fx-text-fill: black;"
+        );
+        Tooltip.install(editProfile, profileEdit);
     }
 
     @FXML

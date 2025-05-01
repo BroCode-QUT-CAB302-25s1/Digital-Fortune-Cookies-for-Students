@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.event.ActionEvent;
@@ -111,6 +112,30 @@ public class HomeController {
         progressBar.setProgress(0.0);
         isStudyActive = false;
         currentSectionLearnedHours = 0.0;
+
+        // Create and style tooltips for user and settings buttons with custom font and background
+        Tooltip userDisplay = new Tooltip("User");
+        userDisplay.setStyle(
+                "-fx-background-color: #FFFFE0;" +
+                        "-fx-border-radius: 5;" +
+                        "-fx-background-radius: 5;" +
+                        "-fx-font-family: 'Arial';" +
+                        "-fx-font-size: 14px;" +
+                        "-fx-text-fill: black;"
+        );
+        Tooltip.install(userDisplayButton, userDisplay);
+
+        Tooltip appSetting = new Tooltip("Setting");
+        appSetting.setStyle(
+                "-fx-background-color: #FFFFE0;" +
+                        "-fx-border-radius: 5;" +
+                        "-fx-background-radius: 5;" +
+                        "-fx-font-family: 'Arial';" +
+                        "-fx-font-size: 14px;" +
+                        "-fx-text-fill: black;"
+        );
+        Tooltip.install(appSettingButton, appSetting);
+
     }
 
     private void updateHourChoiceBoxOptions() {

@@ -44,6 +44,12 @@
     -fx-border-weight: 1;
 }
 
+.tooltip {
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
+    -fx-font-family: "Arial";
+}
+
 .choice-box {
     -fx-background-color: #FFFFE0;
     -fx-border-color: #ffffff;
