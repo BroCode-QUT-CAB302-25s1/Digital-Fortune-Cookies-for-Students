@@ -1,9 +1,6 @@
 package com.example.project.controller;
 
-import com.example.project.dao.IUserDAO;
-import com.example.project.dao.ProfileImageDAO;
-import com.example.project.dao.SqliteUserDAO;
-import com.example.project.dao.UserPreferencesDAO;
+import com.example.project.dao.*;
 import com.example.project.model.User;
 import com.example.project.util.ErrorAlert;
 import javafx.event.ActionEvent;
@@ -48,12 +45,14 @@ public class SignUpController {
     private final IUserDAO userDAO;
     private final UserPreferencesDAO preferencesDAO;
     private final ProfileImageDAO profileImageDAO;
+    private final SecurityQuestionDAO securityQuestionDAO;
 
     // Default constructor for production
     public SignUpController() {
         this.userDAO = new SqliteUserDAO();
         this.preferencesDAO = new UserPreferencesDAO();
         this.profileImageDAO = new ProfileImageDAO();
+        this.securityQuestionDAO = new SecurityQuestionDAO();
     }
 
     // Constructor for testing with dependency injection
@@ -61,6 +60,7 @@ public class SignUpController {
         this.userDAO = userDAO;
         this.preferencesDAO = new UserPreferencesDAO();
         this.profileImageDAO = new ProfileImageDAO();
+        securityQuestionDAO = null;
     }
 
     private Stage signUpStage;
@@ -175,6 +175,7 @@ public class SignUpController {
         // Save to database
         try {
             userDAO.addUser(newUser);
+            securityQuestionDAO.saveSecurityQuestion(email, securityQuestion, securityAnswer);
             // Save default preferences to user_preferences table
             preferencesDAO.savePreferences(email, "", "");
             // Save default profile image to preferences table
