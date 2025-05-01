@@ -70,9 +70,6 @@ The application uses general AI integration to generate dynamic content. The Wee
 ## Project Structure
 ```
 Digital-Fortune-Cookies-for-Students/
-├── .idea/                     # IDE configuration (IntelliJ)
-├── .mvn/                      # Maven wrapper files
-├── lib/                       # External libraries
 ├── src/
 │   ├── main/
 │   │   ├── java/
