@@ -20,12 +20,15 @@ public class User {
     private String cookiesType;
     private String profileImageURL;
     private String theme = "Light";
+    private String securityQuestion;
+    private String securityAnswer;
     private boolean runOnStartup = false;
+
 
     // Constructor
     public User(String username, String preferredName, String firstName, String lastName,
                 String email, String github, String phone, String location, String job,
-                String gender, String dob, String password, String languages, String cookiesType) {
+                String gender, String dob, String password, String securityQuestion, String securityAnswer, String languages, String cookiesType) {
         this.username = username;
         this.preferredName = preferredName;
         this.firstName = firstName;
@@ -40,11 +43,13 @@ public class User {
         this.password = password;
         this.languages = languages;
         this.cookiesType = cookiesType;
+        this.securityQuestion = securityQuestion;
+        this.securityAnswer = securityAnswer;
     }
 
     public User(String username, String preferredName, String firstName, String lastName,
                 String email, String github, String phone, String location, String job,
-                String gender, String dob, String password, String profileImageURL) {
+                String gender, String dob, String password, String profileImageURL, String securityQuestion, String securityAnswer) {
         this.username = username;
         this.preferredName = preferredName;
         this.firstName = firstName;
@@ -57,12 +62,14 @@ public class User {
         this.gender = gender;
         this.dob = dob;
         this.password = password;
+        this.securityQuestion = securityQuestion;
+        this.securityAnswer = securityAnswer;
         this.profileImageURL = profileImageURL;
     }
 
     public User(String username, String preferredName, String firstName, String lastName,
                 String email, String github, String phone, String location, String job,
-                String gender, String dob, String password) {
+                String gender, String dob, String password, String securityQuestion, String securityAnswer) {
         this.username = username;
         this.preferredName = preferredName;
         this.firstName = firstName;
@@ -75,12 +82,16 @@ public class User {
         this.gender = gender;
         this.dob = dob;
         this.password = password;
+        this.securityQuestion = securityQuestion;
+        this.securityAnswer = securityAnswer;
     }
 
-    public User(String email, String password, String username){
+    public User(String email, String password, String username, String securityQuestion, String securityAnswer) {
         this.email = email;
         this.password = password;
         this.username = username;
+        this.securityQuestion = securityQuestion;
+        this.securityAnswer = securityAnswer;
     }
 
     // Getters and Setters
@@ -134,6 +145,23 @@ public class User {
 
     public String getTheme() { return theme; }
     public void setTheme(String theme) {this.theme = theme; }
+
+    public String getSecurityQuestion() {
+        return securityQuestion;
+    }
+
+    public void setSecurityQuestion(String securityQuestion) {
+        this.securityQuestion = securityQuestion;
+    }
+
+    public String getSecurityAnswer() {
+        return securityAnswer;
+    }
+
+    public void setSecurityAnswer(String securityAnswer) {
+        this.securityAnswer = securityAnswer;
+    }
+
 
     public boolean getRunOnStartup() { return runOnStartup; }
     public void setRunOnStartup(boolean runOnStartup) { this.runOnStartup = runOnStartup; }
