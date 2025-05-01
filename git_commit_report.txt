@@ -1,8 +1,9 @@
 "===== Commit Summary ====="
-    39	Antares
-    14	Brian-brocode
+    43	Antares
+    16	Brian-brocode
      6	Brian
      6	Thompson
+     6	Thompson Tang
      5	Tomas
      1	Darcy
      1	Van Thien Phuoc Mai
