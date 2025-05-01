@@ -1,0 +1,29 @@
+.root {
+    -fx-background-color: #202124;
+    -fx-text-fill: #E8EAED;
+}
+
+.label {
+    -fx-text-fill: #E8EAED;
+}
+
+.button {
+    -fx-background-color: #8AB4F8;
+    -fx-text-fill: white;
+}
+
+.text-field, .text-area, .password-field {
+    -fx-background-color: #303134;
+    -fx-text-fill: #E8EAED;
+    -fx-border-color: #5F6368;
+}
+
+.radio-button {
+    -fx-text-fill: #E8EAED;
+}
+
+.check-box {
+    -fx-text-fill: #E8EAED;
+}
+
+/* Add any other component styles as needed */
