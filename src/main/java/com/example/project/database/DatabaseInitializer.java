@@ -43,6 +43,13 @@ public class DatabaseInitializer {
             "FOREIGN KEY (email) REFERENCES users(email)" +
             ")";
 
+    private static final String SECURITY_QUESTIONS_TABLE = "CREATE TABLE IF NOT EXISTS security_questions (" +
+            "email VARCHAR PRIMARY KEY," +
+            "security_question TEXT NOT NULL," +
+            "security_answer TEXT NOT NULL," +
+            "FOREIGN KEY (email) REFERENCES users(email)" +
+            ")";
+
     private static final String INSERT_INITIAL_USER = "INSERT INTO users (" +
             "username, preferred_name, first_name, last_name, email, github, phone, " +
             "location, job, gender, dob, password" +
@@ -66,11 +73,16 @@ public class DatabaseInitializer {
             "email, theme, run_on_startup) VALUES (" +
             "'brocode.QUT@gmail.com', 'Light', 0" +
             ")";
+    private static final String INSERT_INITIAL_SECURITY_QUESTION = "INSERT INTO security_questions (" +
+            "email, security_question, security_answer) VALUES (" +
+            "'brocode.QUT@gmail.com', 'What is the name of your first pet?', 'Lily'" +
+            ")";
 
     private static final String CHECK_USER_EXISTS = "SELECT COUNT(*) FROM users WHERE username = ?";
     private static final String CHECK_PREFERENCES_EXISTS = "SELECT COUNT(*) FROM user_preferences WHERE email = ?";
     private static final String CHECK_PROFILE_IMAGE_EXISTS = "SELECT COUNT(*) FROM preferences WHERE email = ?";
     private static final String CHECK_APP_SETTINGS_EXISTS = "SELECT COUNT(*) FROM app_settings WHERE email = ?";
+    private static final String CHECK_SECURITY_QUESTION_EXISTS = "SELECT COUNT(*) FROM security_questions WHERE email = ?";
 
     public static void initializeDatabase() {
         Connection connection = SqliteConnection.getInstance();
@@ -95,6 +107,10 @@ public class DatabaseInitializer {
             // Create the app_settings table
             statement.execute(APP_SETTINGS_TABLE);
             System.out.println("App settings table created successfully.");
+
+            // Create the security_questions table
+            statement.execute(SECURITY_QUESTIONS_TABLE);
+            System.out.println("Security questions table created successfully.");
 
             // Check if initial user already exists
             try (PreparedStatement checkUserStmt = connection.prepareStatement(CHECK_USER_EXISTS)) {
@@ -145,6 +161,18 @@ public class DatabaseInitializer {
                     System.out.println("Initial app settings data inserted successfully.");
                 } else {
                     System.out.println("Initial app settings already exist. Skipping app settings insertion.");
+                }
+            }
+            // Check if initial security question already exists
+            try (PreparedStatement checkSecurityStmt = connection.prepareStatement(CHECK_SECURITY_QUESTION_EXISTS)) {
+                checkSecurityStmt.setString(1, "brocode.QUT@gmail.com");
+                ResultSet rs = checkSecurityStmt.executeQuery();
+                if (rs.next() && rs.getInt(1) == 0) {
+                    // Insert initial security question
+                    statement.execute(INSERT_INITIAL_SECURITY_QUESTION);
+                    System.out.println("Initial security question data inserted successfully.");
+                } else {
+                    System.out.println("Initial security question already exists. Skipping insertion.");
                 }
             }
         } catch (SQLException ex) {

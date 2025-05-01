@@ -1,9 +1,6 @@
 package com.example.project.controller;
 
-import com.example.project.dao.IUserDAO;
-import com.example.project.dao.ProfileImageDAO;
-import com.example.project.dao.SqliteUserDAO;
-import com.example.project.dao.UserPreferencesDAO;
+import com.example.project.dao.*;
 import com.example.project.model.User;
 import com.example.project.util.ErrorAlert;
 import javafx.event.ActionEvent;
@@ -34,10 +31,10 @@ public class SignUpController {
     private Button backButton;
 
     @FXML
-    public ChoiceBox securityQuestion;
+    public ChoiceBox securityQuestionBox;
 
     @FXML
-    public TextField securityAnswer;
+    public TextField securityAnswerField;
 
     @FXML
     private Label titleLabel;
@@ -48,12 +45,14 @@ public class SignUpController {
     private final IUserDAO userDAO;
     private final UserPreferencesDAO preferencesDAO;
     private final ProfileImageDAO profileImageDAO;
+    private final SecurityQuestionDAO securityQuestionDAO;
 
     // Default constructor for production
     public SignUpController() {
         this.userDAO = new SqliteUserDAO();
         this.preferencesDAO = new UserPreferencesDAO();
         this.profileImageDAO = new ProfileImageDAO();
+        this.securityQuestionDAO = new SecurityQuestionDAO();
     }
 
     // Constructor for testing with dependency injection
@@ -61,6 +60,7 @@ public class SignUpController {
         this.userDAO = userDAO;
         this.preferencesDAO = new UserPreferencesDAO();
         this.profileImageDAO = new ProfileImageDAO();
+        securityQuestionDAO = null;
     }
 
     private Stage signUpStage;
@@ -81,7 +81,7 @@ public class SignUpController {
     @FXML
     private void initialize() {
         // Initialise
-        securityQuestion.getItems().addAll("What is your mother's maiden name?",
+        securityQuestionBox.getItems().addAll("What is your mother's maiden name?",
                 "What was the name of your first pet?",
                 "What is your oldest sibling’s middle name?",
                 "What was the make of your first car?",
@@ -135,6 +135,8 @@ public class SignUpController {
         String email = emailField.getText().trim();
         String password = passwordField.getText();
         String username = usernameField.getText().trim();
+        String securityQuestion = securityQuestionBox.toString().trim();
+        String securityAnswer = securityAnswerField.getText().trim();
 
         // Basic validation
         if (email.isEmpty() || !email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
@@ -152,6 +154,11 @@ public class SignUpController {
             return;
         }
 
+        if (securityAnswer.isEmpty()) {
+            ErrorAlert.show("Invalid Answer", "Invalid answer input");
+            return;
+        }
+
         // Check if email or username already exists
         if (userDAO.getUser(email) != null) {
             ErrorAlert.show("Email Registered", "Email already registered.");
@@ -163,11 +170,12 @@ public class SignUpController {
         }
 
         // Create new user
-        User newUser = new User(email, password, username);
+        User newUser = new User(email, password, username, securityQuestion, securityAnswer);
 
         // Save to database
         try {
             userDAO.addUser(newUser);
+            securityQuestionDAO.saveSecurityQuestion(email, securityQuestion, securityAnswer);
             // Save default preferences to user_preferences table
             preferencesDAO.savePreferences(email, "", "");
             // Save default profile image to preferences table

@@ -28,7 +28,7 @@ public class User {
     // Constructor
     public User(String username, String preferredName, String firstName, String lastName,
                 String email, String github, String phone, String location, String job,
-                String gender, String dob, String password, String securityQuestion, String securityAnswer, String languages, String cookiesType) {
+                String gender, String dob, String password, String languages, String cookiesType) {
         this.username = username;
         this.preferredName = preferredName;
         this.firstName = firstName;
@@ -43,13 +43,11 @@ public class User {
         this.password = password;
         this.languages = languages;
         this.cookiesType = cookiesType;
-        this.securityQuestion = securityQuestion;
-        this.securityAnswer = securityAnswer;
     }
 
     public User(String username, String preferredName, String firstName, String lastName,
                 String email, String github, String phone, String location, String job,
-                String gender, String dob, String password, String profileImageURL, String securityQuestion, String securityAnswer) {
+                String gender, String dob, String password, String profileImageURL) {
         this.username = username;
         this.preferredName = preferredName;
         this.firstName = firstName;
@@ -62,14 +60,12 @@ public class User {
         this.gender = gender;
         this.dob = dob;
         this.password = password;
-        this.securityQuestion = securityQuestion;
-        this.securityAnswer = securityAnswer;
         this.profileImageURL = profileImageURL;
     }
 
     public User(String username, String preferredName, String firstName, String lastName,
                 String email, String github, String phone, String location, String job,
-                String gender, String dob, String password, String securityQuestion, String securityAnswer) {
+                String gender, String dob, String password) {
         this.username = username;
         this.preferredName = preferredName;
         this.firstName = firstName;
@@ -82,8 +78,7 @@ public class User {
         this.gender = gender;
         this.dob = dob;
         this.password = password;
-        this.securityQuestion = securityQuestion;
-        this.securityAnswer = securityAnswer;
+
     }
 
     public User(String email, String password, String username, String securityQuestion, String securityAnswer) {
