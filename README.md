@@ -82,6 +82,7 @@ Digital-Fortune-Cookies-for-Students/
 │   │   │       ├── database/      # Database connection and setup
 │   │   │       ├── model/         # Data models (e.g., User, StudyProgress)
 │   │   │       ├── util/          # Utility classes and helpers
+│   │   │       ├── services/      # AI integration - API
 │   │   │       ├── MainApplication.java  # Application entry point
 │   │   │       └── module-info.java      # Java module configuration
 │   │   └── resources/
