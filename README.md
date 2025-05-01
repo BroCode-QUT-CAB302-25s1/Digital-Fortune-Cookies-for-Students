@@ -7,7 +7,9 @@ Digital Fortune Cookies for Students is a Java-based desktop application develop
 
 The application uses general AI integration to generate dynamic content. The Week 9 preliminary prototype includes a functional GUI, authentication, SQLite persistence, and unit tests, with a full feature set planned for Week 13.
 
-<img src="src/main/resources/com/example/project/symbol/digitalCookieMainIcon2.png" alt="Digital Fortune Cookies Logo" width="60%">
+<div style="text-align: center;">
+    <img src="src/main/resources/com/example/project/symbol/digitalCookieMainIcon2.png" alt="Digital Fortune Cookies Logo" width="60%">
+</div>
 
 ## Features
 - **Personalized Study Tips**: AI-generated advice tailored to study habits, progress, and time spent or remaining toward user-set targets.
