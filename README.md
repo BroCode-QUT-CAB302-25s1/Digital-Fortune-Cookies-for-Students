@@ -70,18 +70,29 @@ The application uses general AI integration to generate dynamic content. The Wee
 ## Project Structure
 ```
 Digital-Fortune-Cookies-for-Students/
+├── .idea/                     # IDE configuration (IntelliJ)
+├── .mvn/                      # Maven wrapper files
+├── lib/                       # External libraries
 ├── src/
 │   ├── main/
 │   │   ├── java/
-│   │   │   ├── controllers/    # JavaFX controllers for UI logic
-│   │   │   ├── models/        # Data models (e.g., User, StudyProgress)
-│   │   │   ├── services/      # Business logic and AI integration
-│   │   │   ├── views/         # FXML files for JavaFX UI
-│   │   │   └── Main.java      # Application entry point
-│   │   └── resources/         # FXML, CSS, and logo
-├── tests/                     # JUnit tests
+│   │   │   └── com/example/project/
+│   │   │       ├── controller/    # JavaFX controllers for UI logic
+│   │   │       ├── dao/           # Data Access Objects for database interaction
+│   │   │       ├── database/      # Database connection and setup
+│   │   │       ├── model/         # Data models (e.g., User, StudyProgress)
+│   │   │       ├── util/          # Utility classes and helpers
+│   │   │       ├── MainApplication.java  # Application entry point
+│   │   │       └── module-info.java      # Java module configuration
+│   │   └── resources/
+│   │       └── com/example/project/      # Contain FXML for UI
+│   │           ├── images/        # Image assets
+│   │           ├── style/         # CSS styles for JavaFX UI
+│   │           └── symbol/        # Logo and icon files (e.g., digitalCookieMainIcon2.png)
+│   └── test/                  # JUnit tests
+├── README.md                  # Project documentation (this file)
 ├── pom.xml                    # Maven configuration
-└── README.md                  # This file
+└── userData.db                # SQLite database file for user data storage
 ```
 
 ## Contributing
