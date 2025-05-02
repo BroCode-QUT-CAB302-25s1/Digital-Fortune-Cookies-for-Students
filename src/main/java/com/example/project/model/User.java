@@ -20,7 +20,10 @@ public class User {
     private String cookiesType;
     private String profileImageURL;
     private String theme = "Light";
+    private String securityQuestion;
+    private String securityAnswer;
     private boolean runOnStartup = false;
+
 
     // Constructor
     public User(String username, String preferredName, String firstName, String lastName,
@@ -75,12 +78,15 @@ public class User {
         this.gender = gender;
         this.dob = dob;
         this.password = password;
+
     }
 
-    public User(String email, String password, String username){
+    public User(String email, String password, String username, String securityQuestion, String securityAnswer) {
         this.email = email;
         this.password = password;
         this.username = username;
+        this.securityQuestion = securityQuestion;
+        this.securityAnswer = securityAnswer;
     }
 
     // Getters and Setters
@@ -134,6 +140,23 @@ public class User {
 
     public String getTheme() { return theme; }
     public void setTheme(String theme) {this.theme = theme; }
+
+    public String getSecurityQuestion() {
+        return securityQuestion;
+    }
+
+    public void setSecurityQuestion(String securityQuestion) {
+        this.securityQuestion = securityQuestion;
+    }
+
+    public String getSecurityAnswer() {
+        return securityAnswer;
+    }
+
+    public void setSecurityAnswer(String securityAnswer) {
+        this.securityAnswer = securityAnswer;
+    }
+
 
     public boolean getRunOnStartup() { return runOnStartup; }
     public void setRunOnStartup(boolean runOnStartup) { this.runOnStartup = runOnStartup; }

@@ -27,21 +27,24 @@
     -fx-background-radius: 5;
     -fx-border-color: #ffffff;
     -fx-border-radius: 5;
-    -fx-border-weight: 1
+    -fx-border-weight: 1;
+    -fx-font-size: 11pt;
 }
 
 .choice-box {
     -fx-background-color: #E6E6FA;
     -fx-border-color: #ffffff;
     -fx-border-radius: 5;
-    -fx-background-radius: 5
+    -fx-background-radius: 5;
+    -fx-font-size: 11pt;
 }
 
 .combo-box {
     -fx-background-color: #E6E6FA;
     -fx-border-color: #ffffff;
     -fx-border-radius: 5;
-    -fx-background-radius: 5
+    -fx-background-radius: 5;
+    -fx-font-size: 11pt;
 }
 
 .label-title {

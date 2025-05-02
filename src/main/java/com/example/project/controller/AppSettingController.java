@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -176,6 +177,8 @@ public class AppSettingController {
             Scene signInScene = new Scene(signInRoot);
             signInStage.setScene(signInScene);
             signInStage.setTitle("Sign In");
+            signInStage.setResizable(false);
+            signInStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/symbol/digitalCookieMainIcon2.png")));
 
             // Pass the stage to the sign-in controller
             signInController.setSignInStage(signInStage);
@@ -185,6 +188,7 @@ public class AppSettingController {
             if (homeController != null && homeScene != null) {
                 Stage homeStage = (Stage) homeScene.getWindow();
                 homeStage.close();
+                homeStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/symbol/digitalCookieMainIcon2.png")));
             }
 
             signInStage.show();
