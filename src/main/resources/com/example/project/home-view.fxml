@@ -61,9 +61,9 @@
                 </ImageView>
             </children>
         </StackPane>
-        <HBox fx:id="trackingSetupBox" layoutX="338.0" layoutY="609.0" prefHeight="34.0" prefWidth="324.0">
+        <HBox fx:id="trackingSetupBox" layoutX="338.0" layoutY="607.0" prefHeight="34.0" prefWidth="324.0">
             <children>
-                <StackPane prefHeight="50.0" prefWidth="158.0">
+                <StackPane prefHeight="50.0" prefWidth="146.0">
                     <children>
                         <Label styleClass="label-bold" text="Target for today">
                             <font>
@@ -72,7 +72,7 @@
                         </Label>
                     </children>
                 </StackPane>
-                <ChoiceBox fx:id="hourChoiceBox" prefHeight="50.0" prefWidth="94.0" />
+                <ChoiceBox fx:id="hourChoiceBox" prefHeight="50.0" prefWidth="114.0" />
                 <StackPane prefHeight="50.0" prefWidth="60.0">
                     <children>
                         <ImageView fx:id="playModeButton" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
