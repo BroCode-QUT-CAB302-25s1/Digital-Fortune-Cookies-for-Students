@@ -25,7 +25,7 @@ public class HomeController {
     private ImageView fortuneCookieImage;
 
     @FXML
-    private ProgressBar progressBar;
+    private ProgressBar progressBab;
 
     @FXML
     private Label progressText;
