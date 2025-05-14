@@ -4,6 +4,7 @@ import com.example.project.dao.AppSettingsDAO;
 import com.example.project.dao.UserPreferencesDAO;
 import com.example.project.model.User;
 import com.example.project.util.ErrorAlert;
+import com.example.project.util.ThemeManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -54,6 +55,24 @@ public class AppSettingController {
     private User currentUser;
     private final UserPreferencesDAO preferencesDAO;
     private final AppSettingsDAO appSettingsDAO;
+
+    // Method to apply the theme based on a selected setting
+    private void applyTheme(String theme) {
+        String stylesheet = "Dark".equals(theme) ? "/styles/dark-theme.css" : "/style_sheet/appSetting-styleSheet.css";
+
+        // Get the current scene
+        Scene scene = settingsStage.getScene();
+        if (scene != null) {
+            // Clear the existing stylesheet
+            scene.getStylesheets().clear();
+            // Add new stylesheet
+            scene.getStylesheets().add(getClass().getResource(stylesheet).toExternalForm());
+
+            // Update ThemeManager
+            ThemeManager.getInstance().setTheme("Dark".equals(theme) ? ThemeManager.Theme.DARK : ThemeManager.Theme.LIGHT);
+        }
+    }
+
 
     public AppSettingController() {
         preferencesDAO = new UserPreferencesDAO();
