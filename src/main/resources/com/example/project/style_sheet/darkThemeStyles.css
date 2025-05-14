@@ -1,0 +1,57 @@
+
+.root {
+    -fx-background-color: #202124;
+    -fx-text-fill: #E8EAED;
+}
+
+.label {
+    -fx-text-fill: #E8EAED;
+}
+
+.button {
+    -fx-background-color: #5F6368;
+    -fx-text-fill: #E8EAED;
+    -fx-background-radius: 5;
+}
+
+.button:hover {
+    -fx-background-color: #8AB4F8;
+}
+
+.radio-button {
+    -fx-text-fill: #E8EAED;
+}
+
+.radio-button .radio {
+    -fx-background-color: #5F6368;
+}
+
+.radio-button:selected .radio .dot {
+    -fx-background-color: #8AB4F8;
+}
+
+.check-box {
+    -fx-text-fill: #E8EAED;
+}
+
+.check-box .box {
+    -fx-background-color: #5F6368;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: #8AB4F8;
+}
+
+.container {
+    -fx-background-color: #202124;
+}
+
+.title {
+    -fx-text-fill: #8AB4F8;
+    -fx-font-size: 24px;
+}
+
+.subTitleLabel {
+    -fx-text-fill: #9AA0A6;
+    -fx-font-size: 16px;
+}
