@@ -64,8 +64,13 @@ private void applyTheme(String theme) {
     );
 
     // Get stylesheet based on theme
-    String stylesheet = ThemeManager.getInstance().getCurrentTheme() == ThemeManager.Theme.DARK ? 
-        "/darkmode_stylesheet/" : "/style_sheet/";
+    String stylesheet = ThemeManager.getInstance().getCurrentTheme() == ThemeManager.Theme.DARK ?
+            "/com/example/project/darkmode_stylesheet/" : "/com/example/project/style_sheet/";
+
+    // Debug: Print current theme and path
+    System.out.println("Current theme: " + theme);
+    System.out.println("Stylesheet base path: " + stylesheet);
+
 
     // Get all open windows and update their themes
     updateThemeForStage(settingsStage, stylesheet + "appSetting-stylesheet.css");
@@ -83,7 +88,12 @@ private void updateThemeForStage(Stage stage, String stylesheetPath) {
 private void updateThemeForScene(Scene scene, String stylesheetPath) {
     if (scene != null) {
         scene.getStylesheets().clear();
-        scene.getStylesheets().add(getClass().getResource(stylesheetPath).toExternalForm());
+        var resource = getClass().getResource(stylesheetPath);
+        if (resource == null) {
+            return;
+        }
+        String resourcePath = resource.toExternalForm();
+        scene.getStylesheets().add(resourcePath);
     }
 }
 
@@ -121,8 +131,10 @@ private void updateThemeForScene(Scene scene, String stylesheetPath) {
         lightButton.setToggleGroup(new javafx.scene.control.ToggleGroup());
         darkButton.setToggleGroup(lightButton.getToggleGroup());
 
-        // Set default theme (e.g., Light)
-        lightButton.setSelected(true);
+        // Set radio button based on current theme
+        ThemeManager.Theme currentTheme = ThemeManager.getInstance().getCurrentTheme();
+        lightButton.setSelected(currentTheme == ThemeManager.Theme.LIGHT);
+        darkButton.setSelected(currentTheme == ThemeManager.Theme.DARK);
 
         // Load existing app settings if available
         if (currentUser != null && currentUser.getEmail() != null) {
@@ -170,6 +182,10 @@ private void updateThemeForScene(Scene scene, String stylesheetPath) {
             try {
                 String theme = lightButton.isSelected() ? "Light" : "Dark";
                 boolean runOnStartup = runOnStartupCheckBox.isSelected();
+
+                // Apply theme immediately when save is clicked
+                applyTheme(theme);
+
 //                System.out.println("Saving settings - Email: " + currentUser.getEmail() + ", Theme: " + theme + ", RunOnStartup: " + runOnStartup);
                 appSettingsDAO.saveAppSettings(currentUser.getEmail(), theme, runOnStartup);
                 configureRunOnStartup(runOnStartup);
