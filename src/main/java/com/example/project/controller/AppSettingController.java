@@ -57,21 +57,35 @@ public class AppSettingController {
     private final AppSettingsDAO appSettingsDAO;
 
     // Method to apply the theme based on a selected setting
-    private void applyTheme(String theme) {
-        String stylesheet = "Dark".equals(theme) ? "/styles/dark-theme.css" : "/style_sheet/appSetting-styleSheet.css";
+private void applyTheme(String theme) {
+    // Update ThemeManager first
+    ThemeManager.getInstance().setTheme(
+        "Dark".equals(theme) ? ThemeManager.Theme.DARK : ThemeManager.Theme.LIGHT
+    );
 
-        // Get the current scene
-        Scene scene = settingsStage.getScene();
-        if (scene != null) {
-            // Clear the existing stylesheet
-            scene.getStylesheets().clear();
-            // Add new stylesheet
-            scene.getStylesheets().add(getClass().getResource(stylesheet).toExternalForm());
+    // Get stylesheet based on theme
+    String stylesheet = ThemeManager.getInstance().getCurrentTheme() == ThemeManager.Theme.DARK ? 
+        "/darkmode_stylesheet/" : "/style_sheet/";
 
-            // Update ThemeManager
-            ThemeManager.getInstance().setTheme("Dark".equals(theme) ? ThemeManager.Theme.DARK : ThemeManager.Theme.LIGHT);
-        }
+    // Get all open windows and update their themes
+    updateThemeForStage(settingsStage, stylesheet + "appSetting-stylesheet.css");
+    if (homeScene != null) {
+        updateThemeForScene(homeScene, stylesheet + "home-stylesheet.css");
     }
+}
+
+private void updateThemeForStage(Stage stage, String stylesheetPath) {
+    if (stage != null && stage.getScene() != null) {
+        updateThemeForScene(stage.getScene(), stylesheetPath);
+    }
+}
+
+private void updateThemeForScene(Scene scene, String stylesheetPath) {
+    if (scene != null) {
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add(getClass().getResource(stylesheetPath).toExternalForm());
+    }
+}
 
 
     public AppSettingController() {
@@ -120,6 +134,10 @@ public class AppSettingController {
                     lightButton.setSelected("Light".equals(theme));
                     darkButton.setSelected("Dark".equals(theme));
                     runOnStartupCheckBox.setSelected(runOnStartup);
+
+                    // Apply the theme immediately
+                    applyTheme(theme);
+
                     System.out.println("Loaded settings - Email: " + currentUser.getEmail() + ", Theme: " + theme + ", RunOnStartup: " + runOnStartup);
                 } else {
                     System.out.println("No settings found for email: " + currentUser.getEmail());
