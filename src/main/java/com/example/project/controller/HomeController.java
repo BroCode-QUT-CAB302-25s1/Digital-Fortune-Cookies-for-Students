@@ -2,6 +2,7 @@ package com.example.project.controller;
 
 import com.example.project.model.User;
 import com.example.project.util.ErrorAlert;
+import com.example.project.util.ThemeManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.Event;
@@ -30,6 +31,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class HomeController {
+
+    @FXML
+    private Label welcomeTitle;
 
     @FXML
     private ImageView fortuneCookieImage;
@@ -78,6 +82,7 @@ public class HomeController {
         this.homeStage = stage;
         this.signInController = signInController;
         resetProgress();
+        applyTheme(); // Apply theme after the stage is set
     }
 
     public void setCurrentUser(User user) {
@@ -92,6 +97,20 @@ public class HomeController {
         progressBar.setProgress(0.0);
         isStudyActive = false;
         updateHourChoiceBoxOptions();
+    }
+
+    public void applyTheme() {
+        // Get the current theme from ThemeManager
+        String stylesheet = ThemeManager.getInstance().getCurrentTheme() == ThemeManager.Theme.DARK ?
+                "/com/example/project/darkmode_stylesheet/home-stylesheet.css" :
+                "/com/example/project/style_sheet/home-stylesheet.css";
+
+        // Apply the stylesheet
+        Scene scene = welcomeTitle.getScene();
+        if (scene != null) {
+            scene.getStylesheets().clear();
+            scene.getStylesheets().add(getClass().getResource(stylesheet).toExternalForm());
+        }
     }
 
     @FXML
