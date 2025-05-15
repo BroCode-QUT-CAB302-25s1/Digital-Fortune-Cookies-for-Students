@@ -78,6 +78,25 @@
     -fx-text-fill: #E2E8F0;
 }
 
+.label-bold {
+    -fx-text-fill: #60A5FA;
+    -fx-font-size: 16.0px;
+    -fx-font-weight: bold;
+    -fx-font-family: "System";
+}
+
+#playModeButton {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 5);
+}
+
+#playModeButton ImageView {
+    -fx-effect: innershadow(gaussian, #60A5FA, 10, 0.5, 0, 0);
+}
+
+#playModeButton:hover {
+    -fx-effect: dropshadow(gaussian, #60A5FA, 15, 0.5, 0, 0);
+}
+
 /* Progress area */
 .progress-pane {
     -fx-background-color: #1E1E1E;
