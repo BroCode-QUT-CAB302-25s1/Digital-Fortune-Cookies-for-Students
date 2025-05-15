@@ -99,7 +99,7 @@ public class HomeController {
     public void applyTheme() {
         // Get the current theme from AppSettingController
         String stylesheet = AppSettingController.getCurrentTheme() == AppSettingController.Theme.DARK ?
-                "/com/example/project/darkmode_stylesheet/home-stylesheet.css" :
+                "/com/example/project/darkmode_stylesheet/home-stylesheet-dark.css" :
                 "/com/example/project/style_sheet/home-stylesheet.css";
 
         // Apply the stylesheet
