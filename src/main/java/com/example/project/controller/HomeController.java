@@ -7,7 +7,6 @@ import javafx.animation.Timeline;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
@@ -19,7 +18,6 @@ import javafx.scene.image.ImageView;
 import javafx.event.ActionEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
@@ -30,6 +28,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class HomeController {
+
+    @FXML
+    private Label welcomeTitle;
 
     @FXML
     private ImageView fortuneCookieImage;
@@ -78,6 +79,7 @@ public class HomeController {
         this.homeStage = stage;
         this.signInController = signInController;
         resetProgress();
+        applyTheme(); // Apply theme after the stage is set
     }
 
     public void setCurrentUser(User user) {
@@ -92,6 +94,20 @@ public class HomeController {
         progressBar.setProgress(0.0);
         isStudyActive = false;
         updateHourChoiceBoxOptions();
+    }
+
+    public void applyTheme() {
+        // Get the current theme from AppSettingController
+        String stylesheet = AppSettingController.getCurrentTheme() == AppSettingController.Theme.DARK ?
+                "/com/example/project/darkmode_stylesheet/home-stylesheet.css" :
+                "/com/example/project/style_sheet/home-stylesheet.css";
+
+        // Apply the stylesheet
+        Scene scene = welcomeTitle.getScene();
+        if (scene != null) {
+            scene.getStylesheets().clear();
+            scene.getStylesheets().add(getClass().getResource(stylesheet).toExternalForm());
+        }
     }
 
     @FXML
