@@ -157,11 +157,12 @@ public class HomeController {
         Tooltip.install(fortuneCookieImage, forCookieImg);
         Tooltip.install(playModeButton, forPlaymodeBtn);
 
+        // TODO Make this work with dark mode
         // Add DropShadow effect on mouse hover
         DropShadow dropShadow = new DropShadow();
         dropShadow.setRadius(10.585);
         dropShadow.setWidth(23.34);
-        dropShadow.setColor(Color.rgb(110, 42, 41)); // #6E2A29
+        dropShadow.setColor(Color.rgb(110, 42, 41)); // #6E2A29 // Currently for light mode
 
         fortuneCookieImage.setOnMouseEntered(event -> fortuneCookieImage.setEffect(dropShadow));
         fortuneCookieImage.setOnMouseExited(event -> fortuneCookieImage.setEffect(null));
