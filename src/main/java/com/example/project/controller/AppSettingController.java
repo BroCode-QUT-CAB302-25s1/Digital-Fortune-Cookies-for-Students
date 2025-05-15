@@ -55,6 +55,60 @@ public class AppSettingController {
     private final UserPreferencesDAO preferencesDAO;
     private final AppSettingsDAO appSettingsDAO;
 
+    // Method to apply the theme based on a selected setting
+    private void applyTheme(String theme) {
+        // Update theme
+        setTheme("Dark".equals(theme) ? Theme.DARK : Theme.LIGHT);
+
+        // Get stylesheet based on theme
+        String stylesheet = getCurrentTheme() == Theme.DARK ?
+                "/com/example/project/darkmode_stylesheet/" : "/com/example/project/style_sheet/";
+
+        // Debug: Print current theme and path
+        System.out.println("Current theme: " + theme);
+        System.out.println("Stylesheet base path: " + stylesheet);
+
+        // Get all open windows and update their themes
+        updateThemeForStage(settingsStage, stylesheet + "appSetting-stylesheet.css");
+        if (homeScene != null) {
+            updateThemeForScene(homeScene, stylesheet + "home-stylesheet.css");
+        }
+    }
+
+    private void updateThemeForStage(Stage stage, String stylesheetPath) {
+        if (stage != null && stage.getScene() != null) {
+            updateThemeForScene(stage.getScene(), stylesheetPath);
+        }
+    }
+
+    private void updateThemeForScene(Scene scene, String stylesheetPath) {
+        if (scene != null) {
+            scene.getStylesheets().clear();
+            var resource = getClass().getResource(stylesheetPath);
+            if (resource == null) {
+                return;
+            }
+            String resourcePath = resource.toExternalForm();
+            scene.getStylesheets().add(resourcePath);
+        }
+    }
+
+    public enum Theme {
+        LIGHT, DARK
+    }
+
+    // Add static theme management
+    private static Theme currentTheme = Theme.LIGHT;
+
+    public static Theme getCurrentTheme() {
+        return currentTheme;
+    }
+
+    public static void setTheme(Theme theme) {
+        currentTheme = theme;
+    }
+
+
     public AppSettingController() {
         preferencesDAO = new UserPreferencesDAO();
         appSettingsDAO = new AppSettingsDAO();
@@ -88,8 +142,10 @@ public class AppSettingController {
         lightButton.setToggleGroup(new javafx.scene.control.ToggleGroup());
         darkButton.setToggleGroup(lightButton.getToggleGroup());
 
-        // Set default theme (e.g., Light)
-        lightButton.setSelected(true);
+        // Set radio button based on current theme
+        Theme currentTheme = getCurrentTheme();
+        lightButton.setSelected(currentTheme == Theme.LIGHT);
+        darkButton.setSelected(currentTheme == Theme.DARK);
 
         // Load existing app settings if available
         if (currentUser != null && currentUser.getEmail() != null) {
@@ -101,6 +157,10 @@ public class AppSettingController {
                     lightButton.setSelected("Light".equals(theme));
                     darkButton.setSelected("Dark".equals(theme));
                     runOnStartupCheckBox.setSelected(runOnStartup);
+
+                    // Apply the theme immediately
+                    applyTheme(theme);
+
                     System.out.println("Loaded settings - Email: " + currentUser.getEmail() + ", Theme: " + theme + ", RunOnStartup: " + runOnStartup);
                 } else {
                     System.out.println("No settings found for email: " + currentUser.getEmail());
@@ -133,6 +193,10 @@ public class AppSettingController {
             try {
                 String theme = lightButton.isSelected() ? "Light" : "Dark";
                 boolean runOnStartup = runOnStartupCheckBox.isSelected();
+
+                // Apply theme immediately when save is clicked
+                applyTheme(theme);
+
 //                System.out.println("Saving settings - Email: " + currentUser.getEmail() + ", Theme: " + theme + ", RunOnStartup: " + runOnStartup);
                 appSettingsDAO.saveAppSettings(currentUser.getEmail(), theme, runOnStartup);
                 configureRunOnStartup(runOnStartup);
