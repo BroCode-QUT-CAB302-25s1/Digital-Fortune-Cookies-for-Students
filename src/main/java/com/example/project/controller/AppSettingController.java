@@ -4,7 +4,6 @@ import com.example.project.dao.AppSettingsDAO;
 import com.example.project.dao.UserPreferencesDAO;
 import com.example.project.model.User;
 import com.example.project.util.ErrorAlert;
-import com.example.project.util.ThemeManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -57,45 +56,57 @@ public class AppSettingController {
     private final AppSettingsDAO appSettingsDAO;
 
     // Method to apply the theme based on a selected setting
-private void applyTheme(String theme) {
-    // Update ThemeManager first
-    ThemeManager.getInstance().setTheme(
-        "Dark".equals(theme) ? ThemeManager.Theme.DARK : ThemeManager.Theme.LIGHT
-    );
+    private void applyTheme(String theme) {
+        // Update theme
+        setTheme("Dark".equals(theme) ? Theme.DARK : Theme.LIGHT);
 
-    // Get stylesheet based on theme
-    String stylesheet = ThemeManager.getInstance().getCurrentTheme() == ThemeManager.Theme.DARK ?
-            "/com/example/project/darkmode_stylesheet/" : "/com/example/project/style_sheet/";
+        // Get stylesheet based on theme
+        String stylesheet = getCurrentTheme() == Theme.DARK ?
+                "/com/example/project/darkmode_stylesheet/" : "/com/example/project/style_sheet/";
 
-    // Debug: Print current theme and path
-    System.out.println("Current theme: " + theme);
-    System.out.println("Stylesheet base path: " + stylesheet);
+        // Debug: Print current theme and path
+        System.out.println("Current theme: " + theme);
+        System.out.println("Stylesheet base path: " + stylesheet);
 
-
-    // Get all open windows and update their themes
-    updateThemeForStage(settingsStage, stylesheet + "appSetting-stylesheet.css");
-    if (homeScene != null) {
-        updateThemeForScene(homeScene, stylesheet + "home-stylesheet.css");
-    }
-}
-
-private void updateThemeForStage(Stage stage, String stylesheetPath) {
-    if (stage != null && stage.getScene() != null) {
-        updateThemeForScene(stage.getScene(), stylesheetPath);
-    }
-}
-
-private void updateThemeForScene(Scene scene, String stylesheetPath) {
-    if (scene != null) {
-        scene.getStylesheets().clear();
-        var resource = getClass().getResource(stylesheetPath);
-        if (resource == null) {
-            return;
+        // Get all open windows and update their themes
+        updateThemeForStage(settingsStage, stylesheet + "appSetting-stylesheet.css");
+        if (homeScene != null) {
+            updateThemeForScene(homeScene, stylesheet + "home-stylesheet.css");
         }
-        String resourcePath = resource.toExternalForm();
-        scene.getStylesheets().add(resourcePath);
     }
-}
+
+    private void updateThemeForStage(Stage stage, String stylesheetPath) {
+        if (stage != null && stage.getScene() != null) {
+            updateThemeForScene(stage.getScene(), stylesheetPath);
+        }
+    }
+
+    private void updateThemeForScene(Scene scene, String stylesheetPath) {
+        if (scene != null) {
+            scene.getStylesheets().clear();
+            var resource = getClass().getResource(stylesheetPath);
+            if (resource == null) {
+                return;
+            }
+            String resourcePath = resource.toExternalForm();
+            scene.getStylesheets().add(resourcePath);
+        }
+    }
+
+    public enum Theme {
+        LIGHT, DARK
+    }
+
+    // Add static theme management
+    private static Theme currentTheme = Theme.LIGHT;
+
+    public static Theme getCurrentTheme() {
+        return currentTheme;
+    }
+
+    public static void setTheme(Theme theme) {
+        currentTheme = theme;
+    }
 
 
     public AppSettingController() {
@@ -132,9 +143,9 @@ private void updateThemeForScene(Scene scene, String stylesheetPath) {
         darkButton.setToggleGroup(lightButton.getToggleGroup());
 
         // Set radio button based on current theme
-        ThemeManager.Theme currentTheme = ThemeManager.getInstance().getCurrentTheme();
-        lightButton.setSelected(currentTheme == ThemeManager.Theme.LIGHT);
-        darkButton.setSelected(currentTheme == ThemeManager.Theme.DARK);
+        Theme currentTheme = getCurrentTheme();
+        lightButton.setSelected(currentTheme == Theme.LIGHT);
+        darkButton.setSelected(currentTheme == Theme.DARK);
 
         // Load existing app settings if available
         if (currentUser != null && currentUser.getEmail() != null) {
