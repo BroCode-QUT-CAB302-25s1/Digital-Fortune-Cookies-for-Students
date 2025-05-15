@@ -62,18 +62,22 @@ public class AppSettingController {
 
         // Get stylesheet based on theme
         String stylesheet = getCurrentTheme() == Theme.DARK ?
-                "/com/example/project/darkmode_stylesheet/" : "/com/example/project/style_sheet/";
+            "/com/example/project/darkmode_stylesheet/appSetting-stylesheet-dark.css" : 
+            "/com/example/project/style_sheet/appSetting-stylesheet.css";
 
         // Debug: Print current theme and path
         System.out.println("Current theme: " + theme);
-        System.out.println("Stylesheet base path: " + stylesheet);
+        System.out.println("Stylesheet path: " + stylesheet);
 
         // Get all open windows and update their themes
-        updateThemeForStage(settingsStage, stylesheet + "appSetting-stylesheet.css");
+        updateThemeForStage(settingsStage, stylesheet);
         if (homeScene != null) {
-            updateThemeForScene(homeScene, stylesheet + "home-stylesheet.css");
-        }
+        String homeStylesheet = getCurrentTheme() == Theme.DARK ?
+                "/com/example/project/darkmode_stylesheet/home-stylesheet-dark.css" : 
+                "/com/example/project/style_sheet/home-stylesheet.css";
+        updateThemeForScene(homeScene, homeStylesheet);
     }
+}
 
     private void updateThemeForStage(Stage stage, String stylesheetPath) {
         if (stage != null && stage.getScene() != null) {
@@ -292,7 +296,7 @@ public class AppSettingController {
             if (enable) {
                 String plistContent = String.format(
                         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-                                "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n" +
+                                "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://wwwwww.apple.com/DTDs/PropertyList-1.0.dtd\">\n" +
                                 "<plist version=\"1.0\">\n" +
                                 "<dict>\n" +
                                 "    <key>Label</key>\n" +
