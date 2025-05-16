@@ -122,6 +122,11 @@ public class HomeController {
         appSettingButton.setStyle("-fx-cursor: hand;");
         playModeButton.setStyle("-fx-cursor: hand;");
 
+        fortuneCookieImage.getStyleClass().add("fortune-image-container");
+        userDisplayButton.getStyleClass().add("nav-button");
+        appSettingButton.getStyleClass().add("nav-button");
+        playModeButton.getStyleClass().add("nav-button");
+
         // Initialize hour choice box
         updateHourChoiceBoxOptions();
         hourChoiceBox.setValue(formatHours(1.0)); // Default to 1 hour
@@ -156,25 +161,6 @@ public class HomeController {
         Tooltip.install(progressBar, forProgressBar);
         Tooltip.install(fortuneCookieImage, forCookieImg);
         Tooltip.install(playModeButton, forPlaymodeBtn);
-
-        // TODO Make this work with dark mode
-        // Add DropShadow effect on mouse hover
-        DropShadow dropShadow = new DropShadow();
-        dropShadow.setRadius(10.585);
-        dropShadow.setWidth(23.34);
-        dropShadow.setColor(Color.rgb(110, 42, 41)); // #6E2A29 // Currently for light mode
-
-        fortuneCookieImage.setOnMouseEntered(event -> fortuneCookieImage.setEffect(dropShadow));
-        fortuneCookieImage.setOnMouseExited(event -> fortuneCookieImage.setEffect(null));
-
-        userDisplayButton.setOnMouseEntered(event -> userDisplayButton.setEffect(dropShadow));
-        userDisplayButton.setOnMouseExited(event -> userDisplayButton.setEffect(null));
-
-        appSettingButton.setOnMouseEntered(event -> appSettingButton.setEffect(dropShadow));
-        appSettingButton.setOnMouseExited(event -> appSettingButton.setEffect(null));
-
-        playModeButton.setOnMouseEntered(mouseEvent -> playModeButton.setEffect(dropShadow));
-        playModeButton.setOnMouseExited(mouseEvent -> playModeButton.setEffect(null));
     }
 
     private void updateHourChoiceBoxOptions() {
