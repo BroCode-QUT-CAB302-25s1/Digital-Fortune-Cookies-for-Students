@@ -2,6 +2,7 @@ package com.example.project.controller;
 
 import com.example.project.model.User;
 import com.example.project.util.ErrorAlert;
+import com.example.project.util.StyleManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.Event;
@@ -79,7 +80,7 @@ public class HomeController {
         this.homeStage = stage;
         this.signInController = signInController;
         resetProgress();
-        applyTheme(); // Apply theme after the stage is set
+        applyTheme();
     }
 
     public void setCurrentUser(User user) {
@@ -97,16 +98,8 @@ public class HomeController {
     }
 
     public void applyTheme() {
-        // Get the current theme from AppSettingController
-        String stylesheet = AppSettingController.getCurrentTheme() == AppSettingController.Theme.DARK ?
-                "/com/example/project/darkmode_stylesheet/home-stylesheet-dark.css" :
-                "/com/example/project/style_sheet/home-stylesheet.css";
-
-        // Apply the stylesheet
-        Scene scene = welcomeTitle.getScene();
-        if (scene != null) {
-            scene.getStylesheets().clear();
-            scene.getStylesheets().add(getClass().getResource(stylesheet).toExternalForm());
+        if (homeStage != null && homeStage.getScene() != null) {
+            StyleManager.applyTheme(homeStage.getScene(), "home");
         }
     }
 
@@ -233,6 +226,10 @@ public class HomeController {
             fortuneStage.setScene(fortuneScene);
             fortuneStage.setResizable(false); // Keep non-resizable as in original
             fortuneStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/symbol/digitalCookieMainIcon2.png")));
+
+            // Apply theme to fortune screen
+            StyleManager.applyTheme(fortuneScene, "fortune");
+
             fortuneStage.showAndWait(); // Show modal dialog
         } catch (IOException e) {
             e.printStackTrace();
@@ -288,6 +285,9 @@ public class HomeController {
             settingsStage.setResizable(false);
             settingsStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/symbol/createIcon1.png")));
 
+            // Apply theme to settings screen
+            StyleManager.applyTheme(settingsScene, "appsetting");
+
             AppSettingController settingController = loader.getController();
             settingController.setStage(settingsStage);
             settingController.setScene(homeStage.getScene(), this);
@@ -314,6 +314,9 @@ public class HomeController {
             userDisplayStage.initModality(Modality.WINDOW_MODAL);
             userDisplayStage.setResizable(false);
             userDisplayStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/symbol/userIcon1.png")));
+
+            // Apply theme to user display screen
+            StyleManager.applyTheme(userDisplayScene, "userdisplay");
 
             UserDisplayController userDisplayController = loader.getController();
             userDisplayController.setStage(userDisplayStage);
