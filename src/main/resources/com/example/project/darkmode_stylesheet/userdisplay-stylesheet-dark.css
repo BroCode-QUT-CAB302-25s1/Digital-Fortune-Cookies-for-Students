@@ -1,0 +1,82 @@
+/* Base styles - Dark Mode */
+.root {
+    -fx-background-color: #121212;
+    -fx-font-family: "Arial";
+}
+
+/* Labels */
+.label {
+    -fx-text-fill: #E2E8F0;
+}
+
+/* Top header panel */
+.root > Pane {
+    -fx-background-color: #1E1E1E;
+}
+
+/* Profile card and info panel */
+#profileCard, #infoPanel {
+    -fx-background-color: #1E1E1E;
+    -fx-background-radius: 15;
+    -fx-border-color: #4C566A;
+    -fx-border-radius: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 5);
+}
+
+/* Sub info frames */
+.subInfoFrame {
+    -fx-background-color: #2D3748;
+    -fx-background-radius: 15;
+    -fx-border-color: #4C566A;
+    -fx-border-radius: 15;
+}
+
+/* Info boxes */
+.infoBox {
+    -fx-background-color: #2D3748;
+    -fx-background-radius: 10;
+}
+
+/* Label styles */
+.label-title {
+    -fx-text-fill: #60A5FA;
+    -fx-font-weight: bold;
+}
+
+.label-value, .label-cardInfo, .infoBoxValue {
+    -fx-text-fill: #E2E8F0;
+}
+
+#titleHeader {
+    -fx-text-fill: #60A5FA;
+}
+
+#profileName {
+    -fx-text-fill: #60A5FA;
+}
+
+#statusOnline {
+    -fx-text-fill: #4FD1C5;
+}
+
+/* Buttons */
+.button {
+    -fx-background-color: #2D3748;
+    -fx-text-fill: #E2E8F0;
+    -fx-border-color: #4A5568;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+.button:hover {
+    -fx-background-color: #4A5568;
+}
+
+.button:pressed {
+    -fx-background-color: #60A5FA;
+}
+
+/* Lines */
+Line {
+    -fx-stroke: #4C566A;
+}
