@@ -2,6 +2,7 @@ package com.example.project;
 
 import com.example.project.controller.MainController;
 import com.example.project.database.DatabaseInitializer;
+import com.example.project.util.StyleManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,6 +19,9 @@ public class MainApplication extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("main-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 500, 500);
+
+        // Apply theme before showing the stage
+        StyleManager.applyTheme(scene, "main");
 
         // Remove title bar
         stage.initStyle(StageStyle.UNDECORATED);
