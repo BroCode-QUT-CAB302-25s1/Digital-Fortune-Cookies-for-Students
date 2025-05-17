@@ -5,6 +5,7 @@ import com.example.project.dao.SqliteUserDAO;
 import com.example.project.dao.UserPreferencesDAO;
 import com.example.project.model.User;
 import com.example.project.util.ErrorAlert;
+import com.example.project.util.StyleManager;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -152,6 +153,7 @@ public class UserDisplayController {
     public void setScene(Scene homeScene, HomeController homeController) {
         this.homeScene = homeScene;
         this.homeController = homeController;
+        applyTheme();
 
         // Clip the image into a circle
         Circle clip = new Circle(75, 75, 75); // x, y, radius
@@ -161,6 +163,13 @@ public class UserDisplayController {
     public void setUser(User user) {
         this.currentUser = user;
         updateUser(user);
+    }
+
+    public void applyTheme() {
+        Scene scene = profileCard.getScene();
+        if (scene != null) {
+            StyleManager.applyTheme(scene, "userdisplay");
+        }
     }
 
     public void updateUser(User user) {
