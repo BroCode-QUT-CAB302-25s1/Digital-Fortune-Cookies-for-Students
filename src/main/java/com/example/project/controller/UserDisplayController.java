@@ -168,7 +168,7 @@ public class UserDisplayController {
     public void applyTheme() {
         Scene scene = profileCard.getScene();
         if (scene != null) {
-            StyleManager.applyTheme(scene, "userdisplay");
+            StyleManager.applyTheme(scene, "userDisplay");
         }
     }
 
