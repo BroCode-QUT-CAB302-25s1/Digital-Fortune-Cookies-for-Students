@@ -4,6 +4,7 @@ import com.example.project.dao.AppSettingsDAO;
 import com.example.project.dao.UserPreferencesDAO;
 import com.example.project.model.User;
 import com.example.project.util.ErrorAlert;
+import com.example.project.util.StyleManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -48,6 +49,7 @@ public class AppSettingController {
     @FXML
     private Button backButton;
 
+    private String pendingTheme = null;
     private Stage settingsStage;
     private Scene homeScene;
     private HomeController homeController;
@@ -57,57 +59,36 @@ public class AppSettingController {
 
     // Method to apply the theme based on a selected setting
     private void applyTheme(String theme) {
-        // Update theme
+        // Update the current theme
         setTheme("Dark".equals(theme) ? Theme.DARK : Theme.LIGHT);
 
-        // Get stylesheet based on theme
-        String stylesheet = getCurrentTheme() == Theme.DARK ?
-                "/com/example/project/darkmode_stylesheet/" : "/com/example/project/style_sheet/";
-
-        // Debug: Print current theme and path
-        System.out.println("Current theme: " + theme);
-        System.out.println("Stylesheet base path: " + stylesheet);
-
-        // Get all open windows and update their themes
-        updateThemeForStage(settingsStage, stylesheet + "appSetting-stylesheet.css");
+        // Apply theme to the current stage
+        if (settingsStage != null && settingsStage.getScene() != null) {
+            StyleManager.applyTheme(settingsStage.getScene(), "appsetting");
+        }
+        // Apply theme to home scene
         if (homeScene != null) {
-            updateThemeForScene(homeScene, stylesheet + "home-stylesheet.css");
-        }
-    }
-
-    private void updateThemeForStage(Stage stage, String stylesheetPath) {
-        if (stage != null && stage.getScene() != null) {
-            updateThemeForScene(stage.getScene(), stylesheetPath);
-        }
-    }
-
-    private void updateThemeForScene(Scene scene, String stylesheetPath) {
-        if (scene != null) {
-            scene.getStylesheets().clear();
-            var resource = getClass().getResource(stylesheetPath);
-            if (resource == null) {
-                return;
-            }
-            String resourcePath = resource.toExternalForm();
-            scene.getStylesheets().add(resourcePath);
+            StyleManager.applyTheme(homeScene, "home");
         }
     }
 
     public enum Theme {
-        LIGHT, DARK
+        LIGHT,
+        DARK
     }
 
-    // Add static theme management
+    // Add static field to track current theme
     private static Theme currentTheme = Theme.LIGHT;
 
+    // Add static getter for current theme
     public static Theme getCurrentTheme() {
         return currentTheme;
     }
 
-    public static void setTheme(Theme theme) {
+    // Add method to set theme
+    private void setTheme(Theme theme) {
         currentTheme = theme;
     }
-
 
     public AppSettingController() {
         preferencesDAO = new UserPreferencesDAO();
@@ -143,9 +124,22 @@ public class AppSettingController {
         darkButton.setToggleGroup(lightButton.getToggleGroup());
 
         // Set radio button based on current theme
-        Theme currentTheme = getCurrentTheme();
-        lightButton.setSelected(currentTheme == Theme.LIGHT);
-        darkButton.setSelected(currentTheme == Theme.DARK);
+        AppSettingController.Theme currentTheme = AppSettingController.getCurrentTheme();
+        lightButton.setSelected(currentTheme == AppSettingController.Theme.LIGHT);
+        darkButton.setSelected(currentTheme == AppSettingController.Theme.DARK);
+
+        // Set up radio button listeners
+        lightButton.setOnAction(event -> {
+            if (lightButton.isSelected()) {
+                pendingTheme = "Light";
+            }
+        });
+
+        darkButton.setOnAction(event -> {
+            if (darkButton.isSelected()) {
+                pendingTheme = "Dark";
+            }
+        });
 
         // Load existing app settings if available
         if (currentUser != null && currentUser.getEmail() != null) {
@@ -196,6 +190,7 @@ public class AppSettingController {
 
                 // Apply theme immediately when save is clicked
                 applyTheme(theme);
+                pendingTheme = null;
 
 //                System.out.println("Saving settings - Email: " + currentUser.getEmail() + ", Theme: " + theme + ", RunOnStartup: " + runOnStartup);
                 appSettingsDAO.saveAppSettings(currentUser.getEmail(), theme, runOnStartup);
@@ -223,6 +218,12 @@ public class AppSettingController {
 
     @FXML
     private void handleBackButton(ActionEvent event) {
+        if (pendingTheme != null) {
+            Theme currentTheme = getCurrentTheme();
+            lightButton.setSelected(currentTheme == Theme.LIGHT);
+            darkButton.setSelected(currentTheme == Theme.DARK);
+            pendingTheme = null;
+        }
         settingsStage.close(); // Close the settings dialog
     }
 
@@ -292,7 +293,7 @@ public class AppSettingController {
             if (enable) {
                 String plistContent = String.format(
                         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-                                "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n" +
+                                "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://wwwwww.apple.com/DTDs/PropertyList-1.0.dtd\">\n" +
                                 "<plist version=\"1.0\">\n" +
                                 "<dict>\n" +
                                 "    <key>Label</key>\n" +

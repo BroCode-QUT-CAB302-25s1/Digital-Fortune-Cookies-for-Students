@@ -26,6 +26,14 @@
     -fx-font-family: "Arial";
 }
 
+/* DropShadow effect on mouse hover */
+.fortune-image-container ImageView {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 5);
+}
+
+.fortune-image-container ImageView:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 15, 0.5, 0, 0);
+}
 
 #trackingSetupBox{
     -fx-background-color: white;
@@ -59,6 +67,19 @@
     -fx-background-radius: 5;
     -fx-font-family: "Arial";
     -fx-font-size: 12pt;
+}
+
+/* play button */
+#playModeButton {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 5);
+}
+
+#playModeButton ImageView {
+    -fx-effect: innershadow(gaussian, #3178C6, 10, 0.5, 0, 0);
+}
+
+#playModeButton:hover {
+    -fx-effect: dropshadow(gaussian, #3178C6, 15, 0.5, 0, 0);
 }
 
 /* Progress area */

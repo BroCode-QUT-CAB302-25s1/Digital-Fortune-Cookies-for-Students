@@ -2,6 +2,7 @@ package com.example.project.controller;
 
 import com.example.project.model.User;
 import com.example.project.util.ErrorAlert;
+import com.example.project.util.StyleManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.Event;
@@ -79,7 +80,7 @@ public class HomeController {
         this.homeStage = stage;
         this.signInController = signInController;
         resetProgress();
-        applyTheme(); // Apply theme after the stage is set
+        applyTheme();
     }
 
     public void setCurrentUser(User user) {
@@ -97,16 +98,8 @@ public class HomeController {
     }
 
     public void applyTheme() {
-        // Get the current theme from AppSettingController
-        String stylesheet = AppSettingController.getCurrentTheme() == AppSettingController.Theme.DARK ?
-                "/com/example/project/darkmode_stylesheet/home-stylesheet.css" :
-                "/com/example/project/style_sheet/home-stylesheet.css";
-
-        // Apply the stylesheet
-        Scene scene = welcomeTitle.getScene();
-        if (scene != null) {
-            scene.getStylesheets().clear();
-            scene.getStylesheets().add(getClass().getResource(stylesheet).toExternalForm());
+        if (homeStage != null && homeStage.getScene() != null) {
+            StyleManager.applyTheme(homeStage.getScene(), "home");
         }
     }
 
@@ -121,6 +114,11 @@ public class HomeController {
         fortuneCookieImage.setStyle("-fx-cursor: hand;");
         appSettingButton.setStyle("-fx-cursor: hand;");
         playModeButton.setStyle("-fx-cursor: hand;");
+
+        fortuneCookieImage.getStyleClass().add("fortune-image-container");
+        userDisplayButton.getStyleClass().add("nav-button");
+        appSettingButton.getStyleClass().add("nav-button");
+        playModeButton.getStyleClass().add("nav-button");
 
         // Initialize hour choice box
         updateHourChoiceBoxOptions();
@@ -156,24 +154,6 @@ public class HomeController {
         Tooltip.install(progressBar, forProgressBar);
         Tooltip.install(fortuneCookieImage, forCookieImg);
         Tooltip.install(playModeButton, forPlaymodeBtn);
-
-        // Add DropShadow effect on mouse hover
-        DropShadow dropShadow = new DropShadow();
-        dropShadow.setRadius(10.585);
-        dropShadow.setWidth(23.34);
-        dropShadow.setColor(Color.rgb(110, 42, 41)); // #6E2A29
-
-        fortuneCookieImage.setOnMouseEntered(event -> fortuneCookieImage.setEffect(dropShadow));
-        fortuneCookieImage.setOnMouseExited(event -> fortuneCookieImage.setEffect(null));
-
-        userDisplayButton.setOnMouseEntered(event -> userDisplayButton.setEffect(dropShadow));
-        userDisplayButton.setOnMouseExited(event -> userDisplayButton.setEffect(null));
-
-        appSettingButton.setOnMouseEntered(event -> appSettingButton.setEffect(dropShadow));
-        appSettingButton.setOnMouseExited(event -> appSettingButton.setEffect(null));
-
-        playModeButton.setOnMouseEntered(mouseEvent -> playModeButton.setEffect(dropShadow));
-        playModeButton.setOnMouseExited(mouseEvent -> playModeButton.setEffect(null));
     }
 
     private void updateHourChoiceBoxOptions() {
@@ -246,6 +226,10 @@ public class HomeController {
             fortuneStage.setScene(fortuneScene);
             fortuneStage.setResizable(false); // Keep non-resizable as in original
             fortuneStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/symbol/digitalCookieMainIcon2.png")));
+
+            // Apply theme to fortune screen
+            StyleManager.applyTheme(fortuneScene, "fortune");
+
             fortuneStage.showAndWait(); // Show modal dialog
         } catch (IOException e) {
             e.printStackTrace();
@@ -301,6 +285,9 @@ public class HomeController {
             settingsStage.setResizable(false);
             settingsStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/symbol/createIcon1.png")));
 
+            // Apply theme to settings screen
+            StyleManager.applyTheme(settingsScene, "appsetting");
+
             AppSettingController settingController = loader.getController();
             settingController.setStage(settingsStage);
             settingController.setScene(homeStage.getScene(), this);
@@ -327,6 +314,9 @@ public class HomeController {
             userDisplayStage.initModality(Modality.WINDOW_MODAL);
             userDisplayStage.setResizable(false);
             userDisplayStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/symbol/userIcon1.png")));
+
+            // Apply theme to user display screen
+            StyleManager.applyTheme(userDisplayScene, "userdisplay");
 
             UserDisplayController userDisplayController = loader.getController();
             userDisplayController.setStage(userDisplayStage);
