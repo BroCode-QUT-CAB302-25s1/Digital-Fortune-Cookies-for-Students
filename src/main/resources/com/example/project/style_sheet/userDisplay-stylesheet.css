@@ -3,6 +3,11 @@
     -fx-font-family: "Arial"
 }
 
+.root > Pane:first-child {
+    -fx-background-color: #f9fdf6;
+    -fx-border-radius: 10;
+}
+
 #titleHeader {
     -fx-font-size: 22px;
     -fx-font-weight: bold;
