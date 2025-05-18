@@ -21,7 +21,7 @@ public class MainApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 500, 500);
 
         // Apply theme before showing the stage
-        StyleManager.applyTheme(scene, "main");
+//        StyleManager.applyTheme(scene, "main");
 
         // Remove title bar
         stage.initStyle(StageStyle.UNDECORATED);
