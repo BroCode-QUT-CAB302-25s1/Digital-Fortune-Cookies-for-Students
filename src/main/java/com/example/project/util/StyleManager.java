@@ -18,7 +18,7 @@ public class StyleManager {
         VIEW_STYLESHEETS.put("home", "home-stylesheet");
         //VIEW_STYLESHEETS.put("signin", "signin-stylesheet");
         //VIEW_STYLESHEETS.put("signup", "signup-stylesheet");
-        VIEW_STYLESHEETS.put("userdisplay", "userdisplay-stylesheet");
+        VIEW_STYLESHEETS.put("userdisplay", "userDisplay-stylesheet");
         VIEW_STYLESHEETS.put("appsetting", "appSetting-stylesheet");
         //VIEW_STYLESHEETS.put("passwordsetup", "passwordSetting-stylesheet");
 //        VIEW_STYLESHEETS.put("usersetting", "userSetting-stylesheet");
