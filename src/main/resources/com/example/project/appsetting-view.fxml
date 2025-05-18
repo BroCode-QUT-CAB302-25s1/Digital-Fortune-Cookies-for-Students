@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="container" alignment="TOP_CENTER" prefWidth="430.0" spacing="15" styleClass="container" stylesheets="@style_sheet/appSetting-stylesheet.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+<VBox fx:id="container" alignment="TOP_CENTER" prefWidth="430.0" spacing="15" styleClass="container" stylesheets="@style_sheet/appSetting.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.project.controller.AppSettingController">
 
     <!-- Title section -->

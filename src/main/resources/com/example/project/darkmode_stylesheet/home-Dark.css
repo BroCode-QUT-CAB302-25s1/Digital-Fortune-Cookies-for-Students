@@ -1,6 +1,7 @@
 /* Base styles - Dark Mode */
 .root {
-    -fx-background-color: #121212;
+    /*-fx-background-color: #121212;*/
+    -fx-background-color: #292222;
     -fx-font-family: "Arial";
 }
 
@@ -38,17 +39,16 @@
 #trackingSetupBox{
     -fx-background-color: #1E1E1E;
     -fx-background-radius: 10;
-    -fx-border-color: #3B4252;
     -fx-border-radius: 10;
     -fx-border-weight: 10;
-    -fx-border-color: #4C566A;
+    -fx-border-color: #6ee08b;
 }
 
 #trackingProgressBox{
     -fx-background-color: #1E1E1E;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 5);
     -fx-background-radius: 10;
-    -fx-border-color: #2E3440;
+    -fx-border-color: #6ee08b;
     -fx-border-radius: 10;
     -fx-border-weight: 1;
 }
@@ -62,7 +62,7 @@
 
 .choice-box {
     -fx-background-color: #2D3748;
-    -fx-border-color: #4A5568;
+    -fx-border-color: #387a3f;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
     -fx-font-family: "Arial";
@@ -112,7 +112,7 @@
     -fx-background-radius: 10px;
     -fx-padding: 15px;
     -fx-spacing: 10px;
-    -fx-border-color: #4C566A;
+    -fx-border-color: #6ee08b;
     -fx-border-radius: 10px;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 5, 0, 0, 2);
     -fx-font-family: "Arial";
@@ -154,7 +154,6 @@
     -fx-background-color: transparent;
     -fx-text-fill: #E2E8F0;
     -fx-font-size: 18px;
-    -fx-font-weight: bold;
     -fx-background-radius: 5px;
     -fx-padding: 5px 10px;
     -fx-font-family: "Arial";
@@ -162,9 +161,11 @@
 
 .nav-button:hover {
     -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 10, 0, 0, 5);
 }
 
 .nav-button.selected {
     -fx-background-color: rgba(255, 255, 255, 0.15);
     -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.3), 10, 0, 0, 5);
 }

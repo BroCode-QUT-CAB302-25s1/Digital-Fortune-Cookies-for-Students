@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 
 <?import javafx.scene.control.ChoiceBox?>
-<AnchorPane prefHeight="850.0" prefWidth="884.0" stylesheets="@style_sheet/userSetting-stylesheet.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.controller.UserSettingController">
+<AnchorPane prefHeight="850.0" prefWidth="884.0" stylesheets="@style_sheet/userSetting.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.controller.UserSettingController">
    <children>
       <Pane fx:id="infoPanel" layoutX="32.0" layoutY="66.0" prefHeight="717.0" prefWidth="834.0">
          <children>

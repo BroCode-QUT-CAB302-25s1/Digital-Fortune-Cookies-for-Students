@@ -15,11 +15,11 @@ public class StyleManager {
     static {
         // Initialize mapping of view names to stylesheet names
         //VIEW_STYLESHEETS.put("main", "main-stylesheet");
-        VIEW_STYLESHEETS.put("home", "home-stylesheet");
+        VIEW_STYLESHEETS.put("home", "home");
         //VIEW_STYLESHEETS.put("signin", "signin-stylesheet");
         //VIEW_STYLESHEETS.put("signup", "signup-stylesheet");
-        VIEW_STYLESHEETS.put("userdisplay", "userDisplay-stylesheet");
-        VIEW_STYLESHEETS.put("appsetting", "appSetting-stylesheet");
+        VIEW_STYLESHEETS.put("userdisplay", "userDisplay");
+        VIEW_STYLESHEETS.put("appsetting", "appSetting");
         //VIEW_STYLESHEETS.put("passwordsetup", "passwordSetting-stylesheet");
 //        VIEW_STYLESHEETS.put("usersetting", "userSetting-stylesheet");
 //        VIEW_STYLESHEETS.put("fortune", "fortune-stylesheet");
@@ -29,7 +29,7 @@ public class StyleManager {
     public static void applyTheme(Scene scene, String viewName) {
         if (scene == null) return;
 
-        String stylesheetName = VIEW_STYLESHEETS.getOrDefault(viewName.toLowerCase(), viewName + "-stylesheet");
+        String stylesheetName = VIEW_STYLESHEETS.getOrDefault(viewName.toLowerCase(), viewName);
         AppSettingController.Theme currentTheme = AppSettingController.getCurrentTheme();
         String themeSuffix = currentTheme == AppSettingController.Theme.DARK ? "-dark" : "";
         String stylesheet = (currentTheme == AppSettingController.Theme.DARK ?

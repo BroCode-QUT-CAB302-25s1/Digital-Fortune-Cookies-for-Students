@@ -17,7 +17,7 @@
 
     <!-- Link to the CSS stylesheet for this screen -->
     <stylesheets>
-        <URL value="@style_sheet/fortune-stylesheet.css" />
+        <URL value="@style_sheet/fortune.css" />
     </stylesheets>
 
     <!-- Center content containing the cracked cookie and fortune message -->

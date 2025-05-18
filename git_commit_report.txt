@@ -1,0 +1,12 @@
+"===== Commit Summary ====="
+    52	Antares
+    26	Van Thien Phuoc Mai
+    22	Thompson
+    17	Brian-brocode
+    10	Thompson Tang
+     6	Brian
+     5	Tomas
+     4	ThompsonT
+     2	Darcy
+     1	Thiên Phước
+-e "===== Detailed Commit Log ====="
