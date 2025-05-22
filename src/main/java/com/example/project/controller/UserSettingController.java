@@ -6,6 +6,7 @@ import com.example.project.dao.SqliteUserDAO;
 import com.example.project.dao.UserPreferencesDAO;
 import com.example.project.model.User;
 import com.example.project.util.ErrorAlert;
+import com.example.project.util.SuccessAlert;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -185,7 +186,6 @@ public class UserSettingController {
                 "Wind Turbine Technician", "Yoga Instructor"
         );
 
-
         // Make emailField non-editable
         emailField.setEditable(false);
 
@@ -264,11 +264,6 @@ public class UserSettingController {
 
     @FXML
     private void handleCancelButton(ActionEvent event) {
-//        if (userDisplayController != null) {
-//            userSettingStage.setResizable(false);
-//            userSettingStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/symbol/userIcon3.png")));
-//            userSettingStage.setScene(userDisplayScene);
-//        }
         userSettingStage.close();
     }
 
@@ -351,7 +346,7 @@ public class UserSettingController {
             }
             // Switch back to display scene
             if (userDisplayController != null) {
-                ErrorAlert.show("Notification", "Your data is saved!");
+                SuccessAlert.show("Notification", "Your data is saved!");
                 userDisplayController.updateUser(currentUser);
 //                userSettingStage.setScene(userDisplayScene);
             }
@@ -384,15 +379,6 @@ public class UserSettingController {
                 !user.getEmail().matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
             return false;
         }
-//        if (user.getFirstName() == null || user.getFirstName().trim().isEmpty()) {
-//            return false;
-//        }
-//        if (user.getLastName() == null || user.getLastName().trim().isEmpty()) {
-//            return false;
-//        }
-//        if (user.getPassword() == null || user.getPassword().length() < 6) {
-//            return false;
-//        }
         return true;
     }
 }

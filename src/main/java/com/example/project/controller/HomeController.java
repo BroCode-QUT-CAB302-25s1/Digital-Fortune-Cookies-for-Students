@@ -2,6 +2,7 @@ package com.example.project.controller;
 
 import com.example.project.model.User;
 import com.example.project.util.ErrorAlert;
+import com.example.project.util.SuccessAlert;
 import com.example.project.util.StyleManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -20,8 +21,6 @@ import javafx.event.ActionEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -159,18 +158,22 @@ public class HomeController {
     private void updateHourChoiceBoxOptions() {
         String previousSelection = hourChoiceBox.getValue(); // Store current selection
         hourChoiceBox.getItems().clear();
-        // Filter options to include only those >= totalStudyHours or all if no progress
+
+        // Compute roundedElapsedHours in a single expression to make it effectively final
+        final double roundedElapsedHours = elapsedStudyHours == 0.0 ? 0.0 : Math.ceil(elapsedStudyHours / 0.5) * 0.5;
+
+        // Filter options to include only those >= roundedElapsedHours
         List<String> availableOptions = hourOptions.stream()
-                .filter(hours -> totalStudyHours == 0.0 || hours >= totalStudyHours)
+                .filter(hours -> hours >= roundedElapsedHours)
                 .map(this::formatHours)
                 .collect(Collectors.toList());
         hourChoiceBox.getItems().addAll(availableOptions);
 
-        // Restore previous selection if still valid, otherwise select totalStudyHours
+        // Restore previous selection if still valid, otherwise select the minimum available option
         if (previousSelection != null && availableOptions.contains(previousSelection)) {
             hourChoiceBox.setValue(previousSelection);
-        } else if (totalStudyHours > 0.0) {
-            hourChoiceBox.setValue(formatHours(totalStudyHours));
+        } else if (!availableOptions.isEmpty()) {
+            hourChoiceBox.setValue(availableOptions.get(0));
         }
     }
 
@@ -356,6 +359,7 @@ public class HomeController {
 
                     if (progress >= 1.0) {
                         stopStudySession();
+                        SuccessAlert.show("Success", "Study session completed successfully!");
                         openFortuneScreen(null); // Auto-trigger fortune screen
                     }
                 }));

@@ -109,6 +109,10 @@
     -fx-font-family: "Arial"
 }
 
+.button:hover {
+    -fx-background-color: #b4f7cb;
+}
+
 .infoBox {
     -fx-background-color: #E6E6FA;
     -fx-background-radius: 10;

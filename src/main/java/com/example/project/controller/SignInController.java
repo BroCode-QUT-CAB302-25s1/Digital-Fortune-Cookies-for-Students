@@ -4,6 +4,7 @@ import com.example.project.dao.IUserDAO;
 import com.example.project.dao.SqliteUserDAO;
 import com.example.project.model.User;
 import com.example.project.util.ErrorAlert;
+import com.example.project.util.SuccessAlert;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -17,6 +18,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.stage.Modality;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 
@@ -85,15 +87,33 @@ public class SignInController {
         // Initialize UI components if needed
         loginButton.setOnAction(this::handleLoginButton);
         signupLink.setOnMouseClicked(this::handleSignupLink);
+        forgotLabel.setOnMouseClicked(this::handleForgotLabel);
 
         // Add Enter key handler to emailField and passwordField
         emailField.setOnKeyPressed(this::handleKeyPressed);
         passwordField.setOnKeyPressed(this::handleKeyPressed);
 
-        // Optional: Add visual feedback for interactivity
+        // Add visual feedback for interactivity
         signupLink.setStyle("-fx-cursor: hand;"); // Makes cursor a hand on hover
         forgotLabel.setStyle("-fx-cursor: hand;");
         loginButton.setStyle("-fx-cursor: hand;");
+
+        // Add hover effects for signupLink and forgotLabel
+        // Hover effect for signupLink (Create Account)
+        signupLink.setOnMouseEntered(event -> {
+            signupLink.setStyle("-fx-cursor: hand; -fx-text-fill: #001675; -fx-underline: true;");
+        });
+        signupLink.setOnMouseExited(event -> {
+            signupLink.setStyle("-fx-cursor: hand; -fx-text-fill: black; -fx-underline: false;");
+        });
+
+        // Hover effect for forgotLabel (Forgot Password)
+        forgotLabel.setOnMouseEntered(event -> {
+            forgotLabel.setStyle("-fx-cursor: hand; -fx-text-fill: #00802d; -fx-font-size: 13px;");
+        });
+        forgotLabel.setOnMouseExited(event -> {
+            forgotLabel.setStyle("-fx-cursor: hand; -fx-text-fill: black; -fx-font-size: 12px;");
+        });
     }
 
     @FXML
@@ -134,6 +154,35 @@ public class SignInController {
     }
 
     @FXML
+    private void handleForgotLabel(MouseEvent mouseEvent) {
+        try {
+            // Load forgot password FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/forgotPassword-view.fxml"));
+            Parent forgotPasswordRoot = loader.load();
+
+            // Create a new modal stage for the forgot password dialog
+            Stage forgotPasswordStage = new Stage();
+            forgotPasswordStage.initOwner(signInStage); // Set signInStage as the owner
+            forgotPasswordStage.setTitle("Forgot Password");
+            Scene forgotPasswordScene = new Scene(forgotPasswordRoot);
+            forgotPasswordStage.setScene(forgotPasswordScene);
+            forgotPasswordStage.initModality(Modality.WINDOW_MODAL); // Make it modal
+            forgotPasswordStage.setResizable(false);
+            forgotPasswordStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/symbol/digitalCookieMainIcon2.png")));
+
+            // Pass the stage and sign-in scene to ForgotPasswordController
+            ForgotPasswordController forgotPasswordController = loader.getController();
+            forgotPasswordController.setStage(forgotPasswordStage);
+            forgotPasswordController.setSignInScene(signInStage.getScene(), this);
+
+            forgotPasswordStage.showAndWait(); // Show modal dialog, sign-in remains in background
+        } catch (IOException e) {
+            ErrorAlert.show("Navigation Error", "Failed to load forgot password screen: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     private void handleLoginButton(ActionEvent event) {
         String email = emailField.getText().trim();
         String password = passwordField.getText().trim();
@@ -150,7 +199,10 @@ public class SignInController {
             return;
         }
 
-        // Successful login
+        // Successful login - Show success alert
+        SuccessAlert.show("Success", "Login successful!");
+
+        // Proceed to home screen
         try {
             // Load home FXML
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/home-view.fxml"));
