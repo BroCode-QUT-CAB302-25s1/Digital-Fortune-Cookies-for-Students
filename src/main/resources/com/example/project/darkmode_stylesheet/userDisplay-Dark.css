@@ -1,7 +1,7 @@
 /* Base styles - Dark Mode */
 .root {
     -fx-background-color: #121212;
-    -fx-font-family: "Arial";
+    -fx-font-family: "Arial"
 }
 
 /* Labels */
@@ -11,17 +11,18 @@
 
 /* Top header panel */
 .root > Pane:first-child {
-    -fx-background-color: #1E1E1E;
+    -fx-background-color: #121212;
     -fx-border-radius: 10;
 }
 
 /* Profile card and info panel */
-#profileCard, #infoPanel {
+#profileCard {
     -fx-background-color: #1E1E1E;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 5);
     -fx-background-radius: 15;
     -fx-border-color: #4C566A;
     -fx-border-radius: 15;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 5);
+    -fx-border-weight: 1;
     -fx-padding: 20;
 }
 
@@ -31,11 +32,19 @@
     -fx-background-radius: 15;
     -fx-border-color: #4C566A;
     -fx-border-radius: 15;
+    -fx-border-weight: 0.5;
 }
 
 #infoPanel {
+    -fx-background-color: #1E1E1E;
+    -fx-background-radius: 15;
+    -fx-border-color: #4C566A;
+    -fx-border-radius: 15;
+    -fx-border-weight: 1;
+    -fx-padding: 20;
     -fx-spacing: 15;
     -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 0, 2);
 }
 
 /* Info boxes */
@@ -59,67 +68,62 @@
     -fx-font-size: 10px;
     -fx-text-fill: #E2E8F0;
     -fx-font-family: "Arial";
-    -fx-opacity: 0.3;
+    -fx-opacity: 0.3
 }
 
 /* Label styles */
 .label-title {
     -fx-font-size: 16px;
-    -fx-font-family: "Arial";
+    -fx-font-weight: bold;
+    -fx-text-fill: #E2E8F0;
+    -fx-font-family: "Arial"
 }
 
-.label-value, .label-cardInfo, .infoBoxValue {
+.label-value {
     -fx-font-size: 14px;
-    -fx-font-family: "Arial";
+    -fx-text-fill: #E2E8F0;
+    -fx-font-family: "Arial"
 }
 
 #statusOnline {
+    -fx-font-size: 11px;
     -fx-text-fill: #4FD1C5;
-    -fx-font-size: 11px;
     -fx-font-style: italic;
-    -fx-font-family: "Arial";
-}
-
-#profileName {
-    -fx-text-fill: #60A5FA;
-    -fx-font-size: 20px;
-    -fx-font-family: "Arial";
-    -fx-font-weight: bold;
-}
-
-.label-cardInfo {
-    -fx-font-size: 11px;
-    -fx-font-family: "Arial";
-}
-
-#titleHeader {
-    -fx-text-fill: #60A5FA;
-    -fx-font-size: 22px;
-    -fx-font-weight: bold;
     -fx-font-family: "Arial"
 }
 
 #profileName {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
     -fx-text-fill: #60A5FA;
+    -fx-font-family: "Arial"
+}
+
+.label-cardInfo {
+    -fx-font-size: 11px;
+    -fx-text-fill: #E2E8F0;
+    -fx-font-family: "Arial"
+}
+
+#titleHeader {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #E2E8F0;
+    -fx-font-family: "Arial"
 }
 
 /* Buttons */
 .button {
+    -fx-font-size: 14px;
     -fx-background-color: #2D3748;
     -fx-text-fill: #E2E8F0;
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-cursor: hand;
-    -fx-font-family: "Arial";
-    -fx-border-width: 0.5px;
     -fx-border-color: #4A5568;
+    -fx-border-width: 0.5px;
     -fx-border-radius: 8;
     -fx-background-radius: 8;
-}
-
-.infoBoxValue {
-    -fx-font-size: 13px;
-    -fx-font-family: "Arial";
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-font-family: "Arial"
 }
 
 .button:hover {
@@ -133,4 +137,10 @@
 /* Lines */
 Line {
     -fx-stroke: #4C566A;
+}
+
+.infoBoxValue {
+    -fx-font-size: 13px;
+    -fx-text-fill: #E2E8F0;
+    -fx-font-family: "Arial";
 }
