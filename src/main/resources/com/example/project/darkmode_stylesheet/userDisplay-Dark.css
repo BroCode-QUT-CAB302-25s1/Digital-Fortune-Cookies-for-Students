@@ -1,7 +1,7 @@
-/* Base styles - Dark Mode */
+/* Base styles */
 .root {
     -fx-background-color: #121212;
-    -fx-font-family: "Arial"
+    -fx-font-family: "Arial";
 }
 
 /* Labels */
@@ -9,30 +9,15 @@
     -fx-text-fill: #E2E8F0;
 }
 
-/* Top header panel */
-.root > Pane:first-child {
-    -fx-background-color: #121212;
-    -fx-border-radius: 10;
-}
-
-/* Profile card and info panel */
+/* Card and Panel Styles */
 #profileCard {
-    -fx-background-color: #1E1E1E;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 5);
+    -fx-background-color: #2D3748;
     -fx-background-radius: 15;
     -fx-border-color: #4C566A;
     -fx-border-radius: 15;
     -fx-border-weight: 1;
     -fx-padding: 20;
-}
-
-/* Sub info frames */
-.subInfoFrame {
-    -fx-background-color: #2D3748;
-    -fx-background-radius: 15;
-    -fx-border-color: #4C566A;
-    -fx-border-radius: 15;
-    -fx-border-weight: 0.5;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 5);
 }
 
 #infoPanel {
@@ -47,16 +32,73 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 0, 2);
 }
 
-/* Info boxes */
-.infoBox {
+.subInfoFrame {
     -fx-background-color: #2D3748;
-    -fx-background-radius: 10;
+    -fx-background-radius: 15;
+    -fx-border-color: #4C566A;
+    -fx-border-radius: 15;
+    -fx-border-weight: 0.5;
 }
 
-#profileHeader {
+.infoBox {
+    -fx-background-color: #1E293B;
+    -fx-background-radius: 10;
+    -fx-border-color: #4C566A;
+    -fx-border-radius: 10;
+    -fx-border-width: 0.5;
+}
+
+/* Header and Title Styles */
+#titleHeader, #profileHeader {
     -fx-font-size: 22px;
     -fx-font-weight: bold;
     -fx-text-fill: #E2E8F0;
+    -fx-font-family: "Arial";
+}
+
+#titleHeader {
+    -fx-text-fill: black;
+}
+
+/* Label Styles */
+.label-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #E2E8F0;
+    -fx-font-family: "Arial";
+}
+
+.label-value {
+    -fx-font-size: 14px;
+    -fx-text-fill: #E2E8F0;
+    -fx-font-family: "Arial";
+}
+
+.label-cardInfo {
+    -fx-font-size: 11px;
+    -fx-text-fill: #E2E8F0;
+    -fx-font-family: "Arial";
+}
+
+.infoBoxValue {
+    -fx-font-size: 13px;
+    -fx-text-fill: #E2E8F0;
+    -fx-font-family: "Arial";
+}
+
+/* Profile Specific Styles */
+#profileName {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #60A5FA;
+    -fx-font-family: "Arial";
+}
+
+#statusOnline {
+    -fx-font-size: 11px;
+    -fx-text-fill: #4FD1C5;
+    -fx-font-style: italic;
+    -fx-font-family: "Arial";
 }
 
 .profileIcon {
@@ -64,55 +106,15 @@
     -fx-fit-height: 23;
 }
 
+/* Footer Styles */
 #footerLabel {
     -fx-font-size: 10px;
     -fx-text-fill: #E2E8F0;
     -fx-font-family: "Arial";
-    -fx-opacity: 0.3
+    -fx-opacity: 0.3;
 }
 
-/* Label styles */
-.label-title {
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #E2E8F0;
-    -fx-font-family: "Arial"
-}
-
-.label-value {
-    -fx-font-size: 14px;
-    -fx-text-fill: #E2E8F0;
-    -fx-font-family: "Arial"
-}
-
-#statusOnline {
-    -fx-font-size: 11px;
-    -fx-text-fill: #4FD1C5;
-    -fx-font-style: italic;
-    -fx-font-family: "Arial"
-}
-
-#profileName {
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #60A5FA;
-    -fx-font-family: "Arial"
-}
-
-.label-cardInfo {
-    -fx-font-size: 11px;
-    -fx-text-fill: #E2E8F0;
-    -fx-font-family: "Arial"
-}
-
-#titleHeader {
-    -fx-font-size: 22px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #E2E8F0;
-    -fx-font-family: "Arial"
-}
-
-/* Buttons */
+/* Button Styles */
 .button {
     -fx-font-size: 14px;
     -fx-background-color: #2D3748;
@@ -123,7 +125,7 @@
     -fx-background-radius: 8;
     -fx-font-weight: bold;
     -fx-cursor: hand;
-    -fx-font-family: "Arial"
+    -fx-font-family: "Arial";
 }
 
 .button:hover {
@@ -137,10 +139,4 @@
 /* Lines */
 Line {
     -fx-stroke: #4C566A;
-}
-
-.infoBoxValue {
-    -fx-font-size: 13px;
-    -fx-text-fill: #E2E8F0;
-    -fx-font-family: "Arial";
 }
