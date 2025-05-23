@@ -126,10 +126,15 @@
     -fx-font-weight: bold;
     -fx-cursor: hand;
     -fx-font-family: "Arial";
+    -fx-transition: background-color 0.2s ease;
 }
 
 .button:hover {
     -fx-background-color: #4A5568;
+}
+
+#footerLabel:hover {
+    -fx-opacity: 0.5;
 }
 
 .button:pressed {
@@ -139,4 +144,8 @@
 /* Lines */
 Line {
     -fx-stroke: #4C566A;
+}
+
+#statusOnline {
+    -fx-effect: dropshadow(gaussian, #4FD1C5, 10, 0, 0, 0);
 }
