@@ -14,7 +14,7 @@ public class StyleManager {
 
     static {
         // Initialize mapping of view names to stylesheet names
-        VIEW_STYLESHEETS.put("home", "Home");
+        VIEW_STYLESHEETS.put("home", "home");
         VIEW_STYLESHEETS.put("userdisplay", "userDisplay");
         VIEW_STYLESHEETS.put("appsetting", "appSetting");
     }
