@@ -18,3 +18,36 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 0);
     -fx-max-width: 300px;
 }
+
+.fortune-container {
+    -fx-padding: 20px;
+}
+
+.paper-container {
+    -fx-background-color: linear-gradient(to bottom right, #fff4e6, #ffe4c4);
+    -fx-background-radius: 10;
+    -fx-padding: 20px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 0);
+}
+
+.fortune-button {
+    -fx-background-color: #8B4513;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+.fortune-button:hover {
+    -fx-background-color: #A0522D;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0, 0, 0);
+}
+
+.cookie-image {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 0);
+}
+
+.button-container {
+    -fx-background-color: transparent;
+}
