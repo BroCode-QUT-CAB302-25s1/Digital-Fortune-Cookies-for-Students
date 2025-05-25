@@ -209,17 +209,23 @@ public class HomeController {
 
     private void openFortuneScreen(Event event) {
         try {
+            double remainingHours;
             if (isStudyActive) {
                 currentSectionLearnedHours = elapsedStudyHours;
-                double remainingHours = totalStudyHours - elapsedStudyHours;
+                remainingHours = totalStudyHours - elapsedStudyHours;
                 System.out.println("Remaining study time: " + String.format("%.2f", remainingHours) + " hours");
+            } else {
+                // If not in a study session, set remaining hours to 0
+                currentSectionLearnedHours = 0.0;
+                remainingHours = 0.0;
             }
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/fortune-screen.fxml"));
             Parent fortuneRoot = loader.load();
 
             MessageController fortuneController = loader.getController();
-            fortuneController.setFortune(getRandomFortune());
+            fortuneController.setHomeController(this);
+            fortuneController.fetchFortune(currentUser, progressBar.getProgress(), remainingHours, totalStudyHours);
 
             Scene fortuneScene = new Scene(fortuneRoot);
             Stage fortuneStage = new Stage();
@@ -238,34 +244,6 @@ public class HomeController {
             e.printStackTrace();
             ErrorAlert.show("Navigation Error", "Failed to load fortune screen: " + e.getMessage());
         }
-    }
-
-    public String getRandomFortune() {
-        // Return random congratulatory quote if progress is 100%
-        if (progressBar.getProgress() >= 1.0) {
-            String[] congrats = {
-                    "Congratulations! 'Success is not the absence of obstacles, but the courage to push through them.'",
-                    "Well done! 'The only limit to our realization of tomorrow is our doubts of today.'",
-                    "Fantastic work! 'Success is the sum of small efforts, repeated day in and day out.'",
-                    "You did it! 'The future belongs to those who believe in the beauty of their dreams.'",
-                    "Amazing effort! 'Perseverance turns dreams into achievements.'"
-            };
-            return congrats[(int) (Math.random() * congrats.length)];
-        }
-
-        String[] fortunes = {
-                "Good things come to those who wait... but better things come to those who work for it.",
-                "Your creativity will lead you to success.",
-                "New opportunities await you this week.",
-                "A smile is your passport into the hearts of others.",
-                "Your hard work is about to pay off. Remember, dreams don't work unless you do.",
-                "Adventure can be real happiness.",
-                "The greatest risk is not taking one.",
-                "Today it's up to you to create the peacefulness you long for.",
-                "Your ability to accomplish tasks will follow with success.",
-                "You will be rewarded for your patience and persistence."
-        };
-        return fortunes[(int) (Math.random() * fortunes.length)];
     }
 
     @FXML
@@ -385,5 +363,14 @@ public class HomeController {
         hourChoiceBox.setDisable(false);
         // Switch back to play icon
         playModeButton.setImage(new Image(getClass().getResourceAsStream("/com/example/project/symbol/playIcon.png")));
+    }
+
+    // Getter methods to access private fields from MessageController
+    public double getTotalStudyHours() {
+        return totalStudyHours;
+    }
+
+    public double getElapsedStudyHours() {
+        return elapsedStudyHours;
     }
 }

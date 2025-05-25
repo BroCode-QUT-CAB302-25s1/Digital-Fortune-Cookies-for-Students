@@ -8,6 +8,8 @@ module com.example.project {
     requires java.sql;
     requires java.desktop;
     requires org.xerial.sqlitejdbc;
+    requires java.net.http;
+    requires com.google.gson;
     opens com.example.project to javafx.fxml;
     opens com.example.project.controller to javafx.fxml;
 
