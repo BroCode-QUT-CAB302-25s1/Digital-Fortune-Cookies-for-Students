@@ -200,7 +200,7 @@ public class SignInController {
         }
 
         // Successful login - Show success alert
-        SuccessAlert.show("Success", "Login successful!");
+//        SuccessAlert.show("Success", "Login successful!");
 
         // Proceed to home screen
         try {
