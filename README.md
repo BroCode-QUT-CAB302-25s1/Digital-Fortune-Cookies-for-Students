@@ -87,7 +87,7 @@ Digital-Fortune-Cookies-for-Students/
 │   │   │       ├── database/      # Database connection and initialization
 │   │   │       ├── model/         # Data models (e.g., User, StudyProgress)
 │   │   │       ├── util/          # Utility classes and helpers
-│   │   │       ├── api/           # API integration with Grok for AI-generated content, using Gson for JSON serialization/deserialization of prompts and responses
+│   │   │       ├── api/           # API integration with Grok for AI-generated content
 │   │   │       ├── MainApplication.java  # Application entry point
 │   │   │       └── module-info.java      # Java module configuration
 │   │   └── resources/
