@@ -104,7 +104,7 @@ public class MessageController {
         }
 
         // Build the prompt dynamically
-        StringBuilder promptBuilder = new StringBuilder("Generate a single motivational sentence (no yapping) for a 21-year-old university student studying Information Technology");
+        StringBuilder promptBuilder = new StringBuilder("Generate a single motivational sentence (no yapping)");
 
         // Randomly decide whether to include the name (50% chance)
         Random random = new Random();
