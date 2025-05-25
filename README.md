@@ -25,7 +25,7 @@ The application leverages **Grok** (developed by xAI) for AI-generated content, 
   - **Input**: The application constructs a dynamic prompt sent to the Grok API via the `com/example/project/api/` package. The prompt includes:
     - **User Data**: Preferred name (used occasionally), language, fortune cookie preference, learning progress (e.g., "2 hours 30 minutes remaining out of 10.00 hours chosen"), location, job, and gender, if available.
     - **Context**: Tailored details about the user’s academic and personal circumstances to inform the AI’s response.
-    - **Instructions**: Requests a single motivational sentence (minimum 7 words), with a randomly selected focus (e.g., learning progress, location, or academic journey) and varied sentence length.
+    - **Instructions**: Requests a single motivational sentence, with a randomly selected focus (e.g., learning progress, location, or academic journey) and varied sentence length.
     - **Serialization**: Gson serializes the prompt and API parameters into a JSON payload for the request to `https://api.x.ai/v1/chat/completions`, authenticated with an API key.
   - **Output**: The API returns a JSON response, deserialized by Gson into a Java object, containing a single motivational sentence (e.g., "Your dedication to learning will open new opportunities."). The sentence is displayed in the UI with a fade-in animation. The response may include metadata (e.g., response ID), but only the sentence is used.
 
@@ -87,7 +87,7 @@ Digital-Fortune-Cookies-for-Students/
 │   │   │       ├── database/      # Database connection and initialization
 │   │   │       ├── model/         # Data models (e.g., User, StudyProgress)
 │   │   │       ├── util/          # Utility classes and helpers
-│   │   │       ├── api/           # API integration with Grok for AI-generated content, using Gson for JSON serialization/deserialization of prompts and responses
+│   │   │       ├── api/           # API integration with Grok for AI-generated content
 │   │   │       ├── MainApplication.java  # Application entry point
 │   │   │       └── module-info.java      # Java module configuration
 │   │   └── resources/
