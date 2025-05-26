@@ -20,6 +20,7 @@ import com.google.gson.JsonObject;
 public class GrokResponseFetcher {
 
     private static final String USERAGENT = "GROK FETCHER";
+    private static final String LANGUAGE_MODEL = "grok-3-mini-fast";
     public static final Logger logger = Logger.getLogger(GrokResponseFetcher.class.getName());
     private final String apiUrl;
     private final String apiKey;
@@ -67,7 +68,7 @@ public class GrokResponseFetcher {
             messages.add(userMessage);
 
             requestBodyMap.put("messages", messages);
-            requestBodyMap.put("model", "grok-3-latest");
+            requestBodyMap.put("model", LANGUAGE_MODEL);
             requestBodyMap.put("stream", false);
             requestBodyMap.put("temperature", 0);
 
