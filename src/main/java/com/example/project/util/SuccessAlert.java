@@ -5,16 +5,16 @@ import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class ErrorAlert {
+public class SuccessAlert {
     public static void show(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
 
-        // Set custom content icon (already present)
+        // Set custom content icon
         try {
-            Image icon = new Image(ErrorAlert.class.getResourceAsStream("/com/example/project/symbol/errorIcon1.png"));
+            Image icon = new Image(ErrorAlert.class.getResourceAsStream("/com/example/project/symbol/successIcon.png"));
             ImageView imageView = new ImageView(icon);
             imageView.setFitWidth(50);
             imageView.setFitHeight(50);
@@ -26,9 +26,9 @@ public class ErrorAlert {
         // Set custom window icon
         try {
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-            stage.getIcons().add(new Image(ErrorAlert.class.getResourceAsStream("/com/example/project/symbol/errorIcon.png")));
+            stage.getIcons().add(new Image(SuccessAlert.class.getResourceAsStream("/com/example/project/symbol/digitalCookieMainIcon2.png")));
         } catch (Exception e) {
-            System.err.println("Failed to load error window icon: " + e.getMessage());
+            System.err.println("Failed to load success window icon: " + e.getMessage());
         }
 
         // Increase font size of the message text

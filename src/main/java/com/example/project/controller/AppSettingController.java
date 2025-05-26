@@ -4,6 +4,7 @@ import com.example.project.dao.AppSettingsDAO;
 import com.example.project.dao.UserPreferencesDAO;
 import com.example.project.model.User;
 import com.example.project.util.ErrorAlert;
+import com.example.project.util.SuccessAlert;
 import com.example.project.util.StyleManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -195,7 +196,7 @@ public class AppSettingController {
 //                System.out.println("Saving settings - Email: " + currentUser.getEmail() + ", Theme: " + theme + ", RunOnStartup: " + runOnStartup);
                 appSettingsDAO.saveAppSettings(currentUser.getEmail(), theme, runOnStartup);
                 configureRunOnStartup(runOnStartup);
-                ErrorAlert.show("Success", "Settings saved successfully.");
+                SuccessAlert.show("Success", "Settings saved successfully.");
             } catch (SQLException e) {
                 String errorMsg = e.getMessage();
                 if (errorMsg.contains("FOREIGN KEY constraint failed")) {

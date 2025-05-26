@@ -3,6 +3,7 @@ package com.example.project.controller;
 import com.example.project.dao.*;
 import com.example.project.model.User;
 import com.example.project.util.ErrorAlert;
+import com.example.project.util.SuccessAlert;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -181,7 +182,7 @@ public class SignUpController {
             preferencesDAO.savePreferences(email, "", "");
             // Save default profile image to preferences table
             profileImageDAO.saveProfileImage(email, "/com/example/project/symbol/digitalCookieMainIcon1.png");
-            ErrorAlert.show("Congratulation!", "Your Email: " + email + " is registered successfully!");
+            SuccessAlert.show("Congratulation!", "Your Email: " + email + " is registered successfully!");
             // Navigate back to sign-in scene
             if (signInScene != null && signUpStage != null) {
                 signUpStage.setScene(signInScene);

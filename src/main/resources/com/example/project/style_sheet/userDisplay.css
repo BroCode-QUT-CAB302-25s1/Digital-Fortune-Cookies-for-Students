@@ -1,9 +1,16 @@
+/* Root Styles */
 .root {
     -fx-background-color: #f9fdf6;
     -fx-font-family: "Arial";
 }
 
-/* Card and Panel Styles */
+/* Added: Friend's style for root's first Pane child (from master) */
+.root > Pane:first-child {
+    -fx-background-color: #f9fdf6;
+    -fx-border-radius: 10;
+}
+
+/* Card and Panel Styles (from Dark-mode-cont' comment, enhanced with master) */
 #profileCard {
     -fx-background-color: white;
     -fx-background-radius: 15;
@@ -11,7 +18,7 @@
     -fx-border-radius: 15;
     -fx-border-weight: 1;
     -fx-padding: 20;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 5);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 5); /* From Dark-mode-cont' */
 }
 
 #infoPanel {
@@ -39,22 +46,24 @@
     -fx-background-radius: 10;
 }
 
-/* Header and Title Styles */
+/* Header and Title Styles (from Dark-mode-cont' comment, enhanced with master) */
 #titleHeader, #profileHeader {
     -fx-font-size: 22px;
     -fx-font-weight: bold;
     -fx-font-family: "Arial";
 }
 
+/* Added: Friend's split #titleHeader style (from master) */
 #titleHeader {
     -fx-text-fill: black;
 }
 
+/* Added: Friend's split #profileHeader style (from master) */
 #profileHeader {
     -fx-text-fill: #3b3b3b;
 }
 
-/* Label Styles */
+/* Label Styles (from Dark-mode-cont' comment) */
 .label-title {
     -fx-font-size: 16px;
     -fx-font-weight: bold;
@@ -80,7 +89,7 @@
     -fx-font-family: "Arial";
 }
 
-/* Profile Specific Styles */
+/* Profile Specific Styles (from Dark-mode-cont' comment) */
 #profileName {
     -fx-font-size: 20px;
     -fx-font-weight: bold;
@@ -100,7 +109,7 @@
     -fx-fit-height: 23;
 }
 
-/* Footer Styles */
+/* Footer Styles (from Dark-mode-cont' comment) */
 #footerLabel {
     -fx-font-size: 10px;
     -fx-text-fill: black;
@@ -108,7 +117,7 @@
     -fx-opacity: 0.3;
 }
 
-/* Button Styles */
+/* Button Styles (from Dark-mode-cont' comment) */
 .button {
     -fx-font-size: 14px;
     -fx-background-color: white;
@@ -120,4 +129,9 @@
     -fx-font-weight: bold;
     -fx-cursor: hand;
     -fx-font-family: "Arial";
+}
+
+/* Original: Retained .button:hover style (from master) */
+.button:hover {
+    -fx-background-color: #b4f7cb;
 }

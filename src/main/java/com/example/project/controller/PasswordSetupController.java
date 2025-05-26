@@ -4,6 +4,7 @@ import com.example.project.dao.IUserDAO;
 import com.example.project.dao.SqliteUserDAO;
 import com.example.project.model.User;
 import com.example.project.util.ErrorAlert;
+import com.example.project.util.SuccessAlert;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -103,7 +104,7 @@ public class PasswordSetupController {
             // Update password
             currentUser.setPassword(newPassword);
             if (saveToDB(currentUser)) {
-                ErrorAlert.show("Success", "Password updated successfully.");
+                SuccessAlert.show("Success", "Password updated successfully.");
                 // Switch back to display scene
                 if (userDisplayController != null) {
                     userDisplayController.updateUser(currentUser);

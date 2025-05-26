@@ -2,9 +2,9 @@ package com.example.project.controller;
 
 import com.example.project.model.User;
 import com.example.project.util.ErrorAlert;
+import com.example.project.util.SuccessAlert;
 import com.example.project.util.StyleManager;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,9 +19,6 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.animation.*;
-import javafx.animation.Interpolator;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -158,18 +155,22 @@ public class HomeController {
     private void updateHourChoiceBoxOptions() {
         String previousSelection = hourChoiceBox.getValue(); // Store current selection
         hourChoiceBox.getItems().clear();
-        // Filter options to include only those >= totalStudyHours or all if no progress
+
+        // Compute roundedElapsedHours in a single expression to make it effectively final
+        final double roundedElapsedHours = elapsedStudyHours == 0.0 ? 0.0 : Math.ceil(elapsedStudyHours / 0.5) * 0.5;
+
+        // Filter options to include only those >= roundedElapsedHours
         List<String> availableOptions = hourOptions.stream()
-                .filter(hours -> totalStudyHours == 0.0 || hours >= totalStudyHours)
+                .filter(hours -> hours >= roundedElapsedHours)
                 .map(this::formatHours)
                 .collect(Collectors.toList());
         hourChoiceBox.getItems().addAll(availableOptions);
 
-        // Restore previous selection if still valid, otherwise select totalStudyHours
+        // Restore previous selection if still valid, otherwise select the minimum available option
         if (previousSelection != null && availableOptions.contains(previousSelection)) {
             hourChoiceBox.setValue(previousSelection);
-        } else if (totalStudyHours > 0.0) {
-            hourChoiceBox.setValue(formatHours(totalStudyHours));
+        } else if (!availableOptions.isEmpty()) {
+            hourChoiceBox.setValue(availableOptions.get(0));
         }
     }
 
@@ -203,135 +204,161 @@ public class HomeController {
         return hours;
     }
 
-private void loadFortuneScreen() {
-    try {
-        if (isStudyActive) {
-            currentSectionLearnedHours = elapsedStudyHours;
-            double remainingHours = totalStudyHours - elapsedStudyHours;
-            System.out.println("Remaining study time: " + String.format("%.2f", remainingHours) + " hours");
+    private void openFortuneScreen(Event event) {
+        try {
+            // Animation sequence (from prior merge, kept from master)
+            ParallelTransition shakeEffect = createShakeAnimation(fortuneCookieImage);
+
+            // Initial pause for anticipation
+            PauseTransition initialPause = new PauseTransition(Duration.millis(100));
+
+            // Hover effect (moving slightly up)
+            TranslateTransition moveUp = new TranslateTransition(Duration.millis(200), fortuneCookieImage);
+            moveUp.setByY(-10);
+
+            // Scale effect with slight bounce
+            ScaleTransition scaleUp = new ScaleTransition(Duration.millis(200), fortuneCookieImage);
+            scaleUp.setToX(1.15);
+            scaleUp.setToY(1.15);
+
+            ScaleTransition scaleBounce = new ScaleTransition(Duration.millis(100), fortuneCookieImage);
+            scaleBounce.setToX(1.1);
+            scaleBounce.setToY(1.1);
+
+            // Rotation with easing
+            RotateTransition rotateForward = new RotateTransition(Duration.millis(300), fortuneCookieImage);
+            rotateForward.setByAngle(15);
+            rotateForward.setInterpolator(Interpolator.EASE_BOTH);
+
+            // Return animations
+            TranslateTransition moveDown = new TranslateTransition(Duration.millis(200), fortuneCookieImage);
+            moveDown.setByY(10);
+
+            ScaleTransition scaleDown = new ScaleTransition(Duration.millis(200), fortuneCookieImage);
+            scaleDown.setToX(1.0);
+            scaleDown.setToY(1.0);
+
+            RotateTransition rotateBack = new RotateTransition(Duration.millis(200), fortuneCookieImage);
+            rotateBack.setByAngle(-15);
+            rotateBack.setInterpolator(Interpolator.EASE_OUT);
+
+            // Combine all animations in sequence
+            SequentialTransition sequence = new SequentialTransition(
+                initialPause,
+                new ParallelTransition(moveUp, scaleUp),
+                scaleBounce,
+                shakeEffect,
+                rotateForward,
+                new ParallelTransition(moveDown, scaleDown, rotateBack)
+            );
+
+            sequence.setOnFinished(e -> {
+                try {
+                    double remainingHours;
+                    if (isStudyActive) {
+                        currentSectionLearnedHours = elapsedStudyHours;
+                        remainingHours = totalStudyHours - elapsedStudyHours;
+                        System.out.println("Remaining study time: " + String.format("%.2f", remainingHours) + " hours");
+                    } else {
+                        currentSectionLearnedHours = 0.0;
+                        remainingHours = 0.0;
+                    }
+
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/fortune-screen.fxml"));
+                    Parent fortuneRoot = loader.load();
+
+                    MessageController fortuneController = loader.getController();
+                    fortuneController.setHomeController(this);
+                    // Use fetchFortune (from master), with getRandomFortune as fallback
+                    try {
+                        fortuneController.fetchFortune(currentUser, progressBar.getProgress(), remainingHours, totalStudyHours);
+                    } catch (Exception ex) {
+                        System.err.println("Failed to fetch fortune: " + ex.getMessage());
+                        fortuneController.setFortune(getRandomFortune()); // Fallback from Dark-mode-cont'
+                    }
+
+                    Scene fortuneScene = new Scene(fortuneRoot);
+                    Stage fortuneStage = new Stage();
+                    fortuneStage.initOwner(homeStage);
+                    fortuneStage.initModality(Modality.WINDOW_MODAL);
+                    fortuneStage.setTitle("Your Fortune");
+                    fortuneStage.setScene(fortuneScene);
+                    fortuneStage.setResizable(false);
+                    fortuneStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/symbol/digitalCookieMainIcon2.png")));
+
+                    StyleManager.applyTheme(fortuneScene, "fortune");
+
+                    fortuneStage.showAndWait(); // Keep modal dialog (from master)
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                    ErrorAlert.show("Navigation Error", "Failed to load fortune screen: " + ex.getMessage());
+                }
+            });
+
+            // Flash effect before opening fortune screen (from master)
+            FadeTransition flash = new FadeTransition(Duration.millis(100), fortuneCookieImage);
+            flash.setFromValue(1.0);
+            flash.setToValue(0.8);
+            flash.setCycleCount(2);
+            flash.setAutoReverse(true);
+            flash.setOnFinished(f -> sequence.play());
+            flash.play();
+        } catch (Exception e) {
+            e.printStackTrace();
+            ErrorAlert.show("Animation Error", "Failed to animate fortune cookie: " + e.getMessage());
+        }
+    }
+
+    private ParallelTransition createShakeAnimation(ImageView node) {
+        Timeline shakeTimeline = new Timeline(
+            new KeyFrame(Duration.ZERO, new KeyValue(node.rotateProperty(), 0)),
+            new KeyFrame(Duration.millis(50), new KeyValue(node.rotateProperty(), 3)),
+            new KeyFrame(Duration.millis(100), new KeyValue(node.rotateProperty(), -3)),
+            new KeyFrame(Duration.millis(150), new KeyValue(node.rotateProperty(), 2)),
+            new KeyFrame(Duration.millis(200), new KeyValue(node.rotateProperty(), -2)),
+            new KeyFrame(Duration.millis(250), new KeyValue(node.rotateProperty(), 1)),
+            new KeyFrame(Duration.millis(300), new KeyValue(node.rotateProperty(), -1)),
+            new KeyFrame(Duration.millis(350), new KeyValue(node.rotateProperty(), 0))
+        );
+
+        ScaleTransition scaleShake = new ScaleTransition(Duration.millis(350), node);
+        scaleShake.setFromX(1.1);
+        scaleShake.setFromY(1.1);
+        scaleShake.setToX(1.1);
+        scaleShake.setToY(1.1);
+
+        return new ParallelTransition(node, shakeTimeline, scaleShake);
+    }
+
+    // From Dark-mode-cont': Added as fallback for fetchFortune
+    public String getRandomFortune() {
+        if (progressBar.getProgress() >= 1.0) {
+            String[] congrats = {
+                "Congratulations! 'Success is not the absence of obstacles, but the courage to push through them.'",
+                "Well done! 'The only limit to our realization of tomorrow is our doubts of today.'",
+                "Fantastic work! 'Success is the sum of small efforts, repeated day in and day out.'",
+                "You did it! 'The future belongs to those who believe in the beauty of their dreams.'",
+                "Amazing effort! 'Perseverance turns dreams into achievements.'"
+            };
+            return congrats[(int) (Math.random() * congrats.length)];
         }
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/fortune-screen.fxml"));
-        Parent fortuneRoot = loader.load();
-
-        MessageController fortuneController = loader.getController();
-        fortuneController.setHomeController(this);
-        fortuneController.setFortune(getRandomFortune());
-
-        Scene fortuneScene = new Scene(fortuneRoot);
-        Stage fortuneStage = new Stage();
-        fortuneStage.initOwner(homeStage);
-        fortuneStage.initModality(Modality.WINDOW_MODAL);
-        fortuneStage.setTitle("Your Fortune");
-        fortuneStage.setScene(fortuneScene);
-        fortuneStage.setResizable(false);
-        fortuneStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/symbol/digitalCookieMainIcon2.png")));
-
-        StyleManager.applyTheme(fortuneScene, "fortune");
-
-        // Use show() instead of showAndWait()
-        fortuneStage.show();
-    } catch (IOException e) {
-        e.printStackTrace();
-        ErrorAlert.show("Navigation Error", "Failed to load fortune screen: " + e.getMessage());
+        String[] fortunes = {
+            "Good things come to those who wait... but better things come to those who work for it.",
+            "Your creativity will lead you to success.",
+            "New opportunities await you this week.",
+            "A smile is your passport into the hearts of others.",
+            "Your hard work is about to pay off. Remember, dreams don't work unless you do.",
+            "Adventure can be real happiness.",
+            "The greatest risk is not taking one.",
+            "Today it's up to you to create the peacefulness you long for.",
+            "Your ability to accomplish tasks will follow with success.",
+            "You will be rewarded for your patience and persistence."
+        };
+        return fortunes[(int) (Math.random() * fortunes.length)];
     }
-}
 
-private void openFortuneScreen(Event event) {
-    try {
-        ParallelTransition shakeEffect = createShakeAnimation(fortuneCookieImage);
-        
-        // Initial pause for anticipation
-        PauseTransition initialPause = new PauseTransition(Duration.millis(100));
-        
-        // Hover effect (moving slightly up)
-        TranslateTransition moveUp = new TranslateTransition(Duration.millis(200), fortuneCookieImage);
-        moveUp.setByY(-10);
-        
-        // Scale effect with slight bounce
-        ScaleTransition scaleUp = new ScaleTransition(Duration.millis(200), fortuneCookieImage);
-        scaleUp.setToX(1.15);
-        scaleUp.setToY(1.15);
-        
-        ScaleTransition scaleBounce = new ScaleTransition(Duration.millis(100), fortuneCookieImage);
-        scaleBounce.setToX(1.1);
-        scaleBounce.setToY(1.1);
-        
-        // Rotation with easing
-        RotateTransition rotateForward = new RotateTransition(Duration.millis(300), fortuneCookieImage);
-        rotateForward.setByAngle(15);
-        rotateForward.setInterpolator(Interpolator.EASE_BOTH);
-        
-        // Return animations
-        TranslateTransition moveDown = new TranslateTransition(Duration.millis(200), fortuneCookieImage);
-        moveDown.setByY(10);
-        
-        ScaleTransition scaleDown = new ScaleTransition(Duration.millis(200), fortuneCookieImage);
-        scaleDown.setToX(1.0);
-        scaleDown.setToY(1.0);
-        
-        RotateTransition rotateBack = new RotateTransition(Duration.millis(200), fortuneCookieImage);
-        rotateBack.setByAngle(-15);
-        rotateBack.setInterpolator(Interpolator.EASE_OUT);
-        
-        // Combine all animations in sequence
-        SequentialTransition sequence = new SequentialTransition(
-            initialPause,
-            new ParallelTransition(moveUp, scaleUp),
-            scaleBounce,
-            shakeEffect,
-            rotateForward,
-            new ParallelTransition(moveDown, scaleDown, rotateBack)
-        );
-        
-        sequence.setOnFinished(e -> {
-            try {
-                // Add a small flash effect before opening fortune screen
-                FadeTransition flash = new FadeTransition(Duration.millis(100), fortuneCookieImage);
-                flash.setFromValue(1.0);
-                flash.setToValue(0.8);
-                flash.setCycleCount(2);
-                flash.setAutoReverse(true);
-                flash.setOnFinished(f -> {
-                    javafx.application.Platform.runLater(this::loadFortuneScreen);
-                });
-                flash.play();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                ErrorAlert.show("Error", "Failed to load fortune screen: " + ex.getMessage());
-            }
-        });
-        
-        sequence.play();
-    } catch (Exception e) {
-        e.printStackTrace();
-        ErrorAlert.show("Animation Error", "Failed to animate fortune cookie: " + e.getMessage());
-    }
-}
-
-private ParallelTransition createShakeAnimation(ImageView node) {
-    // Create subtle shake effect
-    Timeline shakeTimeline = new Timeline(
-        new KeyFrame(Duration.ZERO, new KeyValue(node.rotateProperty(), 0)),
-        new KeyFrame(Duration.millis(50), new KeyValue(node.rotateProperty(), 3)),
-        new KeyFrame(Duration.millis(100), new KeyValue(node.rotateProperty(), -3)),
-        new KeyFrame(Duration.millis(150), new KeyValue(node.rotateProperty(), 2)),
-        new KeyFrame(Duration.millis(200), new KeyValue(node.rotateProperty(), -2)),
-        new KeyFrame(Duration.millis(250), new KeyValue(node.rotateProperty(), 1)),
-        new KeyFrame(Duration.millis(300), new KeyValue(node.rotateProperty(), -1)),
-        new KeyFrame(Duration.millis(350), new KeyValue(node.rotateProperty(), 0))
-    );
-    
-    // Add subtle scaling during shake
-    ScaleTransition scaleShake = new ScaleTransition(Duration.millis(350), node);
-    scaleShake.setFromX(1.1);
-    scaleShake.setFromY(1.1);
-    scaleShake.setToX(1.1);
-    scaleShake.setToY(1.1);
-    
-    return new ParallelTransition(node, shakeTimeline, scaleShake);
-}
-
+    // From Dark-mode-cont': Kept but unused (optional)
     private SequentialTransition getSequentialTransition() {
         ScaleTransition scaleUp = new ScaleTransition(Duration.millis(200), fortuneCookieImage);
         scaleUp.setToX(1.1);
@@ -346,34 +373,6 @@ private ParallelTransition createShakeAnimation(ImageView node) {
 
         SequentialTransition sequence = new SequentialTransition(scaleUp, rotate, scaleDown);
         return sequence;
-    }
-
-    public String getRandomFortune() {
-        // Return a random congratulatory quote if progress is 100%
-        if (progressBar.getProgress() >= 1.0) {
-            String[] congrats = {
-                    "Congratulations! 'Success is not the absence of obstacles, but the courage to push through them.'",
-                    "Well done! 'The only limit to our realization of tomorrow is our doubts of today.'",
-                    "Fantastic work! 'Success is the sum of small efforts, repeated day in and day out.'",
-                    "You did it! 'The future belongs to those who believe in the beauty of their dreams.'",
-                    "Amazing effort! 'Perseverance turns dreams into achievements.'"
-            };
-            return congrats[(int) (Math.random() * congrats.length)];
-        }
-
-        String[] fortunes = {
-                "Good things come to those who wait... but better things come to those who work for it.",
-                "Your creativity will lead you to success.",
-                "New opportunities await you this week.",
-                "A smile is your passport into the hearts of others.",
-                "Your hard work is about to pay off. Remember, dreams don't work unless you do.",
-                "Adventure can be real happiness.",
-                "The greatest risk is not taking one.",
-                "Today it's up to you to create the peacefulness you long for.",
-                "Your ability to accomplish tasks will follow with success.",
-                "You will be rewarded for your patience and persistence."
-        };
-        return fortunes[(int) (Math.random() * fortunes.length)];
     }
 
     @FXML
@@ -391,7 +390,6 @@ private ParallelTransition createShakeAnimation(ImageView node) {
             settingsStage.setResizable(false);
             settingsStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/symbol/createIcon1.png")));
 
-            // Apply theme to settings screen
             StyleManager.applyTheme(settingsScene, "appsetting");
 
             AppSettingController settingController = loader.getController();
@@ -421,7 +419,6 @@ private ParallelTransition createShakeAnimation(ImageView node) {
             userDisplayStage.setResizable(false);
             userDisplayStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/symbol/userIcon1.png")));
 
-            // Apply theme to the user display screen
             StyleManager.applyTheme(userDisplayScene, "userdisplay");
 
             UserDisplayController userDisplayController = loader.getController();
@@ -429,7 +426,7 @@ private ParallelTransition createShakeAnimation(ImageView node) {
             userDisplayController.setScene(homeStage.getScene(), this);
             userDisplayController.setUser(currentUser);
 
-            userDisplayStage.showAndWait(); // Show modal dialog, home remains open
+            userDisplayStage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
             ErrorAlert.show("Navigation Error", "Failed to load profile screen: " + e.getMessage());
@@ -445,24 +442,22 @@ private ParallelTransition createShakeAnimation(ImageView node) {
         }
 
         if (!isStudyActive) {
-            // Start study session
             try {
                 totalStudyHours = parseHours(selectedHours);
-                elapsedStudyHours = currentSectionLearnedHours; // Preserve learned hours
+                elapsedStudyHours = currentSectionLearnedHours;
                 hourChoiceBox.setDisable(true);
 
-                // Switch to pause icon
                 playModeButton.setImage(new Image(getClass().getResourceAsStream("/com/example/project/symbol/pauseIcon.png")));
 
-                // Start timer
                 studyTimer = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
-                    elapsedStudyHours += 1.0 / 3600; // Increment by 1 second in hours
+                    elapsedStudyHours += 1.0 / 3600;
                     double progress = elapsedStudyHours / totalStudyHours;
                     progressBar.setProgress(Math.min(progress, 1.0));
 
                     if (progress >= 1.0) {
                         stopStudySession();
-                        openFortuneScreen(null); // Auto-trigger fortune screen
+                        SuccessAlert.show("Success", "Study session completed successfully!");
+                        openFortuneScreen(null);
                     }
                 }));
                 studyTimer.setCycleCount(Timeline.INDEFINITE);
@@ -473,7 +468,6 @@ private ParallelTransition createShakeAnimation(ImageView node) {
                 ErrorAlert.show("Input Error", "Invalid study duration format: " + selectedHours);
             }
         } else {
-            // Pause study session
             stopStudySession();
             updateHourChoiceBoxOptions();
         }
@@ -485,7 +479,14 @@ private ParallelTransition createShakeAnimation(ImageView node) {
         }
         isStudyActive = false;
         hourChoiceBox.setDisable(false);
-        // Switch back to play icon
         playModeButton.setImage(new Image(getClass().getResourceAsStream("/com/example/project/symbol/playIcon.png")));
+    }
+
+    public double getTotalStudyHours() {
+        return totalStudyHours;
+    }
+
+    public double getElapsedStudyHours() {
+        return elapsedStudyHours;
     }
 }
