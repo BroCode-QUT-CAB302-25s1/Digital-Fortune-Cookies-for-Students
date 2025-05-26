@@ -189,12 +189,24 @@ public class UserDisplayController {
 
                     // Update UI with user data
                     profileName.setText(dbUser.getPreferredName() != null ? dbUser.getPreferredName() : dbUser.getUsername());
+
                     githubLink.setText(dbUser.getGithub() != null ? dbUser.getGithub() : "");
+                    githubIcon.setVisible(!githubLink.getText().isEmpty()); // Show icon only if label text is non-empty
+
                     emailLink.setText(dbUser.getEmail() != null ? dbUser.getEmail() : "");
+                    emailIcon.setVisible(!emailLink.getText().isEmpty()); // Show icon only if label text is non-empty
+
                     phoneNumberLink.setText(dbUser.getPhone() != null ? dbUser.getPhone() : "");
+                    phoneIcon.setVisible(!phoneNumberLink.getText().isEmpty()); // Show icon only if label text is non-empty
+
                     currentJob.setText(dbUser.getJob() != null ? dbUser.getJob() : "");
+                    jobIcon.setVisible(!currentJob.getText().isEmpty()); // Show icon only if label text is non-empty
+
                     currentLocation.setText(dbUser.getLocation() != null ? dbUser.getLocation() : "");
+                    locationIcon.setVisible(!currentLocation.getText().isEmpty()); // Show icon only if label text is non-empty
+
                     footerLabel.setText("BroCode © 2025");
+
                     userName.setText(dbUser.getUsername() != null ? dbUser.getUsername() : "");
                     firstName.setText(dbUser.getFirstName() != null ? dbUser.getFirstName() : "");
                     lastName.setText(dbUser.getLastName() != null ? dbUser.getLastName() : "");
@@ -205,6 +217,7 @@ public class UserDisplayController {
                     userPassword.setText(MASKED_PASSWORD);
                     languagesLabel.setText(languages);
                     cookiesTypeLabel.setText(cookiesType);
+
                     statusOnline.setText("Online");
                     titleHeader.setText("My Profile");
 

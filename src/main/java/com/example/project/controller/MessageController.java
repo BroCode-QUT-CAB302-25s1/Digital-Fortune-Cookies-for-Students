@@ -61,12 +61,11 @@ public class MessageController {
         this.remainingHours = remainingHours;
         this.totalStudyHours = totalStudyHours;
 
-        // Construct the prompt dynamically using user data
+        // Fetch the latest user data to ensure up-to-date information
         String name = user.getPreferredName() != null && !user.getPreferredName().isEmpty() ? user.getPreferredName() : user.getUsername();
         String location = user.getLocation();
         String job = user.getJob();
         String gender = user.getGender();
-        String dob = user.getDob();
 
         // Fetch preferences for language and cookie type
         String language = null;
@@ -149,9 +148,8 @@ public class MessageController {
         }
 
         // Append the focus instruction and additional instructions for sentence length and name usage
-        promptBuilder.append(" Focus the sentence on their ").append(focusTopic).append(". ");
-//        promptBuilder.append("Randomly vary the sentence length, sometimes generating a very short sentence (under 10 words). ");
-                promptBuilder.append("Randomly vary the sentence length, minimum is 7 words. ");
+        promptBuilder.append("Highly focus the sentence on their ").append(focusTopic).append(". ");
+        promptBuilder.append("Randomly vary the sentence length, minimum is 7 words. ");
         promptBuilder.append("Do not always include the student's name in the sentence, even if provided; use it occasionally for variety.");
 
         String prompt = promptBuilder.toString();

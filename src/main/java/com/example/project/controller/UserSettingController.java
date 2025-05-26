@@ -119,72 +119,132 @@ public class UserSettingController {
                 "Transfeminine", "Two-Spirit", "Intersex", "Demiboy", "Demigirl", "Pangender",
                 "Androgyne", "Neutrois", "Questioning", "Prefer not to say", "Other");
         jobField.getItems().addAll(
-                "Accountant", "Actor", "Actuary", "Administrator", "Advertising Manager", "Aerospace Engineer",
-                "Agricultural Engineer", "Air Traffic Controller", "Animator", "Anthropologist", "Architect",
-                "Archivist", "Art Director", "Artist", "Astronomer", "Athlete", "Attorney", "Auditor", "Author",
-                "Baker", "Banker", "Barber", "Biologist", "Biomedical Engineer", "Bricklayer", "Broker", "Builder",
-                "Business Analyst", "Butcher", "Camera Operator", "Carpenter", "Cashier", "Chef",
-                "Chemical Engineer", "Chemist", "Choreographer", "Civil Engineer", "Clergy", "Coach",
-                "Computer Programmer", "Construction Worker", "Consultant", "Copywriter", "Counselor", "Courier",
-                "Customer Service Representative", "Dancer", "Data Analyst", "Data Scientist", "Dentist",
-                "Designer", "Dietitian", "Director", "Doctor", "Economist", "Editor", "Electrician", "Engineer",
-                "Event Planner", "Farmer", "Fashion Designer", "Financial Analyst", "Firefighter", "Fisherman",
-                "Flight Attendant", "Florist", "Graphic Designer", "Hairdresser", "Healthcare Assistant",
-                "Historian", "Hotel Manager", "Human Resources Specialist", "Illustrator", "Industrial Designer",
-                "Inspector", "Interpreter", "Investigator", "IT Specialist", "Janitor", "Jeweler", "Journalist",
-                "Judge", "Laboratory Technician", "Lawyer", "Lecturer", "Librarian", "Lifeguard", "Logistician",
-                "Machinist", "Manager", "Marketing Specialist", "Mathematician", "Mechanic", "Medical Assistant",
-                "Meteorologist", "Model", "Musician", "Nurse", "Nutritionist", "Occupational Therapist",
-                "Office Clerk", "Optician", "Painter", "Paramedic", "Pharmacist", "Photographer", "Physician",
-                "Pilot", "Plumber", "Police Officer", "Political Scientist", "Postman", "Principal",
-                "Product Manager", "Professor", "Project Manager", "Psychologist", "Public Relations Specialist",
-                "Quality Assurance Analyst", "Radiologic Technologist", "Real Estate Agent", "Receptionist",
-                "Researcher", "Retail Manager", "Sailor", "Sales Representative", "Scientist", "Security Guard",
-                "Social Media Manager", "Social Worker", "Software Developer", "Software Engineer", "Statistician",
-                "Storekeeper", "Surgeon", "Surveyor", "Systems Analyst", "Tailor", "Taxi Driver", "Teacher",
-                "Technician", "Therapist", "Tour Guide", "Translator", "Travel Agent", "Truck Driver", "Tutor",
-                "UX Designer", "Veterinarian", "Video Editor", "Voice Actor", "Waiter", "Warehouse Worker",
-                "Web Developer", "Welder", "Writer", "Zoologist", "Acting Coach", "Acupuncturist", "Animal Trainer",
-                "App Developer", "Archaeologist", "Art Teacher", "Astrologer", "Auctioneer", "Ballet Dancer",
-                "Barista", "Blacksmith", "Blogger", "Bodyguard", "Botanist", "Broadcast Technician",
-                "Budget Analyst", "Cartographer", "Chiropractor", "Claims Adjuster", "Clinical Psychologist",
-                "Compliance Officer", "Composer", "Computer Scientist", "Conservationist", "Content Creator",
-                "Costume Designer", "Crane Operator", "Critic", "Cruise Director", "Curator", "Cybersecurity Analyst",
-                "Dance Instructor", "Database Administrator", "Demographer", "Dermatologist", "Dog Trainer",
-                "Drone Operator", "Ecologist", "Electric Line Installer", "Embryologist", "Emergency Dispatcher",
-                "Emissions Inspector", "Energy Consultant", "Environmental Engineer", "Ergonomist",
-                "Event Coordinator", "Exterminator", "Fabricator", "Film Director", "Fire Investigator",
-                "Forensic Analyst", "Fundraiser", "Furniture Designer", "Game Designer", "Geneticist",
-                "Geographer", "Geologist", "Glassblower", "Grant Writer", "Greenhouse Manager", "Guidance Counselor",
-                "Handyman", "Hazardous Materials Removal Worker", "Health Educator", "Helicopter Pilot",
-                "Home Inspector", "Horticulturist", "Hospital Administrator", "Hydrologist", "Hypnotherapist",
-                "Import/Export Specialist", "Industrial Engineer", "Infection Control Specialist", "Information Architect",
-                "Instructional Designer", "Intelligence Analyst", "Interior Decorator", "Interpreter",
-                "Inventory Manager", "Investment Banker", "Jewelry Designer", "Judicial Clerk", "Kindergarten Teacher",
-                "Landscape Architect", "Linguist", "Loan Officer", "Locksmith", "Makeup Artist", "Marine Biologist",
-                "Market Research Analyst", "Massage Therapist", "Mediator", "Medical Biller", "Microbiologist",
-                "Mining Engineer", "Mortgage Broker", "Music Producer", "Mycologist", "Naval Officer",
-                "Network Administrator", "Neuroscientist", "Notary Public", "Nuclear Engineer", "Oceanographer",
-                "Operations Manager", "Ophthalmologist", "Ornithologist", "Paralegal", "Park Ranger",
-                "Patent Examiner", "Pathologist", "Pediatrician", "Perfusionist", "Personal Trainer", "Pet Groomer",
-                "Phlebotomist", "Photojournalist", "Physical Therapist", "Physicist", "Pilot Instructor",
-                "Plant Manager", "Playwright", "Police Detective", "Polygraph Examiner", "Postsecondary Administrator",
-                "Private Investigator", "Probation Officer", "Producer", "Proofreader", "Property Manager",
-                "Psychiatrist", "Public Defender", "Quality Control Inspector", "Quantitative Analyst",
-                "Rabbi", "Radiologist", "Realtor", "Recreational Therapist", "Recycling Coordinator",
-                "Referee", "Registrar", "Rehabilitation Counselor", "Religious Educator", "Reporter",
-                "Research Analyst", "Risk Manager", "Robotics Engineer", "Safety Officer", "School Counselor",
-                "Scientific Illustrator", "Scrum Master", "Seismologist", "Set Designer", "Shipping Coordinator",
-                "Silversmith", "Ski Instructor", "Solar Panel Installer", "Sommelier", "Sound Engineer",
-                "Special Education Teacher", "Speech-Language Pathologist", "Statistician", "Stockbroker",
-                "Stonemason", "Strategic Planner", "Structural Engineer", "Substance Abuse Counselor",
-                "Supply Chain Manager", "Surgical Technician", "Tax Advisor", "Technical Writer",
-                "Telecommunications Technician", "Theater Manager", "Tour Operator", "Traffic Analyst",
-                "Transit Police", "Transportation Planner", "Travel Nurse", "Tree Surgeon", "Urban Planner",
-                "Usability Tester", "Veterinary Technician", "Video Game Tester", "Virologist", "Voice Coach",
-                "Volunteer Coordinator", "Watchmaker", "Water Treatment Specialist", "Wildlife Biologist",
-                "Wind Turbine Technician", "Yoga Instructor"
+                // #A
+                "Accountant", "Actor", "Acting Coach", "Actuary", "Acupuncturist", "Administrator", "Advertising Manager",
+                "Aerospace Engineer", "Agricultural Engineer", "Air Traffic Controller", "AI Researcher", "Animator",
+                "Animal Trainer", "Anthropologist", "App Developer", "Apprentice", "Archaeologist", "Architect", "Archivist",
+                "Art Director", "Art Teacher", "Artist", "Astrologer", "Astronomer", "Athlete", "Attorney", "Auctioneer",
+                "Audio Engineer", "Auto Mechanic", "Author",
+
+                // #B
+                "Backend Developer", "Baker", "Ballet Dancer", "Banker", "Barber", "Barista", "Biologist",
+                "Biomedical Engineer", "Blacksmith", "Blogger", "Bodyguard", "Botanist", "Broadcast Technician",
+                "Broker", "Builder", "Budget Analyst", "Business Analyst", "Business Development Manager",
+                "Business Owner", "Butcher",
+
+                // #C
+                "Camera Operator", "Carpenter", "Cardiologist", "Cartographer", "Cashier", "Chef", "Chemical Engineer",
+                "Chemist", "Chiropractor", "Choreographer", "Civil Engineer", "Claims Adjuster", "Clergy",
+                "Clinical Psychologist", "Cloud Engineer", "Coach", "Computer Programmer", "Computer Scientist",
+                "Conservationist", "Consultant", "Content Creator", "Content Marketer", "Contractor", "Copywriter",
+                "Costume Designer", "Counselor", "Courier", "Crane Operator", "Critic", "Cruise Director", "Curator",
+                "Customer Service Representative", "Cybersecurity Analyst", "Cybersecurity Specialist",
+
+                // #D
+                "Dance Instructor", "Dancer", "Data Analyst", "Data Engineer", "Data Scientist", "Database Administrator",
+                "Demographer", "Dentist", "Dermatologist", "Designer", "Developer", "DevOps Engineer",
+
+                // #E
+                "Ecologist", "Economist", "Editor", "Electric Line Installer", "Electrician", "Emergency Dispatcher",
+                "Emergency Room Doctor", "Emissions Inspector", "Energy Consultant", "Engineer", "English Teacher",
+                "Environmental Engineer", "Ergonomist", "Event Coordinator", "Event Planner", "Exterminator",
+
+                // #F
+                "Fabricator", "Farmer", "Fashion Designer", "Financial Analyst", "Financial Planner", "Fire Investigator",
+                "Firefighter", "Fisherman", "Flight Attendant", "Florist", "Forensic Analyst", "Freelancer", "Fundraiser",
+                "Furniture Designer",
+
+                // #G
+                "Game Designer", "Game Developer", "General Practitioner", "Geneticist", "Geographer", "Geologist",
+                "Glassblower", "Graphic Designer", "Greenhouse Manager", "Guidance Counselor",
+
+                // #H
+                "Hairdresser", "Handyman", "Hazardous Materials Removal Worker", "Health Educator", "Healthcare Assistant",
+                "Helicopter Pilot", "Historian", "Home Inspector", "Horticulturist", "Hospital Administrator", "HR Specialist",
+                "HVAC Technician", "Hydrologist", "Hypnotherapist",
+
+                // #I
+                "Illustrator", "Import/Export Specialist", "Industrial Designer", "Industrial Engineer",
+                "Infection Control Specialist", "Information Architect", "Inspector", "Instructional Designer",
+                "Insurance Agent", "Intelligence Analyst", "Interior Decorator", "Interpreter", "Inventory Manager",
+                "Investment Analyst", "Investment Banker", "IT Specialist", "IT Support Specialist",
+
+                // #J
+                "Janitor", "Jeweler", "Jewelry Designer", "Journalist", "Judge", "Judicial Clerk",
+
+                // #K
+                "Kindergarten Teacher",
+
+                // #L
+                "Laboratory Technician", "Landscape Architect", "Lawyer", "Lecturer", "Librarian", "Lifeguard",
+                "Linguist", "Loan Officer", "Locksmith", "Logistician",
+
+                // #M
+                "Machinist", "Makeup Artist", "Manager", "Marine Biologist", "Market Research Analyst", "Marketing Specialist",
+                "Massage Therapist", "Mathematician", "Math Teacher", "Mechanic", "Mediator", "Medical Assistant",
+                "Medical Biller", "Meteorologist", "Microbiologist", "Mining Engineer", "Model", "Motion Graphics Designer",
+                "Mortgage Broker", "Motorcycle Mechanic", "Music Producer", "Musician", "Mycologist",
+
+                // #N
+                "Nanny", "Naval Officer", "Network Administrator", "Network Engineer", "Neuroscientist", "Nuclear Engineer",
+                "Nurse", "Nurse Practitioner", "Nutritionist",
+
+                // #O
+                "Occupational Therapist", "Oceanographer", "Office Clerk", "Oncologist", "Operations Manager",
+                "Ophthalmologist", "Optician", "Ornithologist",
+
+                // #P
+                "Painter", "Paramedic", "Park Ranger", "Paralegal", "Patent Examiner", "Pathologist", "Payroll Specialist",
+                "Pediatrician", "Perfusionist", "Personal Trainer", "Pet Groomer", "Pharmacist", "Pharmacy Technician",
+                "Phlebotomist", "Photojournalist", "Photographer", "Physical Therapist", "Physician", "Physicist",
+                "Pilot", "Pilot Instructor", "Plumber", "Police Detective", "Police Officer", "Political Scientist",
+                "Postdoctoral Researcher", "Postman", "Postsecondary Administrator", "Principal", "Producer",
+                "Product Manager", "Professor", "Project Manager", "Proofreader", "Property Manager", "Psychiatrist",
+                "Psychologist", "Public Defender", "Public Relations Specialist", "Publisher",
+
+                // #Q
+                "Quality Assurance Analyst", "Quality Control Inspector", "Quantitative Analyst",
+
+                // #R
+                "Rabbi", "Radiologic Technologist", "Radiologist", "Real Estate Agent", "Realtor", "Receptionist",
+                "Recreational Therapist", "Recycling Coordinator", "Referee", "Registrar", "Rehabilitation Counselor",
+                "Religious Educator", "Reporter", "Research Analyst", "Research Assistant", "Researcher", "Retired",
+                "Risk Analyst", "Risk Manager", "Robotics Engineer",
+
+                // #S
+                "Sailor", "Sales Representative", "School Counselor", "Scientist", "Scientific Illustrator",
+                "Scrum Master", "Seismologist", "Security Guard", "SEO Specialist", "Set Designer", "Shipping Coordinator",
+                "Silversmith", "Social Media Content Creator", "Social Media Manager", "Social Worker", "Software Developer",
+                "Software Engineer", "Solar Panel Installer", "Sommelier", "Sound Designer", "Sound Engineer",
+                "Special Education Teacher", "Speech-Language Pathologist", "Statistician", "Storekeeper", "Strategic Planner",
+                "Structural Engineer", "Student", "Substance Abuse Counselor", "Supply Chain Manager", "Surgeon",
+                "Surgical Nurse", "Surgical Technician", "Surveyor", "Systems Analyst",
+
+                // #T
+                "Tailor", "Tax Advisor", "Tax Consultant", "Taxi Driver", "Teacher", "Technician",
+                "Technical Writer", "Telecommunications Technician", "Theater Manager", "Therapist", "Tour Guide",
+                "Tour Operator", "Traffic Analyst", "Transit Police", "Translator", "Transportation Planner", "Travel Agent",
+                "Travel Nurse", "Tree Surgeon", "Truck Driver", "Tutor",
+
+                // #U
+                "Unemployed", "Urban Planner", "Usability Tester", "UX Designer", "UX Researcher",
+
+                // #V
+                "Veterinarian", "Veterinary Technician", "Video Editor", "Video Game Artist", "Video Game Tester",
+                "Virologist", "Voice Actor", "Voice Coach", "Volunteer", "Volunteer Coordinator",
+
+                // #W
+                "Waiter", "Warehouse Worker", "Watchmaker", "Water Treatment Specialist", "Web Developer", "Welder",
+                "Wildlife Biologist", "Wind Turbine Technician", "Writer",
+
+                // #Y
+                "Yoga Instructor",
+
+                // #Z
+                "Zoologist"
         );
+
+
 
         // Make emailField non-editable
         emailField.setEditable(false);
