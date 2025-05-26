@@ -14,16 +14,9 @@ public class StyleManager {
 
     static {
         // Initialize mapping of view names to stylesheet names
-        //VIEW_STYLESHEETS.put("main", "main-stylesheet");
         VIEW_STYLESHEETS.put("home", "home");
-        //VIEW_STYLESHEETS.put("signin", "signin-stylesheet");
-        //VIEW_STYLESHEETS.put("signup", "signup-stylesheet");
         VIEW_STYLESHEETS.put("userdisplay", "userDisplay");
         VIEW_STYLESHEETS.put("appsetting", "appSetting");
-        //VIEW_STYLESHEETS.put("passwordsetup", "passwordSetting-stylesheet");
-//        VIEW_STYLESHEETS.put("usersetting", "userSetting-stylesheet");
-//        VIEW_STYLESHEETS.put("fortune", "fortune-stylesheet");
-//        VIEW_STYLESHEETS.put("message", "message-stylesheet");
     }
 
     public static void applyTheme(Scene scene, String viewName) {

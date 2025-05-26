@@ -4,9 +4,7 @@ import com.example.project.model.User;
 import com.example.project.util.ErrorAlert;
 import com.example.project.util.SuccessAlert;
 import com.example.project.util.StyleManager;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.animation.*; // Added: For friend's animation classes
+import javafx.animation.*;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +16,6 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.event.ActionEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -209,7 +206,7 @@ public class HomeController {
 
     private void openFortuneScreen(Event event) {
         try {
-            // Added: Friend's animation sequence before opening fortune screen
+            // Animation sequence (from prior merge, kept from master)
             ParallelTransition shakeEffect = createShakeAnimation(fortuneCookieImage);
 
             // Initial pause for anticipation
@@ -247,16 +244,15 @@ public class HomeController {
 
             // Combine all animations in sequence
             SequentialTransition sequence = new SequentialTransition(
-                    initialPause,
-                    new ParallelTransition(moveUp, scaleUp),
-                    scaleBounce,
-                    shakeEffect,
-                    rotateForward,
-                    new ParallelTransition(moveDown, scaleDown, rotateBack)
+                initialPause,
+                new ParallelTransition(moveUp, scaleUp),
+                scaleBounce,
+                shakeEffect,
+                rotateForward,
+                new ParallelTransition(moveDown, scaleDown, rotateBack)
             );
 
             sequence.setOnFinished(e -> {
-                // Original: Your fortune screen loading logic
                 try {
                     double remainingHours;
                     if (isStudyActive) {
@@ -264,7 +260,6 @@ public class HomeController {
                         remainingHours = totalStudyHours - elapsedStudyHours;
                         System.out.println("Remaining study time: " + String.format("%.2f", remainingHours) + " hours");
                     } else {
-                        // If not in a study session, set remaining hours to 0
                         currentSectionLearnedHours = 0.0;
                         remainingHours = 0.0;
                     }
@@ -274,7 +269,13 @@ public class HomeController {
 
                     MessageController fortuneController = loader.getController();
                     fortuneController.setHomeController(this);
-                    fortuneController.fetchFortune(currentUser, progressBar.getProgress(), remainingHours, totalStudyHours);
+                    // Use fetchFortune (from master), with getRandomFortune as fallback
+                    try {
+                        fortuneController.fetchFortune(currentUser, progressBar.getProgress(), remainingHours, totalStudyHours);
+                    } catch (Exception ex) {
+                        System.err.println("Failed to fetch fortune: " + ex.getMessage());
+                        fortuneController.setFortune(getRandomFortune()); // Fallback from Dark-mode-cont'
+                    }
 
                     Scene fortuneScene = new Scene(fortuneRoot);
                     Stage fortuneStage = new Stage();
@@ -285,23 +286,22 @@ public class HomeController {
                     fortuneStage.setResizable(false);
                     fortuneStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/symbol/digitalCookieMainIcon2.png")));
 
-                    // Apply theme to fortune screen
                     StyleManager.applyTheme(fortuneScene, "fortune");
 
-                    fortuneStage.showAndWait(); // Original: Keep modal dialog
+                    fortuneStage.showAndWait(); // Keep modal dialog (from master)
                 } catch (IOException ex) {
                     ex.printStackTrace();
                     ErrorAlert.show("Navigation Error", "Failed to load fortune screen: " + ex.getMessage());
                 }
             });
 
-            // Added: Friend's flash effect before opening fortune screen
+            // Flash effect before opening fortune screen (from master)
             FadeTransition flash = new FadeTransition(Duration.millis(100), fortuneCookieImage);
             flash.setFromValue(1.0);
             flash.setToValue(0.8);
             flash.setCycleCount(2);
             flash.setAutoReverse(true);
-            flash.setOnFinished(f -> sequence.play()); // Play sequence after flash
+            flash.setOnFinished(f -> sequence.play());
             flash.play();
         } catch (Exception e) {
             e.printStackTrace();
@@ -309,17 +309,16 @@ public class HomeController {
         }
     }
 
-    // Added: Friend's createShakeAnimation method
     private ParallelTransition createShakeAnimation(ImageView node) {
         Timeline shakeTimeline = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(node.rotateProperty(), 0)),
-                new KeyFrame(Duration.millis(50), new KeyValue(node.rotateProperty(), 3)),
-                new KeyFrame(Duration.millis(100), new KeyValue(node.rotateProperty(), -3)),
-                new KeyFrame(Duration.millis(150), new KeyValue(node.rotateProperty(), 2)),
-                new KeyFrame(Duration.millis(200), new KeyValue(node.rotateProperty(), -2)),
-                new KeyFrame(Duration.millis(250), new KeyValue(node.rotateProperty(), 1)),
-                new KeyFrame(Duration.millis(300), new KeyValue(node.rotateProperty(), -1)),
-                new KeyFrame(Duration.millis(350), new KeyValue(node.rotateProperty(), 0))
+            new KeyFrame(Duration.ZERO, new KeyValue(node.rotateProperty(), 0)),
+            new KeyFrame(Duration.millis(50), new KeyValue(node.rotateProperty(), 3)),
+            new KeyFrame(Duration.millis(100), new KeyValue(node.rotateProperty(), -3)),
+            new KeyFrame(Duration.millis(150), new KeyValue(node.rotateProperty(), 2)),
+            new KeyFrame(Duration.millis(200), new KeyValue(node.rotateProperty(), -2)),
+            new KeyFrame(Duration.millis(250), new KeyValue(node.rotateProperty(), 1)),
+            new KeyFrame(Duration.millis(300), new KeyValue(node.rotateProperty(), -1)),
+            new KeyFrame(Duration.millis(350), new KeyValue(node.rotateProperty(), 0))
         );
 
         ScaleTransition scaleShake = new ScaleTransition(Duration.millis(350), node);
@@ -331,9 +330,49 @@ public class HomeController {
         return new ParallelTransition(node, shakeTimeline, scaleShake);
     }
 
-    @FXML
-    private void handleHomeButton(ActionEvent event) {
-        // Implement later
+    // From Dark-mode-cont': Added as fallback for fetchFortune
+    public String getRandomFortune() {
+        if (progressBar.getProgress() >= 1.0) {
+            String[] congrats = {
+                "Congratulations! 'Success is not the absence of obstacles, but the courage to push through them.'",
+                "Well done! 'The only limit to our realization of tomorrow is our doubts of today.'",
+                "Fantastic work! 'Success is the sum of small efforts, repeated day in and day out.'",
+                "You did it! 'The future belongs to those who believe in the beauty of their dreams.'",
+                "Amazing effort! 'Perseverance turns dreams into achievements.'"
+            };
+            return congrats[(int) (Math.random() * congrats.length)];
+        }
+
+        String[] fortunes = {
+            "Good things come to those who wait... but better things come to those who work for it.",
+            "Your creativity will lead you to success.",
+            "New opportunities await you this week.",
+            "A smile is your passport into the hearts of others.",
+            "Your hard work is about to pay off. Remember, dreams don't work unless you do.",
+            "Adventure can be real happiness.",
+            "The greatest risk is not taking one.",
+            "Today it's up to you to create the peacefulness you long for.",
+            "Your ability to accomplish tasks will follow with success.",
+            "You will be rewarded for your patience and persistence."
+        };
+        return fortunes[(int) (Math.random() * fortunes.length)];
+    }
+
+    // From Dark-mode-cont': Kept but unused (optional)
+    private SequentialTransition getSequentialTransition() {
+        ScaleTransition scaleUp = new ScaleTransition(Duration.millis(200), fortuneCookieImage);
+        scaleUp.setToX(1.1);
+        scaleUp.setToY(1.1);
+
+        ScaleTransition scaleDown = new ScaleTransition(Duration.millis(200), fortuneCookieImage);
+        scaleDown.setToX(1.0);
+        scaleDown.setToY(1.0);
+
+        RotateTransition rotate = new RotateTransition(Duration.millis(200), fortuneCookieImage);
+        rotate.setByAngle(10);
+
+        SequentialTransition sequence = new SequentialTransition(scaleUp, rotate, scaleDown);
+        return sequence;
     }
 
     @FXML
