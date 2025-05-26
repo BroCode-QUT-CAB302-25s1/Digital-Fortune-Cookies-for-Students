@@ -4,7 +4,9 @@ import com.example.project.model.User;
 import com.example.project.util.ErrorAlert;
 import com.example.project.util.SuccessAlert;
 import com.example.project.util.StyleManager;
-import javafx.animation.*;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.animation.*; // Added: For friend's animation classes
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +18,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.event.ActionEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -61,18 +64,16 @@ public class HomeController {
     private boolean isStudyActive;
     private double totalStudyHours;
     private double elapsedStudyHours;
-    private boolean isFortuneWindowOpen; // Track fortune window state
-    private boolean isUserDisplayOpen; // Added: Track user display window state
 
+    // Hour options: 30-minute steps from 0.5 to 10 hours
     private final List<Double> hourOptions;
 
     public HomeController() {
+        // Initialize hour options (0.5, 1, 1.5, ..., 10)
         hourOptions = new ArrayList<>();
         for (double hours = 0.5; hours <= 10.0; hours += 0.5) {
             hourOptions.add(hours);
         }
-        isFortuneWindowOpen = false;
-        isUserDisplayOpen = false; // Initialize
     }
 
     public void setHomeStage(Stage stage, SignInController signInController) {
@@ -104,18 +105,10 @@ public class HomeController {
 
     @FXML
     private void initialize() {
-        fortuneCookieImage.setOnMouseClicked(e -> {
-            if (!isFortuneWindowOpen && !isUserDisplayOpen) openFortuneScreen(e); // Check both flags
-        });
-        userDisplayButton.setOnMouseClicked(e -> {
-            if (!isFortuneWindowOpen && !isUserDisplayOpen) handleProfileButton(e);
-        });
-        appSettingButton.setOnMouseClicked(e -> {
-            if (!isFortuneWindowOpen && !isUserDisplayOpen) handleSettingsButton(e);
-        });
-        playModeButton.setOnMouseClicked(e -> {
-            if (!isFortuneWindowOpen && !isUserDisplayOpen) handlePlayModeButton(e);
-        });
+        fortuneCookieImage.setOnMouseClicked(this::openFortuneScreen);
+        userDisplayButton.setOnMouseClicked(this::handleProfileButton);
+        appSettingButton.setOnMouseClicked(this::handleSettingsButton);
+        playModeButton.setOnMouseClicked(this::handlePlayModeButton);
 
         userDisplayButton.setStyle("-fx-cursor: hand;");
         fortuneCookieImage.setStyle("-fx-cursor: hand;");
@@ -127,13 +120,16 @@ public class HomeController {
         appSettingButton.getStyleClass().add("nav-button");
         playModeButton.getStyleClass().add("nav-button");
 
+        // Initialize hour choice box
         updateHourChoiceBoxOptions();
-        hourChoiceBox.setValue(formatHours(1.0));
+        hourChoiceBox.setValue(formatHours(1.0)); // Default to 1 hour
 
+        // Initialize progress bar
         progressBar.setProgress(0.0);
         isStudyActive = false;
         currentSectionLearnedHours = 0.0;
 
+        // Create and style tooltips for user and settings buttons with custom font and background
         String toolTipStyle = "-fx-background-color: #FFFFE0;" +
                 "-fx-border-radius: 5;" +
                 "-fx-background-radius: 5;" +
@@ -161,17 +157,20 @@ public class HomeController {
     }
 
     private void updateHourChoiceBoxOptions() {
-        String previousSelection = hourChoiceBox.getValue();
+        String previousSelection = hourChoiceBox.getValue(); // Store current selection
         hourChoiceBox.getItems().clear();
 
+        // Compute roundedElapsedHours in a single expression to make it effectively final
         final double roundedElapsedHours = elapsedStudyHours == 0.0 ? 0.0 : Math.ceil(elapsedStudyHours / 0.5) * 0.5;
 
+        // Filter options to include only those >= roundedElapsedHours
         List<String> availableOptions = hourOptions.stream()
                 .filter(hours -> hours >= roundedElapsedHours)
                 .map(this::formatHours)
                 .collect(Collectors.toList());
         hourChoiceBox.getItems().addAll(availableOptions);
 
+        // Restore previous selection if still valid, otherwise select the minimum available option
         if (previousSelection != null && availableOptions.contains(previousSelection)) {
             hourChoiceBox.setValue(previousSelection);
         } else if (!availableOptions.isEmpty()) {
@@ -193,6 +192,7 @@ public class HomeController {
     }
 
     private double parseHours(String formattedHours) {
+        // Parse formatted string back to double (e.g., "1 hour 30 minutes" -> 1.5)
         String[] parts = formattedHours.split(" ");
         double hours = 0.0;
         for (int i = 0; i < parts.length; i++) {
@@ -209,32 +209,44 @@ public class HomeController {
     }
 
     private void openFortuneScreen(Event event) {
-        if (isFortuneWindowOpen) return;
-        isFortuneWindowOpen = true;
-
         try {
+            // Added: Friend's animation sequence before opening fortune screen
             ParallelTransition shakeEffect = createShakeAnimation(fortuneCookieImage);
+
+            // Initial pause for anticipation
             PauseTransition initialPause = new PauseTransition(Duration.millis(100));
+
+            // Hover effect (moving slightly up)
             TranslateTransition moveUp = new TranslateTransition(Duration.millis(200), fortuneCookieImage);
             moveUp.setByY(-10);
+
+            // Scale effect with slight bounce
             ScaleTransition scaleUp = new ScaleTransition(Duration.millis(200), fortuneCookieImage);
             scaleUp.setToX(1.15);
             scaleUp.setToY(1.15);
+
             ScaleTransition scaleBounce = new ScaleTransition(Duration.millis(100), fortuneCookieImage);
             scaleBounce.setToX(1.1);
             scaleBounce.setToY(1.1);
+
+            // Rotation with easing
             RotateTransition rotateForward = new RotateTransition(Duration.millis(300), fortuneCookieImage);
             rotateForward.setByAngle(15);
             rotateForward.setInterpolator(Interpolator.EASE_BOTH);
+
+            // Return animations
             TranslateTransition moveDown = new TranslateTransition(Duration.millis(200), fortuneCookieImage);
             moveDown.setByY(10);
+
             ScaleTransition scaleDown = new ScaleTransition(Duration.millis(200), fortuneCookieImage);
             scaleDown.setToX(1.0);
             scaleDown.setToY(1.0);
+
             RotateTransition rotateBack = new RotateTransition(Duration.millis(200), fortuneCookieImage);
             rotateBack.setByAngle(-15);
             rotateBack.setInterpolator(Interpolator.EASE_OUT);
 
+            // Combine all animations in sequence
             SequentialTransition sequence = new SequentialTransition(
                     initialPause,
                     new ParallelTransition(moveUp, scaleUp),
@@ -245,6 +257,7 @@ public class HomeController {
             );
 
             sequence.setOnFinished(e -> {
+                // Original: Your fortune screen loading logic
                 try {
                     double remainingHours;
                     if (isStudyActive) {
@@ -252,6 +265,7 @@ public class HomeController {
                         remainingHours = totalStudyHours - elapsedStudyHours;
                         System.out.println("Remaining study time: " + String.format("%.2f", remainingHours) + " hours");
                     } else {
+                        // If not in a study session, set remaining hours to 0
                         currentSectionLearnedHours = 0.0;
                         remainingHours = 0.0;
                     }
@@ -259,66 +273,42 @@ public class HomeController {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/fortune-screen.fxml"));
                     Parent fortuneRoot = loader.load();
 
-                    MessageController fortuneController = loader.getController();
+                    FortuneController fortuneController = loader.getController();
                     fortuneController.setHomeController(this);
                     fortuneController.fetchFortune(currentUser, progressBar.getProgress(), remainingHours, totalStudyHours);
 
                     Scene fortuneScene = new Scene(fortuneRoot);
                     Stage fortuneStage = new Stage();
                     fortuneStage.initOwner(homeStage);
-                    fortuneStage.initModality(Modality.APPLICATION_MODAL);
-                    fortuneStage.initStyle(StageStyle.UNDECORATED);
+                    fortuneStage.initModality(Modality.WINDOW_MODAL);
                     fortuneStage.setTitle("Your Fortune");
                     fortuneStage.setScene(fortuneScene);
+                    fortuneStage.initStyle(StageStyle.UNDECORATED);
                     fortuneStage.setResizable(false);
                     fortuneStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/symbol/digitalCookieMainIcon2.png")));
 
+                    // Apply theme to fortune screen
                     StyleManager.applyTheme(fortuneScene, "fortune");
 
-                    // Reset flag when fortune window closes (already handled in MessageController)
-                    fortuneStage.setOnCloseRequest(closeEvent -> isFortuneWindowOpen = false);
-
-                    fortuneStage.show();
+                    fortuneStage.show(); // Original: Keep modal dialog
                 } catch (IOException ex) {
-                    isFortuneWindowOpen = false;
                     ex.printStackTrace();
                     ErrorAlert.show("Navigation Error", "Failed to load fortune screen: " + ex.getMessage());
                 }
             });
 
+            // Added: Friend's flash effect before opening fortune screen
             FadeTransition flash = new FadeTransition(Duration.millis(100), fortuneCookieImage);
             flash.setFromValue(1.0);
             flash.setToValue(0.8);
             flash.setCycleCount(2);
             flash.setAutoReverse(true);
-            flash.setOnFinished(f -> sequence.play());
+            flash.setOnFinished(f -> sequence.play()); // Play sequence after flash
             flash.play();
         } catch (Exception e) {
-            isFortuneWindowOpen = false;
             e.printStackTrace();
             ErrorAlert.show("Animation Error", "Failed to animate fortune cookie: " + e.getMessage());
         }
-    }
-
-    private ParallelTransition createShakeAnimation(ImageView node) {
-        Timeline shakeTimeline = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(node.rotateProperty(), 0)),
-                new KeyFrame(Duration.millis(50), new KeyValue(node.rotateProperty(), 3)),
-                new KeyFrame(Duration.millis(100), new KeyValue(node.rotateProperty(), -3)),
-                new KeyFrame(Duration.millis(150), new KeyValue(node.rotateProperty(), 2)),
-                new KeyFrame(Duration.millis(200), new KeyValue(node.rotateProperty(), -2)),
-                new KeyFrame(Duration.millis(250), new KeyValue(node.rotateProperty(), 1)),
-                new KeyFrame(Duration.millis(300), new KeyValue(node.rotateProperty(), -1)),
-                new KeyFrame(Duration.millis(350), new KeyValue(node.rotateProperty(), 0))
-        );
-
-        ScaleTransition scaleShake = new ScaleTransition(Duration.millis(350), node);
-        scaleShake.setFromX(1.1);
-        scaleShake.setFromY(1.1);
-        scaleShake.setToX(1.1);
-        scaleShake.setToY(1.1);
-
-        return new ParallelTransition(node, shakeTimeline, scaleShake);
     }
 
     public String getRandomFortune() {
@@ -348,20 +338,31 @@ public class HomeController {
         return fortunes[(int) (Math.random() * fortunes.length)];
     }
 
-    private SequentialTransition getSequentialTransition() {
-        ScaleTransition scaleUp = new ScaleTransition(Duration.millis(200), fortuneCookieImage);
-        scaleUp.setToX(1.1);
-        scaleUp.setToY(1.1);
+    // Added: Friend's createShakeAnimation method
+    private ParallelTransition createShakeAnimation(ImageView node) {
+        Timeline shakeTimeline = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(node.rotateProperty(), 0)),
+                new KeyFrame(Duration.millis(50), new KeyValue(node.rotateProperty(), 3)),
+                new KeyFrame(Duration.millis(100), new KeyValue(node.rotateProperty(), -3)),
+                new KeyFrame(Duration.millis(150), new KeyValue(node.rotateProperty(), 2)),
+                new KeyFrame(Duration.millis(200), new KeyValue(node.rotateProperty(), -2)),
+                new KeyFrame(Duration.millis(250), new KeyValue(node.rotateProperty(), 1)),
+                new KeyFrame(Duration.millis(300), new KeyValue(node.rotateProperty(), -1)),
+                new KeyFrame(Duration.millis(350), new KeyValue(node.rotateProperty(), 0))
+        );
 
-        ScaleTransition scaleDown = new ScaleTransition(Duration.millis(200), fortuneCookieImage);
-        scaleDown.setToX(1.0);
-        scaleDown.setToY(1.0);
+        ScaleTransition scaleShake = new ScaleTransition(Duration.millis(350), node);
+        scaleShake.setFromX(1.1);
+        scaleShake.setFromY(1.1);
+        scaleShake.setToX(1.1);
+        scaleShake.setToY(1.1);
 
-        RotateTransition rotate = new RotateTransition(Duration.millis(200), fortuneCookieImage);
-        rotate.setByAngle(10);
+        return new ParallelTransition(node, shakeTimeline, scaleShake);
+    }
 
-        SequentialTransition sequence = new SequentialTransition(scaleUp, rotate, scaleDown);
-        return sequence;
+    @FXML
+    private void handleHomeButton(ActionEvent event) {
+        // Implement later
     }
 
     @FXML
@@ -395,9 +396,6 @@ public class HomeController {
 
     @FXML
     private void handleProfileButton(Event event) {
-        if (isUserDisplayOpen) return; // Prevent multiple user display windows
-        isUserDisplayOpen = true; // Set flag
-
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/userdisplay-view.fxml"));
             Parent userDisplayRoot = loader.load();
@@ -407,7 +405,7 @@ public class HomeController {
             userDisplayStage.setTitle("Profile");
             Scene userDisplayScene = new Scene(userDisplayRoot);
             userDisplayStage.setScene(userDisplayScene);
-            userDisplayStage.initModality(Modality.APPLICATION_MODAL); // Changed to APPLICATION_MODAL
+            userDisplayStage.initModality(Modality.WINDOW_MODAL);
             userDisplayStage.setResizable(false);
             userDisplayStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/symbol/userIcon1.png")));
 
@@ -418,12 +416,8 @@ public class HomeController {
             userDisplayController.setScene(homeStage.getScene(), this);
             userDisplayController.setUser(currentUser);
 
-            // Reset flag when user display window closes
-            userDisplayStage.setOnCloseRequest(closeEvent -> isUserDisplayOpen = false);
-
-            userDisplayStage.show();
+            userDisplayStage.showAndWait();
         } catch (IOException e) {
-            isUserDisplayOpen = false; // Reset flag on error
             e.printStackTrace();
             ErrorAlert.show("Navigation Error", "Failed to load profile screen: " + e.getMessage());
         }
@@ -484,10 +478,5 @@ public class HomeController {
 
     public double getElapsedStudyHours() {
         return elapsedStudyHours;
-    }
-
-    // Added: Method to allow MessageController to reset fortune window state
-    public void resetFortuneWindowState() {
-        isFortuneWindowOpen = false;
     }
 }
