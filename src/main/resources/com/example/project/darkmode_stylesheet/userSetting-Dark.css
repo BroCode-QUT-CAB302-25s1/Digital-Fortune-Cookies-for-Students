@@ -1,0 +1,111 @@
+/* Base styles */
+.root {
+    -fx-background-color: #121212;
+    -fx-font-family: "Arial";
+}
+
+/* Labels */
+.label {
+    -fx-text-fill: #E2E8F0;
+}
+
+/* Panel Styles */
+#infoPanel {
+    -fx-background-color: black;
+    -fx-background-radius: 15;
+    -fx-border-color: #4C566A;
+    -fx-border-radius: 15;
+    -fx-border-width: 1;
+    -fx-padding: 20;
+    -fx-spacing: 15;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 0, 2);
+}
+
+/* Input Fields */
+.text-field {
+    -fx-background-color: #2D3748;
+    -fx-background-radius: 5;
+    -fx-border-color: #4C566A;
+    -fx-border-radius: 5;
+    -fx-border-width: 1;
+    -fx-text-fill: #E2E8F0;
+    -fx-font-size: 11pt;
+    -fx-font-family: "Arial";
+}
+
+.choice-box {
+    -fx-background-color: #2D3748;
+    -fx-border-color: #4C566A;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-text-fill: #E2E8F0;
+    -fx-font-size: 11pt;
+    -fx-font-family: "Arial";
+}
+
+.combo-box {
+    -fx-background-color: #2D3748;
+    -fx-border-color: #4C566A;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-text-fill: #E2E8F0;
+    -fx-font-size: 11pt;
+    -fx-font-family: "Arial";
+}
+
+/* Header and Title Styles */
+#titleHeader {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #E2E8F0;
+    -fx-font-family: "Arial";
+}
+
+/* Label Styles */
+.label-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #E2E8F0;
+    -fx-font-family: "Arial";
+}
+
+.label-value {
+    -fx-font-size: 14px;
+    -fx-text-fill: #E2E8F0;
+    -fx-font-family: "Arial";
+}
+
+/* Profile Icon */
+.profileIcon {
+    -fx-fit-width: 23;
+    -fx-fit-height: 23;
+}
+
+/* Button Styles */
+.button {
+    -fx-font-size: 14px;
+    -fx-background-color: #2D3748;
+    -fx-text-fill: #E2E8F0;
+    -fx-border-color: #4A5568;
+    -fx-border-width: 0.5px;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-font-family: "Arial";
+    -fx-transition: background-color 0.2s ease;
+}
+
+.button:hover {
+    -fx-background-color: #4A5568;
+}
+
+.button:pressed {
+    -fx-background-color: #60A5FA;
+}
+
+/* Lines */
+Line {
+    -fx-stroke: #4C566A;
+}
