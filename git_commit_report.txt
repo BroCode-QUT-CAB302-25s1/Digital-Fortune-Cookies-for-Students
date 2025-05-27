@@ -1,12 +1,25 @@
-"===== Commit Summary ====="
-    54	Antares
-    46	Thompson
-    31	Van Thien Phuoc Mai
-    17	Brian-brocode
-    11	Thompson Tang
+"===== Commit Summary (no merges) ====="
+    84	Antares
+    57	Thompson
+    50	Van Thien Phuoc Mai
+    15	Thompson Tang
+    14	Brian-brocode
      6	Brian
-     5	Tomas
-     3	ThompsonT
+     6	Tomas
      2	Darcy
+     2	ThompsonT
      1	Thiên Phước
--e "===== Detailed Commit Log ====="
+
+Note: ----- BroCode -----
+
+Van Thien Phuoc Mai 	Antares, Van Thien Phuoc Mai, Thiên Phước
+
+Brian Chiu 		Brian-brocade, Brian
+
+Thompson Tang		Thompson, Thompson Tang
+
+Tomas Delalic		Tomas
+
+Darcy Bourke		Darcy
+
+Last time updated: 8:23 p.m - Friday, May 2nd 2025
