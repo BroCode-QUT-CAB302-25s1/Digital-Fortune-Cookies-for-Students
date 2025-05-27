@@ -2,9 +2,9 @@ name: Measure Coverage
 
 on:
     push:
-      branches: [ "master" ]
+        branches: [ "master" ]
     pull_request:
-      branches: [ "master" ]
+        branches: [ "master" ]
 
 jobs:
   build:
@@ -17,36 +17,33 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
 
-      - name: Set up JDK 21 🔧
+      - name: Set up JDK 17 🔧
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
+          java-version: '17'
           distribution: 'temurin'
 
       - name: Verify Java version
         run: java -version
 
-      - name: Cache Gradle packages
+      - name: Cache Maven packages
         uses: actions/cache@v4
         with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: ${{ runner.os }}-gradle-
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2-
 
-      - name: Run Coverage 🔍
+      - name: Run Tests and Coverage 🔍
+        env:
+          GROK_API_KEY: ${{ secrets.GROK_API_KEY }}
         run: |
-          chmod +x gradlew
-          ./gradlew testCoverage
+          mvn clean verify jacoco:report -B
 
       - name: Add coverage to PR 📊
         id: jacoco
         uses: madrapps/jacoco-report@v1.7.2
         with:
-          paths: |
-            ${{ github.workspace }}/**/build/reports/jacoco/prodNormalDebugCoverage/prodNormalDebugCoverage.xml,
-            ${{ github.workspace }}/**/build/reports/jacoco/**/debugCoverage.xml
+          paths: ${{ github.workspace }}/target/site/jacoco/jacoco.xml
           token: ${{ secrets.GITHUB_TOKEN }}
           min-coverage-overall: 40
           min-coverage-changed-files: 60
