@@ -30,7 +30,7 @@ The application leverages **Grok-3-Mini-Fast** (developed by xAI) for AI-generat
     - **Output**: The API returns a JSON response, deserialized by Gson into a Java object, containing a single motivational sentence (e.g., "Your dedication to learning will open new opportunities."). The sentence is displayed in the UI with a fade-in animation. The response may include metadata (e.g., response ID), but only the sentence is used.
 
 ## Technologies Used
-- **Java**: Core programming language; Amazon Corretto 21 strongly recommended, though other JDKs (17+) are supported.
+- **Java**: Core programming language; Amazon Corretto 21 strongly recommended.
 - **JavaFX**: Framework for building the graphical interface (version 21 recommended).
 - **Grok-3-Mini-Fast**: AI model by xAI for generating personalized content, integrated via API. Gson serializes prompt data into JSON requests and deserializes JSON responses into Java objects for reliable data handling.
 - **Gson**: Java JSON library for efficient serialization and deserialization of data in API communication with Grok-3-Mini-Fast, ensuring seamless exchange of prompts and responses.
@@ -41,7 +41,7 @@ The application leverages **Grok-3-Mini-Fast** (developed by xAI) for AI-generat
 
 ## Installation
 ### Prerequisites
-- **Java Development Kit (JDK)**: Amazon Corretto 21 strongly recommended, available at [AWS Corretto Downloads](https://docs.aws.amazon.com/corretto/latest/corretto-21-ug/downloads-list.html); other JDKs (17+) are compatible.
+- **Java Development Kit (JDK)**: Amazon Corretto 21 strongly recommended, available at [AWS Corretto Downloads](https://docs.aws.amazon.com/corretto/latest/corretto-21-ug/downloads-list.html); 
 - **JavaFX SDK**: Version 21 recommended.
 - **Maven**: For dependency management.
 - **Git**: For cloning the repository.
