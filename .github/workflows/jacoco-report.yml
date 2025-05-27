@@ -44,7 +44,7 @@ jobs:
         uses: madrapps/jacoco-report@v1.7.2
         with:
           folder: target/docs/javadoc
-          branch: gh-pages
+          branch: coverage-pages
           clean: true
 #          paths: ${{ github.workspace }}/target/site/jacoco/jacoco.xml
 #          token: ${{ secrets.GITHUB_TOKEN }}
