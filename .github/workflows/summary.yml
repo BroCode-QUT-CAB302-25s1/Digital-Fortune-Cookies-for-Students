@@ -1,6 +1,10 @@
 name: Summarize new issues
 
 on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
   issues:
     types: [opened]
 
