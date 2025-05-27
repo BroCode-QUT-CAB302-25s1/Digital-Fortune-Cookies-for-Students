@@ -89,6 +89,29 @@ public class SignInController {
     }
 
     @FXML
+    private void handleForgotPasswordLink(MouseEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/forgot-password-view.fxml"));
+            root = loader.load();
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setTitle("Forgot Password");
+            stage.setScene(scene);
+
+            // Optional: Pass stage to controller
+            ForgotPasswordController controller = loader.getController();
+            controller.setStage(stage);
+
+            stage.show();
+        } catch (IOException e) {
+            descriptionLabel.setText("Error loading forgot password page.");
+            descriptionLabel.setStyle("-fx-text-fill: red;");
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     private void handleSignupLink(MouseEvent mouseEvent) {
         try {
             // Load signup FXML
