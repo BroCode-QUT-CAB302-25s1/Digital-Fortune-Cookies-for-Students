@@ -3,16 +3,16 @@ package com.example.project.controller;
 import com.example.project.api.GrokResponseFetcher;
 import com.example.project.dao.UserPreferencesDAO;
 import com.example.project.model.User;
-import javafx.animation.*; // Added: For friend's animation classes
+import javafx.animation.*; 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane; // Added: For friend's fortuneContainer
-import javafx.scene.layout.VBox; // Added: For friend's paperContainer
-import javafx.scene.paint.Color; // Added: For friend's sparkle effect
-import javafx.scene.shape.Circle; // Added: For friend's sparkle effect
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox; 
+import javafx.scene.paint.Color; 
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.util.ArrayList;
@@ -21,9 +21,9 @@ import java.util.Random;
 
 public class FortuneController {
     @FXML
-    private StackPane fortuneContainer; // Added: From friend's FXML for animations
+    private StackPane fortuneContainer; 
     @FXML
-    private VBox paperContainer; // Added: From friend's FXML for animations
+    private VBox paperContainer; 
     @FXML
     private ImageView crackedCookieImage;
     @FXML
@@ -31,7 +31,7 @@ public class FortuneController {
     @FXML
     private Button closeButton;
     @FXML
-    private Button newFortuneButton; // Assumed: For handleNewFortune
+    private Button newFortuneButton; 
 
     private HomeController homeController;
     private UserPreferencesDAO preferencesDAO;
@@ -46,14 +46,14 @@ public class FortuneController {
     }
 
     public void setFortune(String fortune) {
-        // Added: Friend's animation setup (hide elements initially)
+        // Animation setup (hide elements initially)
         crackedCookieImage.setOpacity(0);
         fortuneMessage.setOpacity(0);
         if (paperContainer != null) { // Check to avoid NullPointerException if FXML lacks paperContainer
             paperContainer.setScaleY(0);
         }
 
-        // Added: Friend's crack animation
+        // Crack animation
         Timeline crackAnimation = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(crackedCookieImage.scaleXProperty(), 0.8)),
                 new KeyFrame(Duration.ZERO, new KeyValue(crackedCookieImage.scaleYProperty(), 0.8)),
@@ -65,7 +65,7 @@ public class FortuneController {
                 new KeyFrame(Duration.millis(600), new KeyValue(crackedCookieImage.scaleYProperty(), 1))
         );
 
-        // Added: Friend's paper unfold animation (conditional to avoid FXML mismatch)
+        // Paper unfold animation (conditional to avoid FXML mismatch)
         Timeline paperUnfold = new Timeline();
         if (paperContainer != null) {
             paperUnfold.getKeyFrames().addAll(
@@ -74,22 +74,22 @@ public class FortuneController {
             );
         }
 
-        // Added: Friend's fortune text reveal
+        // Fortune text reveal
         FadeTransition textReveal = new FadeTransition(Duration.millis(800), fortuneMessage);
         textReveal.setFromValue(0);
         textReveal.setToValue(1);
 
-        // Original: Set the fortune text
+        //  Set the fortune text
         fortuneMessage.setText(fortune);
 
-        // Added: Friend's master animation sequence
+        // Master animation sequence
         SequentialTransition masterSequence = new SequentialTransition(
                 crackAnimation,
                 paperUnfold,
                 textReveal
         );
 
-        // Added: Trigger sparkle effect after animations
+        // Trigger sparkle effect after animations
         masterSequence.setOnFinished(e -> addSparkleEffect());
 
         masterSequence.play();
@@ -97,24 +97,24 @@ public class FortuneController {
 
     @FXML
     private void initialize() {
-        // Original: Hide the message initially for the animation
+        //  Hide the message initially for the animation
         fortuneMessage.setOpacity(0.0);
     }
 
     public void fetchFortune(User user, double progress, double remainingHours, double totalStudyHours) {
-        // Original: Store parameters for re-fetching in handleNewFortune
+        //  Store parameters for re-fetching in handleNewFortune
         this.currentUser = user;
         this.progress = progress;
         this.remainingHours = remainingHours;
         this.totalStudyHours = totalStudyHours;
 
-        // Original: Fetch the latest user data
+        //  Fetch the latest user data
         String name = user.getPreferredName() != null && !user.getPreferredName().isEmpty() ? user.getPreferredName() : user.getUsername();
         String location = user.getLocation();
         String job = user.getJob();
         String gender = user.getGender();
 
-        // Original: Fetch preferences for language and cookie type
+        //  Fetch preferences for language and cookie type
         String language = null;
         String cookieType = null;
         try {
@@ -148,10 +148,10 @@ public class FortuneController {
             }
         }
 
-        // Original: Build the prompt dynamically
+        //  Build the prompt dynamically
         StringBuilder promptBuilder = new StringBuilder("Generate a single motivational sentence (no yapping)");
 
-        // Original: Randomly decide whether to include the name (50% chance)
+        //  Randomly decide whether to include the name (50% chance)
         Random random = new Random();
         boolean includeName = random.nextBoolean();
         if (includeName && name != null) {
@@ -177,7 +177,7 @@ public class FortuneController {
         }
         promptBuilder.append(", balancing academics and personal growth with potential for fatigue or burnout.");
 
-        // Original: Collect available topics for random selection
+        //  Collect available topics for random selection
         List<String> availableTopics = new ArrayList<>();
         if (name != null) availableTopics.add("name");
         if (language != null) availableTopics.add("language");
@@ -187,7 +187,7 @@ public class FortuneController {
         if (job != null) availableTopics.add("job");
         if (gender != null) availableTopics.add("gender");
 
-        // Original: Randomly select a topic to focus on
+        //  Randomly select a topic to focus on
         String focusTopic = "academic journey"; // Default focus if no topics are available
         if (!availableTopics.isEmpty()) {
             focusTopic = availableTopics.get(random.nextInt(availableTopics.size()));
@@ -218,7 +218,7 @@ public class FortuneController {
 
     @FXML
     private void handleNewFortune() {
-        // Original: Fetch a new fortune using the same parameters
+        //  Fetch a new fortune using the same parameters
         if (homeController != null) {
             fetchFortune(currentUser, progress, remainingHours, totalStudyHours);
         }
@@ -226,12 +226,12 @@ public class FortuneController {
 
     @FXML
     private void handleClose() {
-        // Original: Close the fortune window
+        //  Close the fortune window
         Stage stage = (Stage) fortuneMessage.getScene().getWindow();
         stage.close();
     }
 
-    // Added: Friend's addSparkleEffect method
+    // AddSparkleEffect method
     private void addSparkleEffect() {
         // Clear any existing sparkles first
         if (fortuneContainer != null) { // Check to avoid NullPointerException if FXML lacks fortuneContainer
