@@ -137,7 +137,7 @@ public class SignUpController {
         String email = emailField.getText().trim();
         String password = passwordField.getText();
         String username = usernameField.getText().trim();
-        String securityQuestion = securityQuestionBox.toString().trim();
+        String securityQuestion = (String) securityQuestionBox.getValue();
         String securityAnswer = securityAnswerField.getText().trim();
 
         // Basic validation
